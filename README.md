@@ -45,7 +45,7 @@ Basically, I mashed up 5 mini-apps into one so you can explore different stuff:
 
 ### Quick Start:
 ```bash
-git clone [my-repo-url]
-cd flutter-all-in-one-app
+git clone https://github.com/Mms2404/App.git
+cd App
 flutter pub get
 flutter run
