@@ -11,6 +11,8 @@ Basically, I mashed up 5 mini-apps into one so you can explore different stuff:
    - Search YouTube videos
    - Because who doesn't love AI + videos?
 
+FOR PLANT SHOP AND EXPENSE TRACKER - REFER MY Django REPO FOR BACKEND
+
 2. **Plant Shop** 🌱
    - Buy succulents (eco-friendly!)
    - Practice e-commerce flows
