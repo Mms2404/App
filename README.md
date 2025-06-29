@@ -28,10 +28,10 @@ Basically, I mashed up 5 mini-apps into one so you can explore different stuff:
    - Get notifications
    - Because typing to yourself is normal, right?
 
-5. **Ledger Thingy** 
+5. **Ledger Thingy** - *Wanna build a ledger network using HYperledger Fabric ? Look at my Petroleum Supply Chain Repo*
    - Blockchain with Hyperledger Fabric 
    - Looks fancy on your resume
-   - (I'm still figuring this part out too) - *Look at my Petroleum Supply Chain Repo*
+   - (I'm still figuring this part out too) 
 
 
 ## Let's Get This Party Started 🎉
@@ -44,7 +44,7 @@ Basically, I mashed up 5 mini-apps into one so you can explore different stuff:
 - most imp - curiosity
 
 ### Quick Start:
-In ur terminal..
+```bash
 git clone [my-repo-url]
 cd flutter-all-in-one-app
 flutter pub get
