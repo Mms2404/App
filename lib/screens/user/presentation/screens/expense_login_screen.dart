@@ -29,7 +29,7 @@ class _ExpenseLoginScreenState extends State<ExpenseLoginScreen> {
     });
 
     var response = await http.post(
-      Uri.parse('http://192.168.84.18:8000/api-token-auth/'),
+      Uri.parse('http://10.36.193.18:8000/api-token-auth/'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         'username': _usernameController.text.trim(),

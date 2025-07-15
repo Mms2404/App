@@ -12,7 +12,7 @@ class UserCart extends ChangeNotifier {
   List<CartItemModel> userCart = [];
 
   // API base URL
-  final String baseUrl = "http://192.168.84.18:8000/api"; 
+  final String baseUrl = "http://10.36.193.18:8000/api"; 
 
   List<Succulents> getSucculentsList() => succulentShop;
   List<Pots> getPotsList() => potShop;
@@ -47,7 +47,10 @@ class UserCart extends ChangeNotifier {
   }
 
   Future<void> fetchPots() async {
+  try {
     final response = await http.get(Uri.parse('$baseUrl/pots/'));
+    print("POTS STATUS: ${response.statusCode}");
+    print("POTS BODY: ${response.body}");
     if (response.statusCode == 200) {
       List data = json.decode(response.body);
       potShop = data.map((json) => Pots(
@@ -63,7 +66,11 @@ class UserCart extends ChangeNotifier {
     } else {
       throw Exception('Failed to load pots');
     }
+  } catch (e) {
+    print("FETCH POTS ERROR: $e");
   }
+}
+
 
   //  call both shops
   Future<void> fetchAllShopItems() async {

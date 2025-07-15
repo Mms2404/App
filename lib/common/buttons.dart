@@ -6,7 +6,7 @@ class AppButtonStyles {
 static ButtonStyle topButton = ElevatedButton.styleFrom(
       backgroundColor: AppColors.black,
       foregroundColor: AppColors.palegreen,
-      minimumSize: Size(400, 56),
+      fixedSize: Size(330, 56),     
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(10),
@@ -21,7 +21,7 @@ static ButtonStyle topButton = ElevatedButton.styleFrom(
 static ButtonStyle bottomButton = ElevatedButton.styleFrom(
       backgroundColor: AppColors.black,
       foregroundColor: AppColors.palegreen,
-      minimumSize: Size(400, 56),
+      fixedSize: Size(330, 56),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(25),
@@ -35,7 +35,7 @@ static ButtonStyle bottomButton = ElevatedButton.styleFrom(
 static ButtonStyle commonButton= ElevatedButton.styleFrom(
       backgroundColor: AppColors.black,
       foregroundColor: AppColors.palegreen,
-      minimumSize: Size(400, 56),
+      minimumSize: Size(330, 56),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20)
       ),

@@ -54,7 +54,7 @@ class _ExpenseListScreenState extends State<ExpenseListScreen> {
     }
 
     final response = await http.get(
-      Uri.parse('http://192.168.84.18:8000/api/expenses/'),
+      Uri.parse('http://10.36.193.18:8000/api/expenses/'),
       headers: {'Authorization': 'Token $token'},
     );
 

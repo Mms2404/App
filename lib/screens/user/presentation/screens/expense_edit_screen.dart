@@ -63,8 +63,8 @@ class _ExpenseEditScreenState extends State<ExpenseEditScreen> {
 
     final isEdit = widget.expense != null;
     final url = isEdit
-        ? 'http://192.168.84.18:8000/api/expenses/${widget.expense!['id']}/'
-        : 'http://192.168.84.18:8000/api/expenses/';
+        ? 'http://10.36.193.18:8000/api/expenses/${widget.expense!['id']}/'
+        : 'http://10.36.193.18:8000/api/expenses/';
 
     final response = await (isEdit
         ? http.put(Uri.parse(url),

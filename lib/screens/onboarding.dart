@@ -26,10 +26,10 @@ class Onboarding extends StatelessWidget {
           Positioned(
             top: 150,
             child: Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding:EdgeInsets.all(20.0),
               child: SafeArea(
                 child:Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
@@ -51,36 +51,30 @@ class Onboarding extends StatelessWidget {
                         )
                       ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 30),
-                      child: ElevatedButton(
-                            onPressed: (){
-                              Future.delayed(
-                                Duration(milliseconds: 800),
-                                (){
-                                 AppDialog.show(context, LoginForm());
-                              });
-                            },
-                            style:AppButtonStyles.topButton,
-                            child: Text("LOGIN")
-                      ),
+                    ElevatedButton(
+                          onPressed: (){
+                            Future.delayed(
+                              Duration(milliseconds: 800),
+                              (){
+                               AppDialog.show(context, LoginForm());
+                            });
+                          },
+                          style:AppButtonStyles.topButton,
+                          child: Text("LOGIN")
                     ),
 
                     SizedBox(height: 30,),
 
-                    Padding(
-                      padding: const EdgeInsets.only(left: 30),
-                      child: ElevatedButton(
-                            onPressed: (){
-                              Future.delayed(
-                                Duration(milliseconds: 800),
-                                (){
-                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>SignUpScreen()));
-                              });
-                            },
-                            style:AppButtonStyles.bottomButton,
-                            child: Text("SIGN UP")
-                      ),
+                    ElevatedButton(
+                          onPressed: (){
+                            Future.delayed(
+                              Duration(milliseconds: 800),
+                              (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>SignUpScreen()));
+                            });
+                          },
+                          style:AppButtonStyles.bottomButton,
+                          child: Text("SIGN UP")
                     )
                   ],
                 )
