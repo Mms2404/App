@@ -47,7 +47,7 @@ FOR PLANT SHOP AND EXPENSE TRACKER - REFER MY Django REPO FOR BACKEND
    - Get notifications
    - Because typing to yourself is normal, right?
 
-5. **Ledger Thingy** - *Wanna build a ledger network using HYperledger Fabric ? Look at my Petroleum Supply Chain Repo*
+5. **Ledger Thingy** - *Wanna build a ledger network using HYperledger Fabric ? Look at my Petroleum Supply Chain Repo* - https://github.com/Mms2404/Pertroleum-SupplyChain-with-Hyperledger-Fabric
    - Blockchain with Hyperledger Fabric 
    - Looks fancy on your resume
    - (I'm still figuring this part out too) 
