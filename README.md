@@ -4,7 +4,7 @@
 Hey there! Are you beginning to learn Flutter ? Try this out and boost your experianceeee !!
 
 ## What's Inside? 🤔
-Basically, I mashed up 5 mini-apps into one so you can explore different stuff:
+Basically, I mashed up 5 mini-apps into one so we can explore different stuff:
 
 ![WhatsApp Image 2025-07-15 at 9 43 44 AM](https://github.com/user-attachments/assets/8916b3c6-7636-4399-a4ba-e1af8c88a869) ![WhatsApp Image 2025-07-15 at 9 44 08 AM](https://github.com/user-attachments/assets/9febfbd6-e8c3-4c8e-a7e0-83a37baa8716) ![WhatsApp Image 2025-07-15 at 9 44 15 AM](https://github.com/user-attachments/assets/9589be95-5757-4a5a-987d-32dcb572decd)
 
