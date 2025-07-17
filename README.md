@@ -25,7 +25,8 @@ FOR PLANT SHOP AND EXPENSE TRACKER - REFER MY Django REPO FOR BACKEND
    - Warning: You may start to want to grow succulents tooo !!
 
 
-<img src="https://github.com/user-attachments/assets/18c0a415-598d-42eb-9d9d-0a6a23b9b514" height="600" width="300" />   <img src="https://github.com/user-attachments/assets/ff0d7d8c-6a26-4fa7-9345-21032f822368" height="600" width="300" />   <img src="https://github.com/user-attachments/assets/d6afca4b-94ce-4e49-a1a6-76ce03ea6fca" height="600" width="300" />   <img src="https://github.com/user-attachments/assets/fffa2d95-b32f-4cc0-bd69-c303d79fce8e" height="600" width="300" /> 
+<img src="https://github.com/user-attachments/assets/18c0a415-598d-42eb-9d9d-0a6a23b9b514" height="600" width="300" />   <img src="https://github.com/user-attachments/assets/ff0d7d8c-6a26-4fa7-9345-21032f822368" height="600" width="300" />  
+<img src="https://github.com/user-attachments/assets/d6afca4b-94ce-4e49-a1a6-76ce03ea6fca" height="600" width="300" />   <img src="https://github.com/user-attachments/assets/fffa2d95-b32f-4cc0-bd69-c303d79fce8e" height="600" width="300" /> 
 
 
 3. **Expense Tracker** 💸
