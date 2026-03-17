@@ -1,7 +1,7 @@
-import 'package:app/screens/purchase/models/userCart.dart';
-import 'package:app/screens/purchase/screens/cart.dart';
-import 'package:app/screens/purchase/screens/shop.dart';
-import 'package:app/screens/purchase/screens/widgets/navBar.dart';
+import 'package:app/features/purchase/models/userCart.dart';
+import 'package:app/features/purchase/screens/cart.dart';
+import 'package:app/features/purchase/screens/shop.dart';
+import 'package:app/features/purchase/screens/widgets/navBar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

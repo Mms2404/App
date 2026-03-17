@@ -1,9 +1,9 @@
 import 'package:app/core/textField.dart';
 import 'package:app/core/constants/colors.dart';
-import 'package:app/screens/purchase/models/userCart.dart';
-import 'package:app/screens/purchase/models/models.dart';
-import 'package:app/screens/purchase/screens/widgets/pot_tile.dart';
-import 'package:app/screens/purchase/screens/widgets/succulent_tile.dart';
+import 'package:app/features/purchase/models/userCart.dart';
+import 'package:app/features/purchase/models/models.dart';
+import 'package:app/features/purchase/screens/widgets/pot_tile.dart';
+import 'package:app/features/purchase/screens/widgets/succulent_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

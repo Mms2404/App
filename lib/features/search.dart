@@ -1,6 +1,6 @@
 import 'package:app/core/constants/colors.dart';
-import 'package:app/screens/actions/gemini.dart';
-import 'package:app/screens/actions/youtube.dart';
+import 'package:app/features/actions/gemini.dart';
+import 'package:app/features/actions/youtube.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 

@@ -1,5 +1,5 @@
-import 'package:app/screens/purchase/models/userCart.dart';
-import 'package:app/screens/purchase/screens/widgets/cartItem.dart';
+import 'package:app/features/purchase/models/userCart.dart';
+import 'package:app/features/purchase/screens/widgets/cartItem.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

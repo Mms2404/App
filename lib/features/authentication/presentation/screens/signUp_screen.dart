@@ -1,6 +1,6 @@
 import 'package:app/core/buttons.dart';
 import 'package:app/core/textField.dart';
-import 'package:app/screens/authentication/presentation/screens/verification_screen.dart';
+import 'package:app/features/authentication/presentation/screens/verification_screen.dart';
 import 'package:app/utils/enum.dart';
 import 'package:flutter/material.dart';
 

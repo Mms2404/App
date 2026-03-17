@@ -1,5 +1,5 @@
 import 'package:app/core/constants/colors.dart';
-import 'package:app/screens/purchase/models/models.dart';
+import 'package:app/features/purchase/models/models.dart';
 import 'package:flutter/material.dart';
 
 class PotTile extends StatelessWidget {
