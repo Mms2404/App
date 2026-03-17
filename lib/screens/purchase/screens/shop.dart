@@ -1,5 +1,5 @@
-import 'package:app/common/textField.dart';
-import 'package:app/constants/colors.dart';
+import 'package:app/core/textField.dart';
+import 'package:app/core/constants/colors.dart';
 import 'package:app/screens/purchase/models/userCart.dart';
 import 'package:app/screens/purchase/models/models.dart';
 import 'package:app/screens/purchase/screens/widgets/pot_tile.dart';

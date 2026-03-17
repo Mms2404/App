@@ -1,4 +1,4 @@
-import 'package:app/constants/colors.dart';
+import 'package:app/core/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 class SideBar extends StatefulWidget {

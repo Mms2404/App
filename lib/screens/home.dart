@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:app/constants/colors.dart';
+import 'package:app/core/constants/colors.dart';
 import 'package:app/screens/chat.dart';
 import 'package:app/screens/ledger.dart';
 import 'package:app/screens/purchase/screens/purchase.dart';

@@ -1,7 +1,7 @@
 import 'dart:ui';
-import 'package:app/common/buttons.dart';
-import 'package:app/common/dialogBox.dart';
-import 'package:app/constants/colors.dart';
+import 'package:app/core/buttons.dart';
+import 'package:app/core/dialogBox.dart';
+import 'package:app/core/constants/colors.dart';
 import 'package:app/screens/authentication/presentation/screens/login_form.dart';
 import 'package:app/screens/authentication/presentation/screens/signUp_screen.dart';
 import 'package:flutter/material.dart';

@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
-import 'package:app/constants/colors.dart';
+import 'package:app/core/constants/colors.dart';
 
 class Navbar extends StatelessWidget {
   final Function(int)? onTabChange;

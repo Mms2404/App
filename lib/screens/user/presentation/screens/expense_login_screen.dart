@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'package:app/common/buttons.dart';
-import 'package:app/common/textField.dart';
-import 'package:app/constants/colors.dart';
+import 'package:app/core/buttons.dart';
+import 'package:app/core/textField.dart';
+import 'package:app/core/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
