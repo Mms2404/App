@@ -1,5 +1,5 @@
 import 'package:app/core/constants/theme.dart';
-import 'package:app/screens/onboarding.dart';
+import 'package:app/features/onboarding.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,6 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      // debugShowCheckedModeBanner: false,
       theme: AppTheme.themeData,
       home:Onboarding(),
     );

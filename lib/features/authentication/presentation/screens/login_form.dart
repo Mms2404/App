@@ -1,7 +1,7 @@
-import 'package:app/core/buttons.dart';
 import 'package:app/core/constants/colors.dart';
+import 'package:app/core/utils/rive.dart';
+import 'package:app/core/widgets/buttons.dart';
 import 'package:app/features/home.dart';
-import 'package:app/utils/rive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:rive/rive.dart';

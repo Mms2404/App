@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:app/core/constants/colors.dart';
+import 'package:app/core/utils/rive.dart';
 import 'package:app/features/chat.dart';
 import 'package:app/features/ledger.dart';
 import 'package:app/features/purchase/screens/purchase.dart';
@@ -8,7 +9,6 @@ import 'package:app/features/search.dart';
 import 'package:app/features/user/presentation/screens/expense_list_screen.dart';
 import 'package:app/features/user/presentation/screens/expense_login_screen.dart';
 import 'package:app/core/widgets/side_bar.dart';
-import 'package:app/utils/rive.dart';
 import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
 
