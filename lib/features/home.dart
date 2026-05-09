@@ -105,7 +105,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     return Scaffold(
       resizeToAvoidBottomInset: false,  // this one and the next line is to make the body
       extendBody: true,                // use the full screen  
-      backgroundColor: AppColors.black,
+      backgroundColor: Color.fromARGB(255, 22, 23, 23),
 
       bottomNavigationBar: showNavigation 
       ?Transform.translate(

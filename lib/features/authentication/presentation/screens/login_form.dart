@@ -1,9 +1,10 @@
 import 'package:app/core/constants/colors.dart';
 import 'package:app/core/utils/rive.dart';
 import 'package:app/core/widgets/buttons.dart';
+import 'package:app/core/widgets/textField.dart';
+import 'package:app/features/authentication/presentation/screens/signUp_screen.dart';
 import 'package:app/features/home.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:rive/rive.dart';
 
 class LoginForm extends StatefulWidget {
@@ -14,152 +15,227 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
+  final _formKey = GlobalKey<FormState>();
+  final _emailCtrl = TextEditingController();
+  final _passwordCtrl = TextEditingController();
 
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool _isShowLoading = false;
 
-  bool isShowLoading =false;
+  SMITrigger? _check;
+  SMITrigger? _error;
+  SMITrigger? _reset;
 
-  late SMITrigger check;
-  late SMITrigger error;
-  late SMITrigger reset;
+  @override
+  void dispose() {
+    _emailCtrl.dispose();
+    _passwordCtrl.dispose();
+    super.dispose();
+  }
 
- 
+  String? _validateEmail(String? v) {
+    final value = v?.trim() ?? '';
+    if (value.isEmpty) return 'Email is required';
+    final emailRegex = RegExp(r'^[\w\.-]+@[\w\.-]+\.\w+$');
+    if (!emailRegex.hasMatch(value)) return 'Enter a valid email';
+    return null;
+  }
+
+  String? _validatePassword(String? v) {
+    final value = v ?? '';
+    if (value.isEmpty) return 'Password is required';
+    if (value.length < 6) return 'Min 6 characters';
+    return null;
+  }
+
+  Future<void> _handleSubmit() async {
+    setState(() => _isShowLoading = true);
+
+    await Future.delayed(const Duration(seconds: 1));
+    if (!mounted) return;
+
+    final isValid = _formKey.currentState?.validate() ?? false;
+
+    if (isValid) {
+      _check?.fire();
+      await Future.delayed(const Duration(seconds: 2));
+      if (!mounted) return;
+      setState(() => _isShowLoading = false);
+
+      await Future.delayed(const Duration(milliseconds: 500));
+      if (!mounted) return;
+      Navigator.of(context).pop();
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (_) => const Home()),
+      );
+    } else {
+      _error?.fire();
+      await Future.delayed(const Duration(seconds: 2));
+      if (!mounted) return;
+      setState(() => _isShowLoading = false);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Expanded(
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                Text("WELCOME BACK !" , style: TextStyle(fontSize: 25 , fontWeight: FontWeight.bold),),
-
-                SizedBox(height: 10,),
-            
-                TextFormField(
-                  validator: (value){
-                    if(value!.isEmpty){
-                      return "";
-                    }
-                    return null ;
-                  },
-                  onSaved: (email){} ,
-                  cursorColor: AppColors.palegreen,
-                  decoration: InputDecoration(
-                    //prefix icon
-                    hintText: "Email"
+        Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              AppTextField(
+                controller: _emailCtrl,
+                labelText: 'Email',
+                keyboardType: TextInputType.emailAddress,
+                textInputAction: TextInputAction.next,
+                validator: _validateEmail,
+                prefixIcon: const Icon(Icons.mail_outline_rounded),
+              ),
+              const SizedBox(height: 18),
+              AppTextField(
+                controller: _passwordCtrl,
+                labelText: 'Password',
+                obscureText: true,
+                textInputAction: TextInputAction.done,
+                validator: _validatePassword,
+                onFieldSubmitted: (_) => _handleSubmit(),
+                prefixIcon: const Icon(Icons.lock_outline_rounded),
+              ),
+              const SizedBox(height: 12),
+              Align(
+                alignment: Alignment.centerRight,
+                child: TextButton(
+                  onPressed: _isShowLoading ? null : () {},
+                  style: TextButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 4, vertical: 6),
+                    minimumSize: Size.zero,
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  ),
+                  child: Text(
+                    'Forgot password?',
+                    style: TextStyle(
+                      fontFamily: 'Manrope',
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.textSecondary,
+                    ),
                   ),
                 ),
-            
-                SizedBox(height: 20,),
-            
-                TextFormField(
-                  validator: (value){
-                    if(value!.isEmpty){
-                      return "";
-                    }
-                    return null ;
-                  },
-                  onSaved: (password){},
-                  obscureText: true,
-                  cursorColor: AppColors.palegreen,
-                  decoration: InputDecoration(
-                    //prefix icon
-                    hintText: "Password"
-                  ),
-                ),
-            
-                SizedBox(height: 80,),
-            
-                ElevatedButton(
-                  onPressed: (){
-                    setState(() {
-                      isShowLoading = true;
-                    });
-                    Future.delayed(Duration(seconds: 1),
-                    (){
-                     if(_formKey.currentState!.validate()){
-                      check.fire();
-                      Future.delayed(Duration(seconds: 2),
-                      (){
-                        setState(() {
-                          isShowLoading = false;
-                        });
-                      });
-                      Future.delayed(Duration(seconds: 3),
-                      (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>Home()));
-                      });
-                     } 
-                     else{
-                      error.fire();
-                      Future.delayed(Duration(seconds: 2),
-                      (){
-                        setState(() {
-                          isShowLoading = false;
-                        });
-                      });
-                    } 
-                    });
-                  }, 
-                  style: AppButtonStyles.topButton,
-                  child: Text("LOGIN"),),
-            
-                  SizedBox(height: 20,),
-                  Text("---------  OR  ---------" ,),
-                  SizedBox(height: 20,),
-            
-                  ElevatedButton(
-                  onPressed: (){}, 
-                  style:AppButtonStyles.bottomButton,
-                  child: Text("Don't have an account ?"),
-                  ),
-            
-              ],
-            )
+              ),
+              const SizedBox(height: 24),
+              AppButton(
+                label: 'Log in',
+                shape: AppButtonShape.top,
+                trailingIcon: Icons.arrow_forward_rounded,
+                loading: _isShowLoading,
+                onPressed: _isShowLoading ? null : _handleSubmit,
+              ),
+              const SizedBox(height: 20),
+              _OrDivider(),
+              const SizedBox(height: 20),
+              AppButton(
+                label: "Don't have an account?",
+                variant: AppButtonVariant.secondary,
+                shape: AppButtonShape.bottom,
+                onPressed: _isShowLoading
+                    ? null
+                    : () {
+                        Navigator.of(context).pop();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => SignUpScreen()),
+                        );
+                      },
+              ),
+            ],
           ),
         ),
 
-        isShowLoading?
-         Ani_Positioned(
-          size: 100,
-          child:RiveAnimation.asset(
-                  "assets/rive/check_error.riv",
-                  onInit: (artboard){
-                    StateMachineController controller = 
-                    RiveUtils.getRiveController(artboard);
-                    check = controller.findSMI("Check") as SMITrigger;
-                    error = controller.findSMI("Error") as SMITrigger;
-                    reset = controller.findSMI("Reset") as SMITrigger;
-                  },),): SizedBox()
+        // Rive check/error animation overlay
+        if (_isShowLoading)
+          _RiveOverlay(
+            size: 100,
+            child: RiveAnimation.asset(
+              'assets/rive/check_error.riv',
+              onInit: (artboard) {
+                final controller = RiveUtils.getRiveController(artboard);
+                _check = controller.findSMI('Check') as SMITrigger;
+                _error = controller.findSMI('Error') as SMITrigger;
+                _reset = controller.findSMI('Reset') as SMITrigger;
+              },
+            ),
+          ),
       ],
     );
   }
 }
 
+class _OrDivider extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: Container(height: 0.5, color: AppColors.border),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          child: Text(
+            'or',
+            style: TextStyle(
+              fontFamily: 'Manrope',
+              fontSize: 11,
+              fontWeight: FontWeight.w500,
+              letterSpacing: 1.4,
+              color: AppColors.textTertiary,
+            ),
+          ),
+        ),
+        Expanded(
+          child: Container(height: 0.5, color: AppColors.border),
+        ),
+      ],
+    );
+  }
+}
 
-class Ani_Positioned extends StatelessWidget {
-  const Ani_Positioned({super.key , required this.child , required this.size});
-
+class _RiveOverlay extends StatelessWidget {
   final Widget child;
   final double size;
 
+  const _RiveOverlay({required this.child, required this.size});
 
   @override
   Widget build(BuildContext context) {
     return Positioned.fill(
-          child: Column(
-            children: [
-              Spacer(flex: 2),
-              SizedBox(
-                height: size,
-                width: size,
-                child: child, 
+      child: IgnorePointer(
+        child: Container(
+          color: AppColors.bgBase.withOpacity(0.4),
+          alignment: Alignment.center,
+          child: Container(
+            width: size + 24,
+            height: size + 24,
+            decoration: BoxDecoration(
+              color: AppColors.bgSurface.withOpacity(0.85),
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(
+                color: AppColors.borderStrong,
+                width: 0.5,
               ),
-              Spacer(flex: 2,)
-            ],
-          )
-      );
+            ),
+            padding: const EdgeInsets.all(12),
+            child: SizedBox(
+              width: size,
+              height: size,
+              child: child,
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
