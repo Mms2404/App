@@ -65,14 +65,7 @@ static const Color _sidebarTextTertiary = Color(0x70FFFFFF);
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const SizedBox(height: 24),
-                  _ProfileBlock(
-                    surface: _sidebarSurface,
-                    border: _sidebarBorder,
-                    textPrimary: _sidebarTextPrimary,
-                    textTertiary: _sidebarTextTertiary,
-                  ),
-                  const SizedBox(height: 28),
+                  const SizedBox(height: 60),
                   _SectionLabel(
                     'Workspace',
                     color: _sidebarTextTertiary,
@@ -119,73 +112,7 @@ class _NavItem {
   const _NavItem(this.icon, this.label);
 }
 
-class _ProfileBlock extends StatelessWidget {
-  final Color surface;
-  final Color border;
-  final Color textPrimary;
-  final Color textTertiary;
 
-  const _ProfileBlock({
-    required this.surface,
-    required this.border,
-    required this.textPrimary,
-    required this.textTertiary,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Row(
-        children: [
-          Container(
-            width: 44,
-            height: 44,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: surface,
-              border: Border.all(color: border, width: 0.5),
-            ),
-            child: Icon(
-              Icons.person_outline_rounded,
-              color: textPrimary.withOpacity(0.7),
-              size: 22,
-            ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Madhumita',
-                  style: TextStyle(
-                    fontFamily: 'Manrope',
-                    color: textPrimary,
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  'Just going with the flow',
-                  style: TextStyle(
-                    fontFamily: 'Manrope',
-                    color: textTertiary,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w400,
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
 
 class _SectionLabel extends StatelessWidget {
   final String text;

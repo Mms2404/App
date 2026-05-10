@@ -15,7 +15,6 @@ dependencies:
   cupertino_icons: ^1.0.8
   rive: ^0.13.20
   flutter_svg: ^2.1.0
-  google_fonts: ^6.2.1
   http: ^1.4.0
   google_generative_ai: ^0.4.7
   selectable: ^0.5.0
@@ -23,6 +22,7 @@ dependencies:
   flutter_secure_storage: ^9.2.4
   google_nav_bar: ^5.0.7
   provider: ^6.1.5
+  logger: ^2.7.0
 
 dev_dependencies:
   flutter_test:

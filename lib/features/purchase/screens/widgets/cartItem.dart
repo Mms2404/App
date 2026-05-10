@@ -1,40 +1,30 @@
 import 'package:app/core/constants/colors.dart';
-import 'package:app/features/purchase/models/userCart.dart';
-import 'package:app/features/purchase/models/models.dart';
+import 'package:app/features/purchase/data/models.dart';
+import 'package:app/features/purchase/providers/cart_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class CartItem extends StatefulWidget {
+class CartItem extends StatelessWidget {
   final CartItemModel item;
-  CartItem({super.key , required this.item});
-
-  @override
-  State<CartItem> createState() => _CartItemState();
-}
-
-class _CartItemState extends State<CartItem> {
-
-  void removeItem(){
-    Provider.of<UserCart>(context , listen: false).removeItem(widget.item);
-  }
+  const CartItem({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading:  Container(
+      leading: Container(
         height: 50,
         width: 50,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
-          image: DecorationImage(image: NetworkImage(widget.item.imagePath))
+          image: DecorationImage(image: NetworkImage(item.imagePath)),
         ),
       ),
-      title: Text(widget.item.name),
-      subtitle: Text(widget.item.price , style: TextStyle(color: AppColors.grey),),
+      title: Text(item.name),
+      subtitle: Text(item.price, style: const TextStyle(color: AppColors.grey)),
       trailing: IconButton(
-        onPressed: (){
-          removeItem();
-        }, icon: Icon(Icons.delete))
+        onPressed: () => context.read<CartModel>().removeItem(item),
+        icon: const Icon(Icons.delete),
+      ),
     );
   }
 }

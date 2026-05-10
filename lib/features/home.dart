@@ -5,7 +5,7 @@ import 'package:app/core/utils/rive.dart';
 import 'package:app/features/chat.dart';
 import 'package:app/features/ledger.dart';
 import 'package:app/features/purchase/screens/purchase.dart';
-import 'package:app/features/search.dart';
+import 'package:app/features/search/presentation/screens/search.dart';
 import 'package:app/features/user/presentation/screens/expense_list_screen.dart';
 import 'package:app/features/user/presentation/screens/expense_login_screen.dart';
 import 'package:app/core/widgets/side_bar.dart';
