@@ -13,20 +13,23 @@ class PotTile extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8),
       child: Card(
-        elevation: 5,
+        elevation: 0,
+        color: AppColors.lightSurface,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+          side: BorderSide(color: AppColors.lightBorder, width: 0.5),
+        ),
         child: Container(
           height: 220,
           width: 200,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(12),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.only (
-                  left: 5,
-                  top: 5 ),
+                padding: const EdgeInsets.only(left: 5, top: 5),
                 child: Container(
                   height: 150,
                   width: 190,
@@ -39,22 +42,47 @@ class PotTile extends StatelessWidget {
                   ),
                 ),
               ),
-              Divider(thickness: 1, color: AppColors.palegreen , indent: 10, endIndent: 10,),
-
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 6),
-                child: Text(pot.name, style: TextStyle(fontSize: 16)),
+              Divider(
+                thickness: 1,
+                color: Colors.grey.withOpacity(0.3),
+                indent: 10,
+                endIndent: 10,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 6),
-                child: Text(pot.material, style: TextStyle(fontSize: 16, color: AppColors.palegreen)),
+                child: Text(
+                  pot.name,
+                  style: const TextStyle(
+                    fontFamily: 'Manrope',
+                    fontSize: 16,
+                    color: AppColors.lightTextPrimary,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
               ),
               Padding(
-                padding:  const EdgeInsets.symmetric(horizontal: 5),
-                child: Text("Height : ${pot.height}  ,  Width : ${pot.width}" , style: TextStyle(fontSize: 14 , color: AppColors.grey),),
+                padding: const EdgeInsets.symmetric(horizontal: 6),
+                child: Text(
+                  pot.material,
+                  style: const TextStyle(
+                    fontFamily: 'Manrope',
+                    fontSize: 14,
+                    color: AppColors.success,
+                  ),
+                ),
               ),
-
-              Spacer(),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5),
+                child: Text(
+                  'Height : ${pot.height}  ,  Width : ${pot.width}',
+                  style: const TextStyle(
+                    fontFamily: 'Manrope',
+                    fontSize: 12,
+                    color: AppColors.lightTextTertiary,
+                  ),
+                ),
+              ),
+              const Spacer(),
               Align(
                 alignment: Alignment.bottomRight,
                 child: GestureDetector(
@@ -62,21 +90,28 @@ class PotTile extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("  Price : Rs.${pot.price}"),
+                      Text(
+                        '  Price : Rs.${pot.price}',
+                        style: const TextStyle(
+                          fontFamily: 'Manrope',
+                          color: AppColors.lightTextPrimary,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                       Container(
                         padding: const EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          color: AppColors.black,
-                          borderRadius: const BorderRadius.only(
+                        decoration: const BoxDecoration(
+                          color: AppColors.success,
+                          borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(10),
                           ),
                         ),
-                        child: Icon(Icons.add, color: AppColors.palegreen, size: 16),
+                        child: const Icon(Icons.add, color: Colors.white, size: 16),
                       ),
                     ],
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),

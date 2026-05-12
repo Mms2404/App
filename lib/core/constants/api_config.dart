@@ -3,5 +3,5 @@ class ApiConfig {
   //   'API_BASE_URL',
   //   defaultValue: 'http://10.36.193.18:8000/api',
   // );
-  static const String baseUrl = 'http://10.36.193.18:8000/api';
+  static const String baseUrl = 'http://192.168.1.2:8000/api';
 }

@@ -1,3 +1,4 @@
+import 'package:app/core/constants/colors.dart';
 import 'package:app/features/purchase/data/shop_repository.dart';
 import 'package:app/features/purchase/providers/cart_model.dart';
 import 'package:app/features/purchase/providers/shop_catalog.dart';
@@ -46,11 +47,19 @@ class _HomeViewState extends State<_HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.lightBg,
       appBar: AppBar(
+        backgroundColor: AppColors.lightBg,
+        elevation: 0,
+        surfaceTintColor: Colors.transparent,
         leading: IconButton(
           tooltip: 'Exit',
           onPressed: () => Navigator.of(context).pop(),
-          icon: const Icon(Icons.arrow_back_ios),
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            color: AppColors.lightTextPrimary,
+            size: 18,
+          ),
         ),
       ),
       bottomNavigationBar: Navbar(

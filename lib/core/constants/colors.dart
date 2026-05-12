@@ -22,7 +22,7 @@ class AppColors {
   static const Color borderStrong = Color(0x29FFFFFF);    // 16% white, hover/focus
 
   // Semantic
-  static const Color success = Color(0xFF4ADE80);
+  static const Color success = Color(0xFF1FA088);
   static const Color warning = Color(0xFFFACC15);
   static const Color danger = Color(0xFFEB8B6E);          // kept your soft coral — works in dark
   static const Color info = Color(0xFF60A5FA);
@@ -33,6 +33,18 @@ class AppColors {
   static const Color white = textPrimary;
   static const Color grey = textSecondary;
   static const Color palegreen = accent;
+
+  // Light surfaces — for the purchase feature
+static const Color lightBg = Color(0xFFFAFAF7);        // off-white, slightly warm
+static const Color lightSurface = Color(0xFFFFFFFF);   // pure white for cards
+static const Color lightElevated = Color(0xFFF2F2EC);  // subtle gray for hover/pressed
+static const Color lightBorder = Color(0x14000000);    // 8% black border
+static const Color lightBorderStrong = Color(0x29000000); // 16% black
+
+// Text on light backgrounds
+static const Color lightTextPrimary = Color(0xFF1A1A1A);    // near-black
+static const Color lightTextSecondary = Color(0x99000000);  // 60% black
+static const Color lightTextTertiary = Color(0x66000000);   // 40% black
 }
 
 class AppGradient {

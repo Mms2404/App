@@ -15,19 +15,34 @@ dependencies:
   cupertino_icons: ^1.0.8
   rive: ^0.13.20
   flutter_svg: ^2.1.0
-  http: ^1.4.0
   google_generative_ai: ^0.4.7
   selectable: ^0.5.0
   flutter_markdown: ^0.7.7+1
   flutter_secure_storage: ^9.2.4
   google_nav_bar: ^5.0.7
-  provider: ^6.1.5
   logger: ^2.7.0
+
+  # API 
+  http: ^1.4.0
+  dio: ^5.9.2
+
+
+  # State management
+  provider: ^6.1.5
+  flutter_riverpod: ^2.6.1
+  riverpod_annotation: ^2.6.1
+  freezed_annotation: ^2.4.4
+  json_annotation: ^4.9.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  build_runner: ^2.4.0
+  riverpod_generator: ^2.6.4
+  freezed: ^2.5.7
+  json_serializable: ^6.8.0
+  
   flutter_lints: ^5.0.0
 
 flutter:
@@ -42,3 +57,7 @@ flutter:
     - family: Manrope
       fonts:
         - asset: assets/fonts/Manrope-Regular.ttf
+
+
+
+# stable Riverpod 2.x + Freezed 2.x

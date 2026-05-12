@@ -14,7 +14,6 @@ class OrbBackground extends StatefulWidget {
   /// Base radius of the orb in logical pixels.
   final double baseRadius;
 
-  final Color bg;
 
   const OrbBackground({
     Key? key,
@@ -22,7 +21,6 @@ class OrbBackground extends StatefulWidget {
     this.blurIntensity = 1.0,
     this.brightness = 1.0,
     this.baseRadius = 155,
-    this.bg = const Color(0xFF0E0E0E),
   }) : super(key: key);
 
   @override
@@ -114,7 +112,7 @@ class _OrbBackgroundState extends State<OrbBackground>
           child: Stack(
             children: [
               Positioned.fill(
-                child: Container(color: widget.bg),
+                child: Container(color: const Color(0xFF0E0E0E)),
               ),
               Positioned.fill(
                 child: IgnorePointer(

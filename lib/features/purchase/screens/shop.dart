@@ -1,11 +1,10 @@
 import 'package:app/core/constants/colors.dart';
-import 'package:app/core/widgets/textField.dart';
+import 'package:app/core/widgets/light_searchBar.dart';
 import 'package:app/features/purchase/data/models.dart';
 import 'package:app/features/purchase/providers/cart_model.dart';
 import 'package:app/features/purchase/providers/shop_catalog.dart';
 import 'package:app/features/purchase/screens/widgets/pot_tile.dart';
 import 'package:app/features/purchase/screens/widgets/succulent_tile.dart';
-import 'package:app/features/search/presentation/widgets/ui_states.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -47,8 +46,10 @@ class _ShopState extends State<Shop> {
           content: Text('$itemName added to cart'),
           duration: const Duration(seconds: 2),
           behavior: SnackBarBehavior.floating,
+          backgroundColor: AppColors.lightTextPrimary,
           action: SnackBarAction(
             label: 'View',
+            textColor: AppColors.success,
             onPressed: () {},
           ),
         ),
@@ -80,21 +81,19 @@ class _ShopState extends State<Shop> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          AppTextField(
+          LightSearchBar(
             controller: _searchController,
-            labelText: 'Search',
-            suffixIcon: const Icon(Icons.search, color: AppColors.grey),
           ),
           const SizedBox(height: 20),
           Expanded(
             child: Consumer<ShopCatalog>(
               builder: (_, catalog, __) {
                 if (catalog.isLoading && !catalog.hasData) {
-                  return const LoadingState(message: 'Loading the shop…');
+                  return const _LightLoading(message: 'Loading the shop…');
                 }
 
                 if (catalog.error != null && !catalog.hasData) {
-                  return ErrorStateView(
+                  return _LightError(
                     message: catalog.error!.message,
                     onRetry: catalog.retry,
                   );
@@ -107,8 +106,14 @@ class _ShopState extends State<Shop> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('Highlights ..',
-                          style: TextStyle(fontSize: 25)),
+                      const Text(
+                        'Highlights ..',
+                        style: TextStyle(
+                          fontSize: 25,
+                          color: AppColors.lightTextPrimary,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                       const SizedBox(height: 10),
                       _HorizontalRow(
                         height: 340,
@@ -122,8 +127,14 @@ class _ShopState extends State<Shop> {
                         ),
                       ),
                       const SizedBox(height: 20),
-                      const Text('Choose a pot ..',
-                          style: TextStyle(fontSize: 25)),
+                      const Text(
+                        'Choose a pot ..',
+                        style: TextStyle(
+                          fontSize: 25,
+                          color: AppColors.lightTextPrimary,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                       const SizedBox(height: 10),
                       _HorizontalRow(
                         height: 320,
@@ -171,7 +182,7 @@ class _HorizontalRow extends StatelessWidget {
               child: Text(
                 emptyMessage,
                 style: const TextStyle(
-                  color: AppColors.grey,
+                  color: AppColors.lightTextTertiary,
                   fontSize: 13,
                 ),
               ),
@@ -181,6 +192,116 @@ class _HorizontalRow extends StatelessWidget {
               itemCount: itemCount,
               itemBuilder: (_, i) => builder(i),
             ),
+    );
+  }
+}
+
+class _LightLoading extends StatelessWidget {
+  final String message;
+  const _LightLoading({required this.message});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(
+            width: 32,
+            height: 32,
+            child: CircularProgressIndicator(
+              strokeWidth: 2,
+              valueColor: AlwaysStoppedAnimation(AppColors.success),
+            ),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            message,
+            style: const TextStyle(
+              fontFamily: 'Manrope',
+              fontSize: 13,
+              color: AppColors.lightTextSecondary,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _LightError extends StatelessWidget {
+  final String message;
+  final VoidCallback onRetry;
+
+  const _LightError({required this.message, required this.onRetry});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(
+            Icons.cloud_off_outlined,
+            size: 32,
+            color: AppColors.danger,
+          ),
+          const SizedBox(height: 12),
+          const Text(
+            'Something went wrong',
+            style: TextStyle(
+              fontFamily: 'Manrope',
+              fontSize: 15,
+              fontWeight: FontWeight.w600,
+              color: AppColors.lightTextPrimary,
+            ),
+          ),
+          const SizedBox(height: 6),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Text(
+              message,
+              textAlign: TextAlign.center,
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                fontFamily: 'Manrope',
+                fontSize: 12,
+                color: AppColors.lightTextTertiary,
+                height: 1.4,
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
+          GestureDetector(
+            onTap: onRetry,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+              decoration: BoxDecoration(
+                color: AppColors.lightSurface,
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: AppColors.lightBorderStrong),
+              ),
+              child: const Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.refresh_rounded, size: 14, color: AppColors.lightTextPrimary),
+                  SizedBox(width: 6),
+                  Text(
+                    'Try again',
+                    style: TextStyle(
+                      fontFamily: 'Manrope',
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.lightTextPrimary,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

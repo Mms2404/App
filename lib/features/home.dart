@@ -3,11 +3,11 @@ import 'dart:math';
 import 'package:app/core/constants/colors.dart';
 import 'package:app/core/utils/rive.dart';
 import 'package:app/features/chat.dart';
+import 'package:app/features/expense_tracker/expense_tracker_gateway.dart';
 import 'package:app/features/ledger.dart';
 import 'package:app/features/purchase/screens/purchase.dart';
 import 'package:app/features/search/presentation/screens/search.dart';
-import 'package:app/features/user/presentation/screens/expense_list_screen.dart';
-import 'package:app/features/user/presentation/screens/expense_login_screen.dart';
+import 'package:app/features/expense_tracker/expense_tracker/presentation/screens/expense_login_screen.dart';
 import 'package:app/core/widgets/side_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
@@ -77,15 +77,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     });
   }
 
-  void _handleLogout() {
-  Navigator.of(context).pop(); 
-}
   
   // for Expense_Tracker_Login_Screen 
   void _handleLoginSuccess() {
     Navigator.of(context).push(
     MaterialPageRoute(
-      builder: (_) => ExpenseListScreen(onLogout: _handleLogout),
+      builder: (_) => const ExpenseTrackerGateway()
     ),
   );
 }
