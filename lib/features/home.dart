@@ -7,7 +7,6 @@ import 'package:app/features/expense_tracker/expense_tracker_gateway.dart';
 import 'package:app/features/ledger.dart';
 import 'package:app/features/purchase/screens/purchase.dart';
 import 'package:app/features/search/presentation/screens/search.dart';
-import 'package:app/features/expense_tracker/expense_tracker/presentation/screens/expense_login_screen.dart';
 import 'package:app/core/widgets/side_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
@@ -77,22 +76,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     });
   }
 
-  
-  // for Expense_Tracker_Login_Screen 
-  void _handleLoginSuccess() {
-    Navigator.of(context).push(
-    MaterialPageRoute(
-      builder: (_) => const ExpenseTrackerGateway()
-    ),
-  );
-}
-
 
 
   List<Widget> get screens => [     // getter imp
     Search(),
     Purchase(),
-    ExpenseLoginScreen(onLoginSuccess: _handleLoginSuccess),
+    ExpenseTrackerGateway(),
     Chat(),
     Ledger(),
   ];
