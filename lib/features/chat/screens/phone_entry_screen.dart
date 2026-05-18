@@ -10,7 +10,6 @@
 
 import 'package:app/core/constants/colors.dart';
 import 'package:app/features/chat/provider/chat_provider.dart';
-import 'package:app/features/chat/screens/chat_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -69,28 +68,23 @@ class _PhoneEntryScreenState extends State<PhoneEntryScreen> {
   }
 
   Future<void> _verifyOtp() async {
-    final otp = _otpCtrls.map((c) => c.text).join();
-    if (otp.length < 6) {
-      setState(() => _errorMessage = 'Enter all 6 digits');
-      return;
-    }
-
-    setState(() {
-      _isLoading = true;
-      _errorMessage = null;
-    });
-
-    await Future.delayed(const Duration(milliseconds: 700));
-    if (!mounted) return;
-
-    // Any 6-digit code succeeds
-    context.read<ChatProvider>().login(_phoneCtrl.text.trim());
-
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (_) => const ChatListScreen()),
-    );
+  final otp = _otpCtrls.map((c) => c.text).join();
+  if (otp.length < 6) {
+    setState(() => _errorMessage = 'Enter all 6 digits');
+    return;
   }
+
+  setState(() {
+    _isLoading = true;
+    _errorMessage = null;
+  });
+
+  await Future.delayed(const Duration(milliseconds: 700));
+  if (!mounted) return;
+
+  context.read<ChatProvider>().login(_phoneCtrl.text.trim());
+  // No navigation here — _ChatRoot reacts to the provider change
+}
 
   void _onOtpChanged(int index, String value) {
     if (value.length == 1 && index < 5) {
@@ -114,14 +108,13 @@ class _PhoneEntryScreenState extends State<PhoneEntryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.lightBg,
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const SizedBox(height: 24),
-              _BackArrow(),
               const Spacer(flex: 1),
               _IconBadge(),
               const SizedBox(height: 32),
@@ -186,31 +179,6 @@ class _PhoneEntryScreenState extends State<PhoneEntryScreen> {
   }
 }
 
-class _BackArrow extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: GestureDetector(
-        onTap: () => Navigator.maybePop(context),
-        child: Container(
-          width: 40,
-          height: 40,
-          decoration: BoxDecoration(
-            color: AppColors.lightSurface,
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: AppColors.lightBorder, width: 0.5),
-          ),
-          child: const Icon(
-            Icons.arrow_back_rounded,
-            size: 18,
-            color: AppColors.lightTextPrimary,
-          ),
-        ),
-      ),
-    );
-  }
-}
 
 class _IconBadge extends StatelessWidget {
   @override

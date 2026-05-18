@@ -24,6 +24,14 @@ class ChatListScreen extends StatelessWidget {
         backgroundColor: AppColors.lightBg,
         elevation: 0,
         surfaceTintColor: Colors.transparent,
+        leading: IconButton(
+    onPressed: () => context.read<ChatProvider>().logout(),
+    icon: const Icon(
+      Icons.arrow_left_rounded,
+      color: AppColors.lightTextSecondary,
+      size: 42,
+    ),
+  ),
         title: const Text(
           'Chats',
           style: TextStyle(
@@ -92,7 +100,10 @@ class ChatListScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => ChatDetailScreen(chatId: ordered[i].id),
+                    builder: (_) => ChangeNotifierProvider<ChatProvider>.value(
+                      value: chatProvider,
+                      child: ChatDetailScreen(chatId: ordered[i].id)  
+                      )
                   ),
                 );
               },

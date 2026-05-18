@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logger/logger.dart';
 
 void main() {
-  Logger.level = kDebugMode ? Level.debug : Level.off;
+  Logger.level = kDebugMode ? Level.debug : Level.off;  // Logs only in debug mode 
   runApp(
     const ProviderScope(
       child: MyApp()

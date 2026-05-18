@@ -220,16 +220,6 @@ class _ChatHeader extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         IconButton(
           onPressed: () {},
-          icon: const Icon(Icons.videocam_outlined, size: 22),
-          color: AppColors.lightTextSecondary,
-        ),
-        IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.call_outlined, size: 20),
-          color: AppColors.lightTextSecondary,
-        ),
-        IconButton(
-          onPressed: () {},
           icon: const Icon(Icons.more_vert_rounded, size: 20),
           color: AppColors.lightTextSecondary,
         ),
