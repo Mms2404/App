@@ -1,3 +1,4 @@
+import 'package:app/core/constants/background.dart';
 import 'package:app/core/constants/colors.dart';
 import 'package:app/core/widgets/buttons.dart';
 import 'package:app/core/widgets/textField.dart';
@@ -130,9 +131,8 @@ class _ExpenseEditScreenState extends ConsumerState<ExpenseEditScreen> {
     return Scaffold(
       backgroundColor: AppColors.bgBase,
       appBar: AppBar(
-        backgroundColor: AppColors.bgBase,
+        backgroundColor: Colors.transparent,
         elevation: 0,
-        surfaceTintColor: Colors.transparent,
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
           icon: const Icon(Icons.arrow_back_ios, size: 18),
@@ -155,104 +155,106 @@ class _ExpenseEditScreenState extends ConsumerState<ExpenseEditScreen> {
             ),
         ],
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(24, 8, 24, 32),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                AppTextField(
-                  controller: _titleCtrl,
-                  labelText: 'Title',
-                  prefixIcon: const Icon(Icons.title_rounded),
-                  textInputAction: TextInputAction.next,
-                  validator: (v) =>
-                      v == null || v.trim().isEmpty ? 'Title required' : null,
-                ),
-                const SizedBox(height: 18),
-                AppTextField(
-                  controller: _amountCtrl,
-                  labelText: 'Amount (Rs.)',
-                  prefixIcon: const Icon(Icons.currency_rupee_rounded),
-                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                  textInputAction: TextInputAction.next,
-                  validator: (v) {
-                    if (v == null || v.trim().isEmpty) return 'Amount required';
-                    if (double.tryParse(v) == null) return 'Enter a valid number';
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 18),
-                AppTextField(
-                  controller: _categoryCtrl,
-                  labelText: 'Category',
-                  prefixIcon: const Icon(Icons.label_outline_rounded),
-                  textInputAction: TextInputAction.next,
-                  validator: (v) =>
-                      v == null || v.trim().isEmpty ? 'Category required' : null,
-                ),
-                const SizedBox(height: 18),
-                AppTextField(
-                  controller: _dateCtrl,
-                  labelText: 'Date (YYYY-MM-DD)',
-                  prefixIcon: const Icon(Icons.calendar_today_rounded),
-                  textInputAction: TextInputAction.next,
-                  validator: (v) {
-                    if (v == null || v.trim().isEmpty) return 'Date required';
-                    if (!RegExp(r'^\d{4}-\d{2}-\d{2}$').hasMatch(v.trim())) {
-                      return 'Format: YYYY-MM-DD';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 18),
-                AppTextField(
-                  controller: _descriptionCtrl,
-                  labelText: 'Description (optional)',
-                  prefixIcon: const Icon(Icons.notes_rounded),
-                  textInputAction: TextInputAction.done,
-                ),
-                if (_formError != null) ...[
-                  const SizedBox(height: 16),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                    decoration: BoxDecoration(
-                      color: AppColors.danger.withOpacity(0.10),
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(
-                        color: AppColors.danger.withOpacity(0.3),
-                        width: 0.5,
+      body: OrbBackground(
+        child: SafeArea(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.fromLTRB(24, 8, 24, 32),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  AppTextField(
+                    controller: _titleCtrl,
+                    labelText: 'Title',
+                    prefixIcon: const Icon(Icons.title_rounded),
+                    textInputAction: TextInputAction.next,
+                    validator: (v) =>
+                        v == null || v.trim().isEmpty ? 'Title required' : null,
+                  ),
+                  const SizedBox(height: 18),
+                  AppTextField(
+                    controller: _amountCtrl,
+                    labelText: 'Amount (Rs.)',
+                    prefixIcon: const Icon(Icons.currency_rupee_rounded),
+                    keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                    textInputAction: TextInputAction.next,
+                    validator: (v) {
+                      if (v == null || v.trim().isEmpty) return 'Amount required';
+                      if (double.tryParse(v) == null) return 'Enter a valid number';
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 18),
+                  AppTextField(
+                    controller: _categoryCtrl,
+                    labelText: 'Category',
+                    prefixIcon: const Icon(Icons.label_outline_rounded),
+                    textInputAction: TextInputAction.next,
+                    validator: (v) =>
+                        v == null || v.trim().isEmpty ? 'Category required' : null,
+                  ),
+                  const SizedBox(height: 18),
+                  AppTextField(
+                    controller: _dateCtrl,
+                    labelText: 'Date (YYYY-MM-DD)',
+                    prefixIcon: const Icon(Icons.calendar_today_rounded),
+                    textInputAction: TextInputAction.next,
+                    validator: (v) {
+                      if (v == null || v.trim().isEmpty) return 'Date required';
+                      if (!RegExp(r'^\d{4}-\d{2}-\d{2}$').hasMatch(v.trim())) {
+                        return 'Format: YYYY-MM-DD';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 18),
+                  AppTextField(
+                    controller: _descriptionCtrl,
+                    labelText: 'Description (optional)',
+                    prefixIcon: const Icon(Icons.notes_rounded),
+                    textInputAction: TextInputAction.done,
+                  ),
+                  if (_formError != null) ...[
+                    const SizedBox(height: 16),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                      decoration: BoxDecoration(
+                        color: AppColors.danger.withOpacity(0.10),
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(
+                          color: AppColors.danger.withOpacity(0.3),
+                          width: 0.5,
+                        ),
                       ),
-                    ),
-                    child: Row(
-                      children: [
-                        Icon(Icons.error_outline_rounded,
-                            size: 14, color: AppColors.danger),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Text(
-                            _formError!,
-                            style: TextStyle(
-                              fontFamily: 'Manrope',
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.danger,
+                      child: Row(
+                        children: [
+                          Icon(Icons.error_outline_rounded,
+                              size: 14, color: AppColors.danger),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Text(
+                              _formError!,
+                              style: TextStyle(
+                                fontFamily: 'Manrope',
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500,
+                                color: AppColors.danger,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
+                  ],
+                  const SizedBox(height: 32),
+                  AppButton(
+                    label: _isEdit ? 'Update' : 'Add expense',
+                    loading: _isSaving,
+                    onPressed: _isSaving ? null : _save,
                   ),
                 ],
-                const SizedBox(height: 32),
-                AppButton(
-                  label: _isEdit ? 'Update' : 'Add expense',
-                  loading: _isSaving,
-                  onPressed: _isSaving ? null : _save,
-                ),
-              ],
+              ),
             ),
           ),
         ),

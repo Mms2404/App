@@ -13,6 +13,7 @@
 // controller, and UI are untouched. That's the value of clean architecture.
 // -----------------------------------------------------------------------------
 
+import 'package:app/core/constants/api_config.dart';
 import 'package:app/core/network/api_client.dart';
 import 'package:app/core/storage/secure_storage_provider.dart';
 import 'package:app/core/utils/logger.dart';
@@ -35,7 +36,7 @@ class AuthRepository {
   }) async {
     try {
       final response = await _dio.post(
-        '/api-token-auth/',
+        ApiConfig.api_token_auth,
         data: {'username': username, 'password': password},
       );
 

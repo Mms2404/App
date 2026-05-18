@@ -1,5 +1,4 @@
 import 'package:app/core/constants/background.dart';
-import 'package:app/core/constants/colors.dart';
 import 'package:app/core/utils/logger.dart';
 import 'package:app/features/search/actions/gemini.dart';
 import 'package:app/features/search/actions/youtube.dart';

@@ -15,22 +15,48 @@
 // them. It's the "feature root" for the expense tracker as a whole.
 // -----------------------------------------------------------------------------
 
+import 'package:app/features/expense_tracker/expense_auth/expense_login_screen.dart';
 import 'package:app/features/expense_tracker/expense_auth/presentation/controllers/auth_controller.dart';
-import 'package:app/features/expense_tracker/expense_auth/presentation/login_screen.dart';
 import 'package:app/features/expense_tracker/expense_tracker/presentation/screens/expense_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ExpenseTrackerGateway extends ConsumerWidget {
-  const ExpenseTrackerGateway({super.key});
+class ExpenseTrackerGateway extends ConsumerStatefulWidget {
+  final ValueChanged<bool> onChromeOverride;
+  const ExpenseTrackerGateway({super.key, required this.onChromeOverride});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ExpenseTrackerGateway> createState() =>
+      _ExpenseTrackerGatewayState();
+}
+
+class _ExpenseTrackerGatewayState extends ConsumerState<ExpenseTrackerGateway> {
+  @override
+  void dispose() {
+    // Restore chrome visibility when leaving the feature.
+    // Wrap in post-frame to avoid setState-during-build in parent.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      widget.onChromeOverride(true);
+    });
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final authState = ref.watch(authControllerProvider);
+    final isAuthed = authState.maybeWhen(
+      authenticated: (_) => true,
+      orElse: () => false,
+    );
+
+    // Sync chrome visibility with auth state.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      widget.onChromeOverride(!isAuthed);
+    });
 
     return authState.maybeWhen(
       authenticated: (token) => const ExpenseListScreen(),
-      orElse: () => const LoginScreen(),
+      orElse: () => const ExpenseLoginScreen(),
     );
   }
 }

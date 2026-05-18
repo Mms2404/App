@@ -1,17 +1,10 @@
 // LOGIN SCREEN
 // -----------------------------------------------------------------------------
-// ConsumerWidget instead of StatelessWidget. Gives access to `ref` for
-// reading providers. ConsumerStatefulWidget exists too — for screens with
-// local controllers/focus nodes.
-//
-// `ref.watch(authControllerProvider)` rebuilds this widget on state changes.
-// `ref.read(authControllerProvider.notifier)` gets the controller to call
-// methods on it, WITHOUT subscribing to state changes (used in callbacks).
-//
-// Notice: no setState. No StatefulWidget for the loading flag. Riverpod
-// owns the state. UI just renders it.
+// ConsumerWidget for Riverpod access. State (loading, failure) is owned by
+// authController, not by setState. UI just reads the state and renders.
 // -----------------------------------------------------------------------------
 
+import 'package:app/core/constants/background.dart';
 import 'package:app/core/constants/colors.dart';
 import 'package:app/core/widgets/buttons.dart';
 import 'package:app/core/widgets/textField.dart';
@@ -20,14 +13,14 @@ import 'package:app/features/expense_tracker/expense_auth/presentation/controlle
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class LoginScreen extends ConsumerStatefulWidget {
-  const LoginScreen({super.key});
+class ExpenseLoginScreen extends ConsumerStatefulWidget {
+  const ExpenseLoginScreen({super.key});
 
   @override
-  ConsumerState<LoginScreen> createState() => _LoginScreenState();
+  ConsumerState<ExpenseLoginScreen> createState() => _ExpenseLoginScreenState();
 }
 
-class _LoginScreenState extends ConsumerState<LoginScreen> {
+class _ExpenseLoginScreenState extends ConsumerState<ExpenseLoginScreen> {
   final _usernameCtrl = TextEditingController();
   final _passwordCtrl = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -50,75 +43,77 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(authControllerProvider);
-final isLoading = state.maybeWhen(
-  authenticating: () => true,
-  orElse: () => false,
-);
-final failure = state.maybeWhen<AuthFailure?>(
-  failed: (AuthFailure f) => f,
-  orElse: () => null,
-);
+    final isLoading = state.maybeWhen(
+      authenticating: () => true,
+      orElse: () => false,
+    );
+    final failure = state.maybeWhen<AuthFailure?>(
+      failed: (AuthFailure f) => f,
+      orElse: () => null,
+    );
+
     return Scaffold(
-      backgroundColor: AppColors.bgBase,
-      body: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  _Header(),
-                  const SizedBox(height: 40),
-                  AppTextField(
-                    controller: _usernameCtrl,
-                    labelText: 'Username',
-                    prefixIcon: const Icon(Icons.person_outline_rounded),
-                    textInputAction: TextInputAction.next,
-                    validator: (v) => v == null || v.trim().isEmpty
-                        ? 'Username required'
-                        : null,
-                  ),
-                  const SizedBox(height: 18),
-                  AppTextField(
-                    controller: _passwordCtrl,
-                    labelText: 'Password',
-                    prefixIcon: const Icon(Icons.lock_outline_rounded),
-                    obscureText: true,
-                    textInputAction: TextInputAction.done,
-                    onFieldSubmitted: (_) => _submit(),
-                    validator: (v) =>
-                        v == null || v.isEmpty ? 'Password required' : null,
-                  ),
-                  if (failure != null) ...[
-                    const SizedBox(height: 12),
-                    _ErrorBanner(message: failure.message),
-                  ],
-                  const SizedBox(height: 28),
-                  AppButton(
-                    label: 'Log in',
-                    trailingIcon: Icons.arrow_forward_rounded,
-                    loading: isLoading,
-                    onPressed: isLoading ? null : _submit,
-                  ),
-                  const SizedBox(height: 16),
-                  Center(
-                    child: GestureDetector(
-                      onTap: () {
-                        // TODO: wire sign-up flow when built
-                      },
-                      child: Text(
-                        'New to Expense Tracker? Sign up.',
-                        style: TextStyle(
-                          fontFamily: 'Manrope',
-                          fontSize: 12,
-                          color: AppColors.textTertiary,
+      body: OrbBackground(
+        child: SafeArea(
+          child: Center(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    _Header(),
+                    const SizedBox(height: 40),
+                    AppTextField(
+                      controller: _usernameCtrl,
+                      labelText: 'Username',
+                      prefixIcon: const Icon(Icons.person_outline_rounded),
+                      textInputAction: TextInputAction.next,
+                      validator: (v) => v == null || v.trim().isEmpty
+                          ? 'Username required'
+                          : null,
+                    ),
+                    const SizedBox(height: 18),
+                    AppTextField(
+                      controller: _passwordCtrl,
+                      labelText: 'Password',
+                      prefixIcon: const Icon(Icons.lock_outline_rounded),
+                      obscureText: true,
+                      textInputAction: TextInputAction.done,
+                      onFieldSubmitted: (_) => _submit(),
+                      validator: (v) =>
+                          v == null || v.isEmpty ? 'Password required' : null,
+                    ),
+                    if (failure != null) ...[
+                      const SizedBox(height: 12),
+                      _ErrorBanner(message: failure.message),
+                    ],
+                    const SizedBox(height: 28),
+                    AppButton(
+                      label: 'Log in',
+                      trailingIcon: Icons.arrow_forward_rounded,
+                      loading: isLoading,
+                      onPressed: isLoading ? null : _submit,
+                    ),
+                    const SizedBox(height: 16),
+                    Center(
+                      child: GestureDetector(
+                        onTap: () {
+                          // TODO: wire sign-up flow when built
+                        },
+                        child: Text(
+                          'New to Expense Tracker? Sign up.',
+                          style: TextStyle(
+                            fontFamily: 'Manrope',
+                            fontSize: 12,
+                            color: AppColors.textTertiary,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

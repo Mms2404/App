@@ -1,3 +1,4 @@
+import 'package:app/core/constants/background.dart';
 import 'package:app/core/constants/colors.dart';
 import 'package:app/features/expense_tracker/expense_auth/presentation/controllers/auth_controller.dart';
 import 'package:app/features/expense_tracker/expense_tracker/domain/entities/expense.dart';
@@ -56,9 +57,8 @@ class _ExpenseListScreenState extends ConsumerState<ExpenseListScreen> {
     return Scaffold(
       backgroundColor: AppColors.bgBase,
       appBar: AppBar(
-        backgroundColor: AppColors.bgBase,
+        backgroundColor: Colors.transparent,
         elevation: 0,
-        surfaceTintColor: Colors.transparent,
         title: const Text(
           'Your expenses',
           style: TextStyle(
@@ -90,20 +90,22 @@ class _ExpenseListScreenState extends ConsumerState<ExpenseListScreen> {
         tooltip: 'Add expense',
         child: const Icon(Icons.add_rounded),
       ),
-      body: state.when(
-        initial: () => const LoadingState(message: 'Loading expenses…'),
-        loading: () => const LoadingState(message: 'Loading expenses…'),
-        loaded: (expenses) => _buildList(expenses, errorBanner: null),
-        error: (failure, cachedExpenses) {
-          if (cachedExpenses != null) {
-            return _buildList(cachedExpenses, errorBanner: failure.message);
-          }
-          return ErrorStateView(
-            message: failure.message,
-            onRetry: () =>
-                ref.read(expenseListControllerProvider.notifier).fetch(),
-          );
-        },
+      body: OrbBackground(
+        child: state.when(
+          initial: () => const LoadingState(message: 'Loading expenses…'),
+          loading: () => const LoadingState(message: 'Loading expenses…'),
+          loaded: (expenses) => _buildList(expenses, errorBanner: null),
+          error: (failure, cachedExpenses) {
+            if (cachedExpenses != null) {
+              return _buildList(cachedExpenses, errorBanner: failure.message);
+            }
+            return ErrorStateView(
+              message: failure.message,
+              onRetry: () =>
+                  ref.read(expenseListControllerProvider.notifier).fetch(),
+            );
+          },
+        ),
       ),
     );
   }

@@ -29,7 +29,15 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   // only main screens those in the bottom nav bar return true.
   return index >= 0 && index < screens.length;
  }
- bool get showNavigation => isMainScreen(selectedIndex);
+
+// manual override to hide the navBar and MenuBtn in secondary screens
+bool _chromeOverride = true;
+void _setChromeVisible(bool visible) {
+  if (_chromeOverride == visible) return;
+  setState(() => _chromeOverride = visible);
+}
+
+ bool get showNavigation => isMainScreen(selectedIndex) && _chromeOverride;
 
   late AnimationController _animationController;
   late Animation<double> animation;
@@ -81,8 +89,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   List<Widget> get screens => [     // getter imp
     Search(),
     Purchase(),
-    ExpenseTrackerGateway(),
-    ChatGateway(),
+    ExpenseTrackerGateway(onChromeOverride: _setChromeVisible),  // passing the override callback to the gateway
+    ChatGateway(onChromeOverride: _setChromeVisible),
     Ledger(),
   ];
 
@@ -200,7 +208,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 ),
               ),
             ),
-          ): screens[selectedIndex],
+          ):screens[selectedIndex],
           
 
           // Menu button

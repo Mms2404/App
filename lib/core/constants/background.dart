@@ -14,7 +14,6 @@ class OrbBackground extends StatefulWidget {
   /// Base radius of the orb in logical pixels.
   final double baseRadius;
 
-
   const OrbBackground({
     Key? key,
     required this.child,
@@ -44,14 +43,37 @@ class _OrbBackgroundState extends State<OrbBackground>
   static const double _friction = 0.92;
   static const double _lerp = 0.018;
 
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _controller = AnimationController(
+  //     vsync: this,
+  //     duration: const Duration(days: 999),
+  //   )..addListener(_tick)..repeat();
+  // }
+
   @override
   void initState() {
-    super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(days: 999),
-    )..addListener(_tick)..repeat();
-  }
+  super.initState();
+  _controller = AnimationController(
+    vsync: this,
+    duration: const Duration(days: 999),
+  )..addListener(_tick)..repeat();
+  
+  // Initialize position after first frame when size is known
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    if (!mounted) return;
+    final size = MediaQuery.of(context).size;
+    if (!_initialized && !size.isEmpty) {
+      _initialized = true;
+      final start = Offset(size.width * 0.12, size.height * 0.82);
+      setState(() {
+        _orbPos = start;
+        _targetPos = start;
+      });
+    }
+  });
+}
 
   void _initDefaultPos(Size size) {
     if (_initialized || size.isEmpty) return;
@@ -99,31 +121,78 @@ class _OrbBackgroundState extends State<OrbBackground>
     super.dispose();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(
+  // @override
+  // Widget build(BuildContext context) {
+  //   return LayoutBuilder(
+  //     builder: (context, constraints) {
+  //       // _initDefaultPos(constraints.biggest);
+
+  //       return Listener(
+  //         behavior: HitTestBehavior.translucent,
+  //         onPointerDown: (e) => _setTarget(e.localPosition),
+  //         onPointerMove: (e) => _setTarget(e.localPosition),
+  //         child: Stack(
+  //           children: [
+  //             Positioned.fill(
+  //               child: Container(color: const Color(0xFF0E0E0E)),
+  //             ),
+  //             Positioned.fill(
+  //               child: IgnorePointer(
+  //                 child: CustomPaint(
+  //                   painter: _OrbPainter(
+  //                     position: _orbPos,
+  //                     pulse: _pulse,
+  //                     baseRadius: widget.baseRadius,
+  //                     blurIntensity: widget.blurIntensity,
+  //                     brightness: widget.brightness,
+  //                   ),
+  //                 ),
+  //               ),
+  //             ),
+  //             widget.child,
+  //           ],
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
+
+@override
+Widget build(BuildContext context) {
+  return SizedBox.expand(
+    child: LayoutBuilder(
       builder: (context, constraints) {
-        _initDefaultPos(constraints.biggest);
+        print('🟡 LayoutBuilder constraints: $constraints');
+        // Defer init to first frame with known size
+        if (!_initialized && !constraints.biggest.isEmpty) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (!mounted || _initialized) return;
+            _initialized = true;
+            final size = constraints.biggest;
+            final start = Offset(size.width * 0.12, size.height * 0.82);
+            setState(() {
+              _orbPos = start;
+              _targetPos = start;
+            });
+          });
+        }
 
         return Listener(
           behavior: HitTestBehavior.translucent,
           onPointerDown: (e) => _setTarget(e.localPosition),
           onPointerMove: (e) => _setTarget(e.localPosition),
           child: Stack(
+            fit: StackFit.expand,
             children: [
-              Positioned.fill(
-                child: Container(color: const Color(0xFF0E0E0E)),
-              ),
-              Positioned.fill(
-                child: IgnorePointer(
-                  child: CustomPaint(
-                    painter: _OrbPainter(
-                      position: _orbPos,
-                      pulse: _pulse,
-                      baseRadius: widget.baseRadius,
-                      blurIntensity: widget.blurIntensity,
-                      brightness: widget.brightness,
-                    ),
+              Container(color: const Color(0xFF0E0E0E)),
+              IgnorePointer(
+                child: CustomPaint(
+                  painter: _OrbPainter(
+                    position: _orbPos,
+                    pulse: _pulse,
+                    baseRadius: widget.baseRadius,
+                    blurIntensity: widget.blurIntensity,
+                    brightness: widget.brightness,
                   ),
                 ),
               ),
@@ -132,8 +201,9 @@ class _OrbBackgroundState extends State<OrbBackground>
           ),
         );
       },
-    );
-  }
+    ),
+  );
+}
 }
 
 class _OrbPainter extends CustomPainter {
@@ -153,7 +223,11 @@ class _OrbPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    if (position.dx < -100) return;
+    print('🔵 Painter called, position: $position');
+  if (position.dx < -100) {
+    print('  ↑ skipped: position invalid');
+    return;
+  }
 
     final breathe = math.sin(pulse) * 0.10;
     final r = baseRadius * (1 + breathe);
