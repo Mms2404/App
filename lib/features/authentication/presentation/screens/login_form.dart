@@ -3,7 +3,7 @@ import 'package:app/core/utils/rive.dart';
 import 'package:app/core/widgets/buttons.dart';
 import 'package:app/core/widgets/textField.dart';
 import 'package:app/features/authentication/presentation/screens/signUp_screen.dart';
-import 'package:app/features/home.dart';
+import 'package:app/features/app_home.dart';
 import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
 

@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:app/core/constants/colors.dart';
 import 'package:app/core/utils/rive.dart';
-import 'package:app/features/chat.dart';
+import 'package:app/features/chat/chat_gateway.dart';
 import 'package:app/features/expense_tracker/expense_tracker_gateway.dart';
 import 'package:app/features/ledger.dart';
 import 'package:app/features/purchase/screens/purchase.dart';
@@ -82,7 +82,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     Search(),
     Purchase(),
     ExpenseTrackerGateway(),
-    Chat(),
+    ChatGateway(),
     Ledger(),
   ];
 
