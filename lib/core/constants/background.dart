@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'package:app/core/utils/logger.dart';
 import 'package:flutter/material.dart';
 
 class OrbBackground extends StatefulWidget {
@@ -74,14 +75,6 @@ class _OrbBackgroundState extends State<OrbBackground>
     }
   });
 }
-
-  void _initDefaultPos(Size size) {
-    if (_initialized || size.isEmpty) return;
-    _initialized = true;
-    final start = Offset(size.width * 0.12, size.height * 0.82);
-    _orbPos = start;
-    _targetPos = start;
-  }
 
   void _tick() {
     if (!_initialized) return;
@@ -162,7 +155,7 @@ Widget build(BuildContext context) {
   return SizedBox.expand(
     child: LayoutBuilder(
       builder: (context, constraints) {
-        print('🟡 LayoutBuilder constraints: $constraints');
+        // log.d('🟡 LayoutBuilder constraints: $constraints');
         // Defer init to first frame with known size
         if (!_initialized && !constraints.biggest.isEmpty) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -223,9 +216,9 @@ class _OrbPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    print('🔵 Painter called, position: $position');
+    // log.d('🔵 Painter called, position: $position');
   if (position.dx < -100) {
-    print('  ↑ skipped: position invalid');
+    log.d('  ↑ skipped: position invalid');
     return;
   }
 
@@ -237,8 +230,8 @@ class _OrbPainter extends CustomPainter {
     final outerPaint = Paint()
       ..shader = RadialGradient(
         colors: [
-          const Color(0xFF00FFB4).withOpacity(0.18 * brightness),
-          const Color(0xFF00C8FF).withOpacity(0.09 * brightness),
+          const Color(0xFF00FFB4).withValues(alpha: 0.18 * brightness),
+          const Color(0xFF00C8FF).withValues(alpha: 0.09 * brightness),
           Colors.transparent,
         ],
         stops: const [0.0, 0.5, 1.0],
@@ -250,10 +243,10 @@ class _OrbPainter extends CustomPainter {
     final bodyPaint = Paint()
       ..shader = RadialGradient(
         colors: [
-          const Color(0xFF00FFC8).withOpacity(0.72 * brightness),
-          const Color(0xFF00DCFF).withOpacity(0.52 * brightness),
-          const Color(0xFF148CFF).withOpacity(0.28 * brightness),
-          const Color(0xFF503CDC).withOpacity(0.10 * brightness),
+          const Color(0xFF00FFC8).withValues(alpha: 0.72 * brightness),
+          const Color(0xFF00DCFF).withValues(alpha: 0.52 * brightness),
+          const Color(0xFF148CFF).withValues(alpha: 0.28 * brightness),
+          const Color(0xFF503CDC).withValues(alpha: 0.10 * brightness),
           Colors.transparent,
         ],
         stops: const [0.0, 0.3, 0.65, 0.88, 1.0],
@@ -266,8 +259,8 @@ class _OrbPainter extends CustomPainter {
     final innerPaint = Paint()
       ..shader = RadialGradient(
         colors: [
-          const Color(0xFF78FFE6).withOpacity(0.60 * brightness),
-          const Color(0xFF3CE6FF).withOpacity(0.32 * brightness),
+          const Color(0xFF78FFE6).withValues(alpha: 0.60 * brightness),
+          const Color(0xFF3CE6FF).withValues(alpha: 0.32 * brightness),
           Colors.transparent,
         ],
         stops: const [0.0, 0.45, 1.0],

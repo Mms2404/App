@@ -20,7 +20,7 @@ class AppDialog {
       context: context,
       barrierDismissible: barrierDismissible,
       barrierLabel: 'Dialog',
-      barrierColor: Colors.black.withOpacity(0.55),
+      barrierColor: Colors.black.withValues(alpha: 0.55),
       transitionDuration: const Duration(milliseconds: 280),
       transitionBuilder: (context, animation, _, child) {
         final curved = CurvedAnimation(
@@ -96,7 +96,7 @@ class _DialogShell extends StatelessWidget {
                   type: MaterialType.transparency,
                   child: Container(
                     decoration: BoxDecoration(
-                      color: AppColors.bgSurface.withOpacity(0.92),
+                      color: AppColors.bgSurface.withValues(alpha: 0.92),
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(
                         color: AppColors.borderStrong,

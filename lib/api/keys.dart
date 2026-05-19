@@ -1,2 +1,5 @@
-const String GEMINI_API = "AIzaSyCAlaQhvRA4p_ciQx7dd20zd8QIADuO6zc";
+const String GEMINI_API = "AIzaSyB4L8UJPDF2d_7pjOVjypbiNK3_mMahScs";
 const String YOUTUBE_API = "AIzaSyDxdxrQzxt5qVswReW37j7H6kyNMwOuYlM";
+
+
+

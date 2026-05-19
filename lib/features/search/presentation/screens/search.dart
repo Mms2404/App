@@ -31,6 +31,59 @@ class _SearchState extends State<Search> {
     'What is the future of LLMs?',
   ];
 
+
+  String _friendlyError(Object e) {
+  final raw = e.toString().toLowerCase();
+
+  // Gemini quota / rate limit
+  if (raw.contains('quota') || raw.contains('rate') || raw.contains('429')) {
+    return 'You\'re asking faster than I can answer. Wait a moment and try again.';
+  }
+
+  // Server overloaded / temporarily unavailable
+  if (raw.contains('503') ||
+    raw.contains('unavailable') ||
+    raw.contains('overloaded') ||
+    raw.contains('high demand')) {
+  return 'The AI is overloaded right now. Wait a moment and try again.';
+ }
+
+  // No internet
+  if (raw.contains('socketexception') ||
+      raw.contains('failed host lookup') ||
+      raw.contains('network is unreachable') ||
+      raw.contains('connection refused')) {
+    return 'No internet connection. Check your network and try again.';
+  }
+
+  // Timeout
+  if (raw.contains('timeout') || raw.contains('timed out')) {
+    return 'The search took too long. Try again.';
+  }
+
+  // Auth / API key
+  if (raw.contains('api key') ||
+      raw.contains('unauthorized') ||
+      raw.contains('401') ||
+      raw.contains('403') ||
+      raw.contains('permission denied')) {
+    return 'Authentication failed. The app needs attention.';
+  }
+
+  // Safety / blocked content
+  if (raw.contains('safety') || raw.contains('blocked')) {
+    return 'I can\'t answer that one. Try rephrasing your question.';
+  }
+
+  // YouTube specific
+  if (raw.contains('youtube')) {
+    return 'Couldn\'t fetch video results, but the AI answer might still work.';
+  }
+
+  // Catch-all
+  return 'Something went wrong. Tap retry to try again.';
+ }
+
   Future<void> _sendPrompt([String? prefilled]) async {
     final prompt = (prefilled ?? _controller.text).trim();
     if (prompt.isEmpty) return;
@@ -65,7 +118,7 @@ class _SearchState extends State<Search> {
       if (!mounted) return;
       log.e('Search failed', error: e, stackTrace: st);
       setState(() {
-        _errorMessage = e.toString();
+        _errorMessage = _friendlyError(e);
         _response = '';
         _videos = [];
         _isLoading = false;
@@ -84,11 +137,13 @@ class _SearchState extends State<Search> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: OrbBackground(
         blurIntensity: 1.8,
         brightness: 0.5,
         child: SafeArea(
           child: Column(
+            mainAxisSize: MainAxisSize.max,
             children: [
               const SizedBox(height: 12),
               const SearchHeader(),

@@ -2,6 +2,7 @@ import 'package:app/core/constants/colors.dart';
 import 'package:app/features/search/presentation/widgets/ui_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 /// Top header: brand dot + "Search" title + "AI + Video" badge.
 class SearchHeader extends StatelessWidget {
@@ -214,6 +215,7 @@ class AnswerCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 370,
       width: double.infinity,
       padding: const EdgeInsets.fromLTRB(18, 16, 18, 16),
       decoration: BoxDecoration(
@@ -221,70 +223,75 @@ class AnswerCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(14),
         border: Border.all(color: AppColors.border, width: 0.5),
       ),
-      child: MarkdownBody(
-        data: markdown,
-        styleSheet: MarkdownStyleSheet(
-          p: const TextStyle(
-            fontFamily: 'Manrope',
-            fontSize: 14,
-            color: AppColors.textPrimary,
-            height: 1.6,
-          ),
-          h1: const TextStyle(
-            fontFamily: 'Manrope',
-            fontSize: 19,
-            fontWeight: FontWeight.w700,
-            color: AppColors.textPrimary,
-            height: 1.3,
-          ),
-          h2: const TextStyle(
-            fontFamily: 'Manrope',
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            color: AppColors.textPrimary,
-            height: 1.3,
-          ),
-          h3: const TextStyle(
-            fontFamily: 'Manrope',
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
-            color: AppColors.textPrimary,
-            height: 1.3,
-          ),
-          listBullet: const TextStyle(
-            fontFamily: 'Manrope',
-            fontSize: 14,
-            color: AppColors.textPrimary,
-            height: 1.6,
-          ),
-          code: const TextStyle(
-            fontFamily: 'monospace',
-            fontSize: 13,
-            color: AppColors.accent,
-            backgroundColor: AppColors.bgElevated,
-          ),
-          codeblockDecoration: BoxDecoration(
-            color: AppColors.bgElevated,
-            borderRadius: BorderRadius.circular(8),
-          ),
-          codeblockPadding: const EdgeInsets.all(12),
-          blockquote: const TextStyle(
-            fontFamily: 'Manrope',
-            fontSize: 14,
-            color: AppColors.textSecondary,
-            fontStyle: FontStyle.italic,
-            height: 1.5,
-          ),
-          blockquoteDecoration: const BoxDecoration(
-            border: Border(
-              left: BorderSide(color: AppColors.accent, width: 2),
+      child: SingleChildScrollView(
+        child: SelectionArea(
+          child: MarkdownBody(
+            data: markdown,
+            // selectable: true,    // SelectionArea is used instead for better mobile support
+            styleSheet: MarkdownStyleSheet(
+              p: const TextStyle(
+                fontFamily: 'Manrope',
+                fontSize: 14,
+                color: AppColors.textPrimary,
+                height: 1.6,
+              ),
+              h1: const TextStyle(
+                fontFamily: 'Manrope',
+                fontSize: 19,
+                fontWeight: FontWeight.w700,
+                color: AppColors.textPrimary,
+                height: 1.3,
+              ),
+              h2: const TextStyle(
+                fontFamily: 'Manrope',
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: AppColors.textPrimary,
+                height: 1.3,
+              ),
+              h3: const TextStyle(
+                fontFamily: 'Manrope',
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                color: AppColors.textPrimary,
+                height: 1.3,
+              ),
+              listBullet: const TextStyle(
+                fontFamily: 'Manrope',
+                fontSize: 14,
+                color: AppColors.textPrimary,
+                height: 1.6,
+              ),
+              code: const TextStyle(
+                fontFamily: 'monospace',
+                fontSize: 13,
+                color: AppColors.accent,
+                backgroundColor: AppColors.bgElevated,
+              ),
+              codeblockDecoration: BoxDecoration(
+                color: AppColors.bgElevated,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              codeblockPadding: const EdgeInsets.all(12),
+              blockquote: const TextStyle(
+                fontFamily: 'Manrope',
+                fontSize: 14,
+                color: AppColors.textSecondary,
+                fontStyle: FontStyle.italic,
+                height: 1.5,
+              ),
+              blockquoteDecoration: const BoxDecoration(
+                border: Border(
+                  left: BorderSide(color: AppColors.accent, width: 2),
+                ),
+              ),
+              blockquotePadding: const EdgeInsets.only(left: 12),
+              a: TextStyle(
+                color: AppColors.accent,
+                decoration: TextDecoration.underline,
+                decorationColor: AppColors.accent.withOpacity(0.4),
+              ),
             ),
-          ),
-          blockquotePadding: const EdgeInsets.only(left: 12),
-          a: TextStyle(
-            color: AppColors.accent,
-            decoration: TextDecoration.underline,
-            decorationColor: AppColors.accent.withOpacity(0.4),
           ),
         ),
       ),
@@ -304,6 +311,18 @@ class VideoCard extends StatefulWidget {
 class _VideoCardState extends State<VideoCard> {
   bool _pressed = false;
 
+  Future<void> _openVideo() async {
+  final videoId = widget.video['id']?['videoId'];
+  if (videoId == null) return;
+
+  final url = Uri.parse('https://www.youtube.com/watch?v=$videoId');
+  if (await canLaunchUrl(url)) {
+    // LaunchMode.externalApplication opens the YouTube app if installed,
+    // else falls back to browser. LaunchMode.platformDefault is the safe alternative.
+    await launchUrl(url, mode: LaunchMode.externalApplication);
+  }
+}
+
   @override
   Widget build(BuildContext context) {
     final snippet = widget.video['snippet'];
@@ -317,8 +336,10 @@ class _VideoCardState extends State<VideoCard> {
       onTapDown: (_) => setState(() => _pressed = true),
       onTapUp: (_) => setState(() => _pressed = false),
       onTapCancel: () => setState(() => _pressed = false),
-      onTap: () {},
+      onTap: () => _openVideo(),
       child: AnimatedContainer(
+        height: 100,
+        width: double.infinity,
         duration: const Duration(milliseconds: 120),
         margin: const EdgeInsets.only(bottom: 10),
         padding: const EdgeInsets.all(10),

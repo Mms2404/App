@@ -1,10 +1,10 @@
 import 'dart:math';
-
 import 'package:app/core/constants/colors.dart';
 import 'package:app/core/utils/rive.dart';
 import 'package:app/features/chat/chat_gateway.dart';
 import 'package:app/features/expense_tracker/expense_tracker_gateway.dart';
 import 'package:app/features/ledger.dart';
+import 'package:app/features/onboarding.dart';
 import 'package:app/features/purchase/screens/purchase.dart';
 import 'package:app/features/search/presentation/screens/search.dart';
 import 'package:app/core/widgets/side_bar.dart';
@@ -83,6 +83,13 @@ void _setChromeVisible(bool visible) {
       isDrawerClosed = !isDrawerClosed;
     });
   }
+
+  void _exitToOnboarding() {
+  Navigator.of(context).pushAndRemoveUntil(
+    MaterialPageRoute(builder: (_) => const Onboarding()),
+    (route) => false,
+  );
+}
 
 
 
@@ -189,7 +196,7 @@ void _setChromeVisible(bool visible) {
             width: 288,
             left: isDrawerClosed ? -288 : 0,
             height: MediaQuery.of(context).size.height,
-            child: SideBar(),
+            child: SideBar(onExit: _exitToOnboarding),
           ),
 
           // Display screen transformation

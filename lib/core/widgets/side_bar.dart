@@ -2,14 +2,10 @@ import 'package:app/core/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 class SideBar extends StatefulWidget {
-  final int selectedIndex;
-  final ValueChanged<int>? onItemSelected;
   final VoidCallback? onExit;
 
   const SideBar({
     super.key,
-    this.selectedIndex = 0,
-    this.onItemSelected,
     this.onExit,
   });
 
@@ -18,22 +14,49 @@ class SideBar extends StatefulWidget {
 }
 
 class _SideBarState extends State<SideBar> {
-static const Color _sidebarBg = Color.fromARGB(255, 22, 23, 23);
-static const Color _sidebarSurface = Color(0xFF262626);
-static const Color _sidebarBorder = Color(0x1FFFFFFF);
-static const Color _sidebarTextPrimary = Color(0xFFEDF1F5);
-static const Color _sidebarTextSecondary = Color(0xB3FFFFFF);
-static const Color _sidebarTextTertiary = Color(0x70FFFFFF);
+  static const Color _sidebarBg = Color.fromARGB(255, 22, 23, 23);
+  static const Color _sidebarSurface = Color(0xFF262626);
+  static const Color _sidebarBorder = Color(0x1FFFFFFF);
+  static const Color _sidebarTextPrimary = Color(0xFFEDF1F5);
+  static const Color _sidebarTextSecondary = Color(0xB3FFFFFF);
+  static const Color _sidebarTextTertiary = Color(0x70FFFFFF);
 
   bool _confirmingExit = false;
+  int? _expandedIndex;
 
   static const _items = <_NavItem>[
-    _NavItem(Icons.search_rounded, 'Search'),
-    _NavItem(Icons.shopping_bag_outlined, 'Shop'),
-    _NavItem(Icons.account_balance_wallet_outlined, 'Wallet'),
-    _NavItem(Icons.chat_bubble_outline_rounded, 'Chat'),
-    _NavItem(Icons.menu_book_outlined, 'Ledger'),
-  ];
+  _NavItem(
+    Icons.search_rounded,
+    'Search',
+    'Ask anything and get an AI answer with relevant videos. Powered by Gemini and the YouTube Data API.',
+  ),
+  _NavItem(
+    Icons.shopping_bag_outlined,
+    'Shop',
+    'A simple no-login storefront. Browse plants, save items locally, enter your delivery details, and pay through Razorpay. Maps for address selection. Backend on Django.',
+  ),
+  _NavItem(
+    Icons.account_balance_wallet_outlined,
+    'Wallet',
+    'Track your daily expenses. Sign up or log in to add, edit, and review what you spend over time. Backend on Django.',
+  ),
+  _NavItem(
+    Icons.chat_bubble_outline_rounded,
+    'Chat',
+    'Real-time messaging with phone-OTP login. Send text, photos, and voice notes. Push notifications included. Backend on Firebase.',
+  ),
+  _NavItem(
+    Icons.music_note_rounded,
+    'Music',
+    'Play audio files from your device or record voice memos with live waveforms. Two modes in one app.',
+  ),
+];
+
+  void _handleTilePress(int i) {
+    setState(() {
+      _expandedIndex = _expandedIndex == i ? null : i;
+    });
+  }
 
   void _handleExitTap() {
     if (_confirmingExit) {
@@ -51,12 +74,9 @@ static const Color _sidebarTextTertiary = Color(0x70FFFFFF);
     return Material(
       child: Stack(
         children: [
-          // Subtle ambient gradient for depth — barely visible but adds life
           Positioned.fill(
             child: Container(
-              decoration: BoxDecoration(
-                color:_sidebarBg
-              ),
+              decoration: const BoxDecoration(color: _sidebarBg),
             ),
           ),
           SafeArea(
@@ -71,17 +91,23 @@ static const Color _sidebarTextTertiary = Color(0x70FFFFFF);
                     color: _sidebarTextTertiary,
                   ),
                   const SizedBox(height: 4),
-                  ...List.generate(_items.length, (i) {
-                    return _NavTile(
-                      item: _items[i],
-                      selected: widget.selectedIndex == i,
-                      onTap: () => widget.onItemSelected?.call(i),
-                      surface: _sidebarSurface,
-                      textPrimary: _sidebarTextPrimary,
-                      textSecondary: _sidebarTextSecondary,
-                    );
-                  }),
-                  const Spacer(),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: List.generate(_items.length, (i) {
+                          return _ExpandableTile(
+                            item: _items[i],
+                            expanded: _expandedIndex == i,
+                            onTap: () => _handleTilePress(i),
+                            surface: _sidebarSurface,
+                            textPrimary: _sidebarTextPrimary,
+                            textSecondary: _sidebarTextSecondary,
+                            textTertiary: _sidebarTextTertiary,
+                          );
+                        }),
+                      ),
+                    ),
+                  ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Container(
@@ -109,10 +135,9 @@ static const Color _sidebarTextTertiary = Color(0x70FFFFFF);
 class _NavItem {
   final IconData icon;
   final String label;
-  const _NavItem(this.icon, this.label);
+  final String description;
+  const _NavItem(this.icon, this.label, this.description);
 }
-
-
 
 class _SectionLabel extends StatelessWidget {
   final String text;
@@ -137,117 +162,137 @@ class _SectionLabel extends StatelessWidget {
   }
 }
 
-class _NavTile extends StatefulWidget {
+class _ExpandableTile extends StatefulWidget {
   final _NavItem item;
-  final bool selected;
+  final bool expanded;
   final VoidCallback onTap;
   final Color surface;
   final Color textPrimary;
   final Color textSecondary;
+  final Color textTertiary;
 
-  const _NavTile({
+  const _ExpandableTile({
     required this.item,
-    required this.selected,
+    required this.expanded,
     required this.onTap,
     required this.surface,
     required this.textPrimary,
     required this.textSecondary,
+    required this.textTertiary,
   });
 
   @override
-  State<_NavTile> createState() => _NavTileState();
+  State<_ExpandableTile> createState() => _ExpandableTileState();
 }
 
-class _NavTileState extends State<_NavTile> {
+class _ExpandableTileState extends State<_ExpandableTile> {
   bool _hovering = false;
 
   @override
   Widget build(BuildContext context) {
-    final selected = widget.selected;
-    final accent = Color(0xFF3CB8E6);
+    final expanded = widget.expanded;
+    const accent = Color(0xFF3CB8E6);
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
-      child: MouseRegion(
-        onEnter: (_) => setState(() => _hovering = true),
-        onExit: (_) => setState(() => _hovering = false),
-        child: GestureDetector(
-          onTap: widget.onTap,
-          behavior: HitTestBehavior.opaque,
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 200),
-            curve: Curves.easeOut,
-            height: 44,
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            decoration: BoxDecoration(
-              color: selected
-                  ? accent.withOpacity(0.14)
-                  : _hovering
-                      ? widget.surface
-                      : Colors.transparent,
-              borderRadius: BorderRadius.circular(10),
-              border: selected
-                  ? Border.all(
-                      color: accent.withOpacity(0.35),
-                      width: 0.5,
-                    )
-                  : null,
-              boxShadow: selected
-                  ? [
-                      BoxShadow(
-                        color: accent.withOpacity(0.18),
-                        blurRadius: 16,
-                        spreadRadius: -2,
-                      ),
-                    ]
-                  : null,
-            ),
-            child: Row(
-              children: [
-                AnimatedContainer(
-                  duration: const Duration(milliseconds: 200),
-                  width: 3,
-                  height: selected ? 20 : 0,
-                  decoration: BoxDecoration(
-                    color: accent,
-                    borderRadius: BorderRadius.circular(2),
-                    boxShadow: selected
-                        ? [
-                            BoxShadow(
-                              color: accent.withOpacity(0.7),
-                              blurRadius: 6,
-                              spreadRadius: 0,
-                            ),
-                          ]
-                        : null,
-                  ),
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
+          child: MouseRegion(
+            onEnter: (_) => setState(() => _hovering = true),
+            onExit: (_) => setState(() => _hovering = false),
+            child: GestureDetector(
+              onTap: widget.onTap,
+              behavior: HitTestBehavior.opaque,
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                curve: Curves.easeOut,
+                height: 44,
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                decoration: BoxDecoration(
+                  color: expanded
+                      ? accent.withValues(alpha: 0.10)
+                      : _hovering
+                          ? widget.surface
+                          : Colors.transparent,
+                  borderRadius: BorderRadius.circular(10),
+                  border: expanded
+                      ? Border.all(
+                          color: accent.withValues(alpha: 0.25),
+                          width: 0.5,
+                        )
+                      : null,
                 ),
-                SizedBox(width: selected ? 10 : 0),
-                Icon(
-                  widget.item.icon,
-                  size: 18,
-                  color: selected ? accent : widget.textSecondary,
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Text(
-                    widget.item.label,
-                    style: TextStyle(
-                      fontFamily: 'Manrope',
-                      fontSize: 14,
-                      fontWeight:
-                          selected ? FontWeight.w600 : FontWeight.w400,
-                      color: selected
-                          ? widget.textPrimary
-                          : widget.textSecondary,
+                child: Row(
+                  children: [
+                    Icon(
+                      widget.item.icon,
+                      size: 18,
+                      color: expanded ? accent : widget.textSecondary,
                     ),
-                  ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text(
+                        widget.item.label,
+                        style: TextStyle(
+                          fontFamily: 'Manrope',
+                          fontSize: 14,
+                          fontWeight: expanded
+                              ? FontWeight.w600
+                              : FontWeight.w400,
+                          color: expanded
+                              ? widget.textPrimary
+                              : widget.textSecondary,
+                        ),
+                      ),
+                    ),
+                    AnimatedRotation(
+                      duration: const Duration(milliseconds: 200),
+                      turns: expanded ? 0.25 : 0,
+                      child: Icon(
+                        Icons.chevron_right_rounded,
+                        size: 16,
+                        color: expanded ? accent : widget.textTertiary,
+                      ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
         ),
-      ),
+        AnimatedSize(
+          duration: const Duration(milliseconds: 220),
+          curve: Curves.easeOut,
+          alignment: Alignment.topCenter,
+          child: expanded
+              ? Padding(
+                  padding: const EdgeInsets.fromLTRB(24, 4, 24, 12),
+                  child: Container(
+                    padding: const EdgeInsets.fromLTRB(12, 10, 12, 12),
+                    decoration: BoxDecoration(
+                      color: widget.surface.withValues(alpha: 0.5),
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border(
+                        left: BorderSide(
+                          color: accent.withValues(alpha: 0.4),
+                          width: 2,
+                        ),
+                      ),
+                    ),
+                    child: Text(
+                      widget.item.description,
+                      style: TextStyle(
+                        fontFamily: 'Manrope',
+                        fontSize: 12,
+                        height: 1.5,
+                        color: widget.textSecondary,
+                      ),
+                    ),
+                  ),
+                )
+              : const SizedBox.shrink(),
+        ),
+      ],
     );
   }
 }
@@ -276,12 +321,12 @@ class _ExitTile extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 12),
           decoration: BoxDecoration(
             color: confirming
-                ? AppColors.danger.withOpacity(0.14)
+                ? AppColors.danger.withValues(alpha: 0.14)
                 : Colors.transparent,
             borderRadius: BorderRadius.circular(10),
             border: Border.all(
               color: confirming
-                  ? AppColors.danger.withOpacity(0.4)
+                  ? AppColors.danger.withValues(alpha: 0.4)
                   : Colors.transparent,
               width: 0.5,
             ),

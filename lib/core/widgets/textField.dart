@@ -113,6 +113,14 @@ class _AppTextFieldState extends State<AppTextField> {
             autocorrect: widget.autocorrect,
             textInputAction: widget.textInputAction,
             onFieldSubmitted: widget.onFieldSubmitted,
+            validator: (value) {                                  // ← add this block
+    if (widget.validator == null) return null;
+    final result = widget.validator!(value);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) setState(() => _errorText = result);
+    });
+    return result;
+  },
             cursorColor: AppColors.textPrimary,
             cursorWidth: 1.5,
             style: const TextStyle(
@@ -131,6 +139,7 @@ class _AppTextFieldState extends State<AppTextField> {
               enabledBorder: InputBorder.none,
               focusedBorder: InputBorder.none,
               errorBorder: InputBorder.none,
+              errorStyle: const TextStyle(height: 0, fontSize: 0),
               focusedErrorBorder: InputBorder.none,
               isCollapsed: true,
               contentPadding: const EdgeInsets.symmetric(

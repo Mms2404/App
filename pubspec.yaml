@@ -21,6 +21,7 @@ dependencies:
   flutter_secure_storage: ^9.2.4
   google_nav_bar: ^5.0.7
   logger: ^2.7.0
+  url_launcher: ^6.3.2
 
   # API 
   http: ^1.4.0

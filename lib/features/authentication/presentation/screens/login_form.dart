@@ -1,4 +1,5 @@
 import 'package:app/core/constants/colors.dart';
+import 'package:app/core/utils/logger.dart';
 import 'package:app/core/utils/rive.dart';
 import 'package:app/core/widgets/buttons.dart';
 import 'package:app/core/widgets/textField.dart';
@@ -50,10 +51,15 @@ class _LoginFormState extends State<LoginForm> {
   Future<void> _handleSubmit() async {
     setState(() => _isShowLoading = true);
 
-    await Future.delayed(const Duration(seconds: 1));
+    // Give Rive time to mount and run onInit
+    await Future.delayed(const Duration(milliseconds: 600));
     if (!mounted) return;
 
+    // log.d('Email value: "${_emailCtrl.text}"');
+    // log.d('Password value: "${_passwordCtrl.text}"');
+    // log.d('Form state: ${_formKey.currentState}');
     final isValid = _formKey.currentState?.validate() ?? false;
+    // log.d('isValid: $isValid');
 
     if (isValid) {
       _check?.fire();
@@ -68,6 +74,7 @@ class _LoginFormState extends State<LoginForm> {
         MaterialPageRoute(builder: (_) => const Home()),
       );
     } else {
+      log.d("Error SMI is: ${_error?.toString()}");
       _error?.fire();
       await Future.delayed(const Duration(seconds: 2));
       if (!mounted) return;

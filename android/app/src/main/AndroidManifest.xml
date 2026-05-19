@@ -39,8 +39,16 @@
          In particular, this is used by the Flutter engine in io.flutter.plugin.text.ProcessTextPlugin. -->
     <queries>
         <intent>
-            <action android:name="android.intent.action.PROCESS_TEXT"/>
+            <action android:name="android.intent.action.PROCESS_TEXT"/>   <!--This is the intent action used by the Android system when a user selects text and chooses to share it with another app.-->
             <data android:mimeType="text/plain"/>
         </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />      <!--This and the next intent action used by the Android system when a user clicks on a link (e.g., in a web browser or another app) and the system needs to determine which app can handle that link.-->
+            <data android:scheme="https" />
+        </intent>
+        <intent>
+           <action android:name="android.intent.action.VIEW" />       
+           <data android:scheme="http" />
+    </intent>
     </queries>
 </manifest>
