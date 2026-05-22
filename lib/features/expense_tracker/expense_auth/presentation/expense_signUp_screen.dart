@@ -1,7 +1,8 @@
-// LOGIN SCREEN
+// SIGN UP SCREEN
 // -----------------------------------------------------------------------------
-// ConsumerWidget for Riverpod access. State (loading, failure) is owned by
-// authController, not by setState. UI just reads the state and renders.
+// Mirrors LoginScreen pattern: ConsumerStatefulWidget, watches auth state,
+// reads controller for actions. Auto-logs-in on success (auth state becomes
+// authenticated → gateway swaps to expense list).
 // -----------------------------------------------------------------------------
 
 import 'package:app/core/constants/background.dart';
@@ -10,39 +11,62 @@ import 'package:app/core/widgets/buttons.dart';
 import 'package:app/core/widgets/textField.dart';
 import 'package:app/features/expense_tracker/expense_auth/domain/auth_failure.dart';
 import 'package:app/features/expense_tracker/expense_auth/presentation/controllers/auth_controller.dart';
-import 'package:app/features/expense_tracker/expense_auth/presentation/expense_signUp_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ExpenseLoginScreen extends ConsumerStatefulWidget {
-  const ExpenseLoginScreen({super.key});
+class ExpenseSignUpScreen extends ConsumerStatefulWidget {
+  const ExpenseSignUpScreen({super.key});
 
   @override
-  ConsumerState<ExpenseLoginScreen> createState() => _ExpenseLoginScreenState();
+  ConsumerState<ExpenseSignUpScreen> createState() => _ExpenseSignUpScreenState();
 }
 
-class _ExpenseLoginScreenState extends ConsumerState<ExpenseLoginScreen> {
+class _ExpenseSignUpScreenState extends ConsumerState<ExpenseSignUpScreen> {
   final _usernameCtrl = TextEditingController();
+  final _emailCtrl = TextEditingController();
   final _passwordCtrl = TextEditingController();
+  final _confirmCtrl = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
     _usernameCtrl.dispose();
+    _emailCtrl.dispose();
     _passwordCtrl.dispose();
+    _confirmCtrl.dispose();
     super.dispose();
   }
 
   void _submit() {
     if (!_formKey.currentState!.validate()) return;
-    ref.read(authControllerProvider.notifier).login(
+    ref.read(authControllerProvider.notifier).signUp(
           username: _usernameCtrl.text.trim(),
+          email: _emailCtrl.text.trim(),
           password: _passwordCtrl.text,
+          passwordConfirm: _confirmCtrl.text,
         );
   }
 
   @override
   Widget build(BuildContext context) {
+
+    // Pop back to gateway when signup succeeds
+  ref.listen(authControllerProvider, (previous, next) {
+    final wasAuthed = previous?.maybeWhen(
+          authenticated: (_) => true,
+          orElse: () => false,
+        ) ??
+        false;
+    final isAuthed = next.maybeWhen(
+      authenticated: (_) => true,
+      orElse: () => false,
+    );
+
+    if (!wasAuthed && isAuthed && mounted) {
+      Navigator.pop(context);
+    }
+  });
+  
     final state = ref.watch(authControllerProvider);
     final isLoading = state.maybeWhen(
       authenticating: () => true,
@@ -55,6 +79,8 @@ class _ExpenseLoginScreenState extends ConsumerState<ExpenseLoginScreen> {
 
     return Scaffold(
       body: OrbBackground(
+        blurIntensity: 1.6,
+        brightness: 0.7,
         child: SafeArea(
           child: Center(
             child: SingleChildScrollView(
@@ -65,34 +91,67 @@ class _ExpenseLoginScreenState extends ConsumerState<ExpenseLoginScreen> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     _Header(),
-                    const SizedBox(height: 40),
+                    const SizedBox(height: 32),
                     AppTextField(
                       controller: _usernameCtrl,
                       labelText: 'Username',
                       prefixIcon: const Icon(Icons.person_outline_rounded),
                       textInputAction: TextInputAction.next,
-                      validator: (v) => v == null || v.trim().isEmpty
-                          ? 'Username required'
-                          : null,
+                      validator: (v) {
+                        if (v == null || v.trim().isEmpty) return 'Username required';
+                        if (v.trim().length < 3) return 'At least 3 characters';
+                        return null;
+                      },
                     ),
-                    const SizedBox(height: 18),
+                    const SizedBox(height: 16),
+                    AppTextField(
+                      controller: _emailCtrl,
+                      labelText: 'Email',
+                      prefixIcon: const Icon(Icons.mail_outline_rounded),
+                      keyboardType: TextInputType.emailAddress,
+                      textInputAction: TextInputAction.next,
+                      validator: (v) {
+                        if (v == null || v.trim().isEmpty) return 'Email required';
+                        if (!RegExp(r'^[\w\.-]+@[\w\.-]+\.\w+$').hasMatch(v.trim())) {
+                          return 'Enter a valid email';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 16),
                     AppTextField(
                       controller: _passwordCtrl,
                       labelText: 'Password',
                       prefixIcon: const Icon(Icons.lock_outline_rounded),
                       obscureText: true,
+                      textInputAction: TextInputAction.next,
+                      validator: (v) {
+                        if (v == null || v.isEmpty) return 'Password required';
+                        if (v.length < 8) return 'At least 8 characters';
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 16),
+                    AppTextField(
+                      controller: _confirmCtrl,
+                      labelText: 'Confirm password',
+                      prefixIcon: const Icon(Icons.lock_outline_rounded),
+                      obscureText: true,
                       textInputAction: TextInputAction.done,
                       onFieldSubmitted: (_) => _submit(),
-                      validator: (v) =>
-                          v == null || v.isEmpty ? 'Password required' : null,
+                      validator: (v) {
+                        if (v == null || v.isEmpty) return 'Please confirm password';
+                        if (v != _passwordCtrl.text) return 'Passwords do not match';
+                        return null;
+                      },
                     ),
                     if (failure != null) ...[
                       const SizedBox(height: 12),
                       _ErrorBanner(message: failure.message),
                     ],
-                    const SizedBox(height: 28),
+                    const SizedBox(height: 24),
                     AppButton(
-                      label: 'Log in',
+                      label: 'Create account',
                       trailingIcon: Icons.arrow_forward_rounded,
                       loading: isLoading,
                       onPressed: isLoading ? null : _submit,
@@ -100,16 +159,9 @@ class _ExpenseLoginScreenState extends ConsumerState<ExpenseLoginScreen> {
                     const SizedBox(height: 16),
                     Center(
                       child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => const ExpenseSignUpScreen(),
-                            ),
-                          );
-                        },
+                        onTap: isLoading ? null : () => Navigator.pop(context),
                         child: Text(
-                          'New to Expense Tracker? Sign up.',
+                          'Already have an account? Log in.',
                           style: TextStyle(
                             fontFamily: 'Manrope',
                             fontSize: 12,
@@ -160,7 +212,7 @@ class _Header extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         const Text(
-          'Welcome back.',
+          'Start tracking.',
           style: TextStyle(
             fontFamily: 'Manrope',
             fontSize: 32,
@@ -172,7 +224,7 @@ class _Header extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         Text(
-          'Log in to continue managing your expenses.',
+          'Create an account to manage your expenses.',
           style: TextStyle(
             fontFamily: 'Manrope',
             fontSize: 14,
@@ -203,11 +255,7 @@ class _ErrorBanner extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Icon(
-            Icons.error_outline_rounded,
-            size: 14,
-            color: AppColors.danger,
-          ),
+          Icon(Icons.error_outline_rounded, size: 14, color: AppColors.danger),
           const SizedBox(width: 8),
           Expanded(
             child: Text(

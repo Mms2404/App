@@ -17,6 +17,7 @@ import 'package:app/core/utils/logger.dart';
 import 'package:app/features/expense_tracker/expense_auth/data/auth_repository.dart';
 import 'package:app/features/expense_tracker/expense_auth/domain/auth_failure.dart';
 import 'package:app/features/expense_tracker/expense_auth/domain/usecases/login.dart';
+import 'package:app/features/expense_tracker/expense_auth/domain/usecases/sign_up.dart';
 import 'package:app/features/expense_tracker/expense_auth/presentation/state/auth_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -56,6 +57,34 @@ class AuthController extends Notifier<AuthState> {
       state = AuthState.failed(AuthFailure.unknown(e.toString()));
     }
   }
+
+
+  Future<void> signUp({
+  required String username,
+  required String email,
+  required String password,
+  required String passwordConfirm,
+}) async {
+  state = const AuthState.authenticating();
+  try {
+    final signUp = ref.read(signUpUseCaseProvider);
+    final token = await signUp(
+      username: username,
+      email: email,
+      password: password,
+      passwordConfirm: passwordConfirm,
+    );
+    log.d('Signup got token: ${token.substring(0, 10)}...');
+    state = AuthState.authenticated(token);
+    log.d('State is now: $state');  
+  } on AuthFailure catch (failure) {
+    log.d('Signup failed: ${failure.message}'); 
+    state = AuthState.failed(failure);
+  } catch (e, st) {
+    log.e('Unexpected signup error', error: e, stackTrace: st);
+    state = AuthState.failed(AuthFailure.unknown(e.toString()));
+  }
+}
 
   Future<void> logout() async {
     await _repo.logout();

@@ -7,4 +7,5 @@ class ApiConfig {
   static const String baseUrl = '${local}/api';
 
   static const String api_token_auth = '${local}/api-token-auth/';
+  static const String api_expense_register = '${baseUrl}/register/';
 }

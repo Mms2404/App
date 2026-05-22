@@ -80,7 +80,68 @@ class AuthRepository {
     }
     return AuthFailure.unknown(e.message ?? 'Unknown Dio error');
   }
+
+
+  Future<String> signUp({
+  required String username,
+  required String email,
+  required String password,
+  required String passwordConfirm,
+}) async {
+  try {
+    final response = await _dio.post(
+      ApiConfig.api_expense_register,
+      data: {
+        'username': username,
+        'email': email,
+        'password': password,
+        'password_confirm': passwordConfirm,
+      },
+    );
+    log.d('Signup response: ${response.data}');  
+
+    final token = response.data['token'] as String?;
+    if (token == null) {
+      throw const AuthFailure.unknown('Token missing from signup response');
+    }
+
+    await _storage.write(key: 'auth_token', value: token);
+    log.i('Signed up and saved token');
+    return token;
+  } on DioException catch (e) {
+    throw _mapSignUpError(e);
+  } on AuthFailure {
+    rethrow;
+  } catch (e) {
+    throw AuthFailure.unknown(e.toString());
+  }
 }
+
+AuthFailure _mapSignUpError(DioException e) {
+  if (e.type == DioExceptionType.connectionTimeout ||
+      e.type == DioExceptionType.connectionError) {
+    return const AuthFailure.network();
+  }
+  final status = e.response?.statusCode;
+  if (status == 400) {
+    // DRF returns validation errors as a dict — parse first one
+    final data = e.response?.data;
+    if (data is Map) {
+      final firstError = data.values.first;
+      final message = firstError is List ? firstError.first.toString() : firstError.toString();
+      return AuthFailure.unknown(message);
+    }
+    return const AuthFailure.unknown('Invalid signup details');
+  }
+  if (status != null) {
+    return AuthFailure.serverError(status);
+  }
+  return AuthFailure.unknown(e.message ?? 'Unknown error');
+}
+
+}
+
+
 
 // Provider — wires Dio + storage into the repository.
 // Anyone who needs auth reads this provider.
