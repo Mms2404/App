@@ -1,6 +1,7 @@
 import 'package:app/core/constants/colors.dart';
 import 'package:app/core/utils/logger.dart';
 import 'package:app/core/utils/rive.dart';
+import 'package:app/core/utils/validators.dart';
 import 'package:app/core/widgets/buttons.dart';
 import 'package:app/core/widgets/textField.dart';
 import 'package:app/features/authentication/presentation/screens/signUp_screen.dart';
@@ -33,20 +34,6 @@ class _LoginFormState extends State<LoginForm> {
     super.dispose();
   }
 
-  String? _validateEmail(String? v) {
-    final value = v?.trim() ?? '';
-    if (value.isEmpty) return 'Email is required';
-    final emailRegex = RegExp(r'^[\w\.-]+@[\w\.-]+\.\w+$');
-    if (!emailRegex.hasMatch(value)) return 'Enter a valid email';
-    return null;
-  }
-
-  String? _validatePassword(String? v) {
-    final value = v ?? '';
-    if (value.isEmpty) return 'Password is required';
-    if (value.length < 6) return 'Min 6 characters';
-    return null;
-  }
 
   Future<void> _handleSubmit() async {
     setState(() => _isShowLoading = true);
@@ -97,7 +84,7 @@ class _LoginFormState extends State<LoginForm> {
                 labelText: 'Email',
                 keyboardType: TextInputType.emailAddress,
                 textInputAction: TextInputAction.next,
-                validator: _validateEmail,
+                validator: (v) => AppValidators.email(v),
                 prefixIcon: const Icon(Icons.mail_outline_rounded),
               ),
               const SizedBox(height: 18),
@@ -106,7 +93,7 @@ class _LoginFormState extends State<LoginForm> {
                 labelText: 'Password',
                 obscureText: true,
                 textInputAction: TextInputAction.done,
-                validator: _validatePassword,
+                validator: (v) => AppValidators.password(v,min: 6),
                 onFieldSubmitted: (_) => _handleSubmit(),
                 prefixIcon: const Icon(Icons.lock_outline_rounded),
               ),

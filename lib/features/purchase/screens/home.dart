@@ -13,6 +13,25 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+// PROVIDER SCOPING — why providers live HERE
+// -----------------------------------------------------------------------------
+// These providers are scoped to the shop feature, not global. They're created
+// when Home builds and disposed when Home leaves the tree. CartModel, the
+// catalog, and the repository only matter while the user is shopping — no
+// reason to keep them alive app-wide.
+//
+// The catch: provider scope does NOT cross Navigator routes. Shop and Cart
+// (inside _HomeView's IndexedStack) are part of THIS widget subtree, so they
+// see these providers fine. But any screen pushed with Navigator.push (like
+// CheckoutScreen) becomes a SIBLING route in the navigator stack — outside this
+// subtree — and can't see CartModel.
+//
+// That's why CheckoutScreen is pushed wrapped in ChangeNotifierProvider.value
+// (see cart.dart): we hand the SAME CartModel instance across the route
+// boundary so checkout reads the same cart, not a fresh empty one.
+// -----------------------------------------------------------------------------
+    
     return MultiProvider(
       providers: [
         Provider<ShopRepository>(

@@ -45,7 +45,7 @@ class CartItem extends StatelessWidget {
           ),
         ),
         trailing: IconButton(
-          onPressed: () => context.read<CartModel>().removeItem(item),
+          onPressed: () => context.read<CartModel>().removeLine(item),
           icon: const Icon(
             Icons.delete_outline_rounded,
             color: AppColors.lightTextTertiary,

@@ -6,6 +6,7 @@
 
 import 'package:app/core/constants/background.dart';
 import 'package:app/core/constants/colors.dart';
+import 'package:app/core/utils/validators.dart';
 import 'package:app/core/widgets/buttons.dart';
 import 'package:app/core/widgets/textField.dart';
 import 'package:app/features/expense_tracker/expense_auth/domain/auth_failure.dart';
@@ -71,9 +72,7 @@ class _ExpenseLoginScreenState extends ConsumerState<ExpenseLoginScreen> {
                       labelText: 'Username',
                       prefixIcon: const Icon(Icons.person_outline_rounded),
                       textInputAction: TextInputAction.next,
-                      validator: (v) => v == null || v.trim().isEmpty
-                          ? 'Username required'
-                          : null,
+                      validator: (v) => AppValidators.required(v, 'Username'),
                     ),
                     const SizedBox(height: 18),
                     AppTextField(
@@ -83,8 +82,7 @@ class _ExpenseLoginScreenState extends ConsumerState<ExpenseLoginScreen> {
                       obscureText: true,
                       textInputAction: TextInputAction.done,
                       onFieldSubmitted: (_) => _submit(),
-                      validator: (v) =>
-                          v == null || v.isEmpty ? 'Password required' : null,
+                      validator: (v) => AppValidators.password(v),
                     ),
                     if (failure != null) ...[
                       const SizedBox(height: 12),
@@ -194,10 +192,10 @@ class _ErrorBanner extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
-        color: AppColors.danger.withOpacity(0.10),
+        color: AppColors.danger.withValues(alpha: 0.10),
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
-          color: AppColors.danger.withOpacity(0.3),
+          color: AppColors.danger.withValues(alpha: 0.3),
           width: 0.5,
         ),
       ),

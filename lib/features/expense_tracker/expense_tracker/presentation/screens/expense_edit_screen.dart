@@ -1,5 +1,6 @@
 import 'package:app/core/constants/background.dart';
 import 'package:app/core/constants/colors.dart';
+import 'package:app/core/utils/validators.dart';
 import 'package:app/core/widgets/buttons.dart';
 import 'package:app/core/widgets/textField.dart';
 import 'package:app/features/expense_tracker/expense_tracker/domain/entities/expense.dart';
@@ -169,8 +170,7 @@ class _ExpenseEditScreenState extends ConsumerState<ExpenseEditScreen> {
                     labelText: 'Title',
                     prefixIcon: const Icon(Icons.title_rounded),
                     textInputAction: TextInputAction.next,
-                    validator: (v) =>
-                        v == null || v.trim().isEmpty ? 'Title required' : null,
+                    validator: (v) => AppValidators.required(v, 'Title'),
                   ),
                   const SizedBox(height: 18),
                   AppTextField(
@@ -179,11 +179,7 @@ class _ExpenseEditScreenState extends ConsumerState<ExpenseEditScreen> {
                     prefixIcon: const Icon(Icons.currency_rupee_rounded),
                     keyboardType: const TextInputType.numberWithOptions(decimal: true),
                     textInputAction: TextInputAction.next,
-                    validator: (v) {
-                      if (v == null || v.trim().isEmpty) return 'Amount required';
-                      if (double.tryParse(v) == null) return 'Enter a valid number';
-                      return null;
-                    },
+                    validator: (v) => AppValidators.amount(v),
                   ),
                   const SizedBox(height: 18),
                   AppTextField(
@@ -191,8 +187,7 @@ class _ExpenseEditScreenState extends ConsumerState<ExpenseEditScreen> {
                     labelText: 'Category',
                     prefixIcon: const Icon(Icons.label_outline_rounded),
                     textInputAction: TextInputAction.next,
-                    validator: (v) =>
-                        v == null || v.trim().isEmpty ? 'Category required' : null,
+                    validator: (v) => AppValidators.required(v, 'Category'),  
                   ),
                   const SizedBox(height: 18),
                   AppTextField(
@@ -200,13 +195,7 @@ class _ExpenseEditScreenState extends ConsumerState<ExpenseEditScreen> {
                     labelText: 'Date (YYYY-MM-DD)',
                     prefixIcon: const Icon(Icons.calendar_today_rounded),
                     textInputAction: TextInputAction.next,
-                    validator: (v) {
-                      if (v == null || v.trim().isEmpty) return 'Date required';
-                      if (!RegExp(r'^\d{4}-\d{2}-\d{2}$').hasMatch(v.trim())) {
-                        return 'Format: YYYY-MM-DD';
-                      }
-                      return null;
-                    },
+                    validator: (v) => AppValidators.dateYmd(v),
                   ),
                   const SizedBox(height: 18),
                   AppTextField(
@@ -220,10 +209,10 @@ class _ExpenseEditScreenState extends ConsumerState<ExpenseEditScreen> {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
                       decoration: BoxDecoration(
-                        color: AppColors.danger.withOpacity(0.10),
+                        color: AppColors.danger.withValues(alpha: 0.10),
                         borderRadius: BorderRadius.circular(8),
                         border: Border.all(
-                          color: AppColors.danger.withOpacity(0.3),
+                          color: AppColors.danger.withValues(alpha: 0.3),
                           width: 0.5,
                         ),
                       ),

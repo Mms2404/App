@@ -7,6 +7,7 @@
 
 import 'package:app/core/constants/background.dart';
 import 'package:app/core/constants/colors.dart';
+import 'package:app/core/utils/validators.dart';
 import 'package:app/core/widgets/buttons.dart';
 import 'package:app/core/widgets/textField.dart';
 import 'package:app/features/expense_tracker/expense_auth/domain/auth_failure.dart';
@@ -97,11 +98,7 @@ class _ExpenseSignUpScreenState extends ConsumerState<ExpenseSignUpScreen> {
                       labelText: 'Username',
                       prefixIcon: const Icon(Icons.person_outline_rounded),
                       textInputAction: TextInputAction.next,
-                      validator: (v) {
-                        if (v == null || v.trim().isEmpty) return 'Username required';
-                        if (v.trim().length < 3) return 'At least 3 characters';
-                        return null;
-                      },
+                      validator: (v) => AppValidators.required(v, 'Username'),
                     ),
                     const SizedBox(height: 16),
                     AppTextField(
@@ -110,13 +107,7 @@ class _ExpenseSignUpScreenState extends ConsumerState<ExpenseSignUpScreen> {
                       prefixIcon: const Icon(Icons.mail_outline_rounded),
                       keyboardType: TextInputType.emailAddress,
                       textInputAction: TextInputAction.next,
-                      validator: (v) {
-                        if (v == null || v.trim().isEmpty) return 'Email required';
-                        if (!RegExp(r'^[\w\.-]+@[\w\.-]+\.\w+$').hasMatch(v.trim())) {
-                          return 'Enter a valid email';
-                        }
-                        return null;
-                      },
+                      validator: (v) => AppValidators.email(v),
                     ),
                     const SizedBox(height: 16),
                     AppTextField(
@@ -125,11 +116,7 @@ class _ExpenseSignUpScreenState extends ConsumerState<ExpenseSignUpScreen> {
                       prefixIcon: const Icon(Icons.lock_outline_rounded),
                       obscureText: true,
                       textInputAction: TextInputAction.next,
-                      validator: (v) {
-                        if (v == null || v.isEmpty) return 'Password required';
-                        if (v.length < 8) return 'At least 8 characters';
-                        return null;
-                      },
+                      validator: (v) => AppValidators.password(v),
                     ),
                     const SizedBox(height: 16),
                     AppTextField(
@@ -139,11 +126,7 @@ class _ExpenseSignUpScreenState extends ConsumerState<ExpenseSignUpScreen> {
                       obscureText: true,
                       textInputAction: TextInputAction.done,
                       onFieldSubmitted: (_) => _submit(),
-                      validator: (v) {
-                        if (v == null || v.isEmpty) return 'Please confirm password';
-                        if (v != _passwordCtrl.text) return 'Passwords do not match';
-                        return null;
-                      },
+                      validator: (v) => AppValidators.confirmPassword(v, _passwordCtrl.text),
                     ),
                     if (failure != null) ...[
                       const SizedBox(height: 12),
@@ -246,10 +229,10 @@ class _ErrorBanner extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
-        color: AppColors.danger.withOpacity(0.10),
+        color: AppColors.danger.withValues(alpha: 0.10),
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
-          color: AppColors.danger.withOpacity(0.3),
+          color: AppColors.danger.withValues(alpha: 0.3),
           width: 0.5,
         ),
       ),

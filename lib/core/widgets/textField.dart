@@ -1,5 +1,6 @@
 import 'package:app/core/constants/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class AppTextField extends StatefulWidget {
   final TextEditingController controller;
@@ -175,6 +176,268 @@ class _AppTextFieldState extends State<AppTextField> {
           Row(
             children: [
               Icon(
+                Icons.error_outline_rounded,
+                size: 13,
+                color: AppColors.danger,
+              ),
+              const SizedBox(width: 4),
+              Expanded(
+                child: Text(
+                  _errorText!,
+                  style: const TextStyle(
+                    fontFamily: 'Manrope',
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.danger,
+                    height: 1.3,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ],
+    );
+  }
+}
+
+class LightTextField extends StatefulWidget {
+  final TextEditingController controller;
+  final String labelText;
+  final String? hintText;
+  final Widget? prefixIcon;
+  final String? prefixText;          // e.g. "+91" for phone
+  final Widget? suffixIcon;
+  final TextInputType keyboardType;
+  final bool obscureText;
+  final String? Function(String?)? validator;
+  final TextInputAction textInputAction;
+  final void Function(String)? onFieldSubmitted;
+  final int maxLines;                // 1 = single line, >1 = multi-line
+  final int? maxLength;
+  final List<TextInputFormatter>? inputFormatters;
+
+  const LightTextField({
+    Key? key,
+    required this.controller,
+    required this.labelText,
+    this.hintText,
+    this.prefixIcon,
+    this.prefixText,
+    this.suffixIcon,
+    this.keyboardType = TextInputType.text,
+    this.obscureText = false,
+    this.validator,
+    this.textInputAction = TextInputAction.next,
+    this.onFieldSubmitted,
+    this.maxLines = 1,
+    this.maxLength,
+    this.inputFormatters,
+  }) : super(key: key);
+
+  @override
+  State<LightTextField> createState() => _LightTextFieldState();
+}
+
+class _LightTextFieldState extends State<LightTextField> {
+  final FocusNode _focusNode = FocusNode();
+  bool _isFocused = false;
+  String? _errorText;
+
+  bool get _multiline => widget.maxLines > 1;
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNode.addListener(() {
+      setState(() => _isFocused = _focusNode.hasFocus);
+    });
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  void _revalidate() {
+    if (widget.validator != null) {
+      setState(() => _errorText = widget.validator!(widget.controller.text));
+    }
+  }
+
+  Color get _borderColor {
+    if (_errorText != null) return AppColors.danger;
+    if (_isFocused) return AppColors.success.withOpacity(0.5);
+    return AppColors.lightBorder;
+  }
+
+  Color get _labelColor {
+    if (_errorText != null) return AppColors.danger;
+    if (_isFocused) return AppColors.success;
+    return AppColors.lightTextTertiary;
+  }
+
+  Color get _iconColor {
+    if (_errorText != null) return AppColors.danger;
+    if (_isFocused) return AppColors.success;
+    return AppColors.lightTextTertiary;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Uppercase label
+        AnimatedDefaultTextStyle(
+          duration: const Duration(milliseconds: 200),
+          style: TextStyle(
+            fontFamily: 'Manrope',
+            fontSize: 11,
+            fontWeight: FontWeight.w600,
+            letterSpacing: 1.1,
+            color: _labelColor,
+          ),
+          child: Text(widget.labelText.toUpperCase()),
+        ),
+        const SizedBox(height: 6),
+
+        // Field container
+        AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          decoration: BoxDecoration(
+            color: AppColors.lightSurface,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: _borderColor,
+              width: (_errorText != null || _isFocused) ? 1 : 0.5,
+            ),
+            boxShadow: _isFocused && _errorText == null
+                ? [
+                    BoxShadow(
+                      color: AppColors.success.withOpacity(0.12),
+                      blurRadius: 16,
+                      spreadRadius: -4,
+                    ),
+                  ]
+                : null,
+          ),
+          child: Row(
+            crossAxisAlignment: _multiline
+                ? CrossAxisAlignment.start
+                : CrossAxisAlignment.center,
+            children: [
+              // Prefix icon
+              if (widget.prefixIcon != null)
+                Padding(
+                  padding: EdgeInsets.only(
+                    left: 14,
+                    right: 10,
+                    top: _multiline ? 16 : 0,
+                  ),
+                  child: IconTheme(
+                    data: IconThemeData(color: _iconColor, size: 18),
+                    child: widget.prefixIcon!,
+                  ),
+                ),
+
+              // Prefix text (e.g. +91) with a divider
+              if (widget.prefixText != null) ...[
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 14),
+                  child: Text(
+                    widget.prefixText!,
+                    style: const TextStyle(
+                      fontFamily: 'Manrope',
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.lightTextPrimary,
+                    ),
+                  ),
+                ),
+                Container(
+                  width: 0.5,
+                  height: 24,
+                  color: AppColors.lightBorder,
+                ),
+              ],
+
+              // The actual field
+              Expanded(
+                child: TextFormField(
+                  focusNode: _focusNode,
+                  controller: widget.controller,
+                  keyboardType: widget.keyboardType,
+                  obscureText: widget.obscureText,
+                  textInputAction: widget.textInputAction,
+                  onFieldSubmitted: widget.onFieldSubmitted,
+                  maxLines: widget.maxLines,
+                  minLines: _multiline ? widget.maxLines - 1 : 1,
+                  maxLength: widget.maxLength,
+                  inputFormatters: widget.inputFormatters,
+                  cursorColor: AppColors.lightTextPrimary,
+                  cursorWidth: 1.5,
+                  // Wires the validator into Form.validate() AND syncs our
+                  // own _errorText so the error shows below the field.
+                  validator: (value) {
+                    if (widget.validator == null) return null;
+                    final result = widget.validator!(value);
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      if (mounted) setState(() => _errorText = result);
+                    });
+                    return result;
+                  },
+                  onChanged: (_) {
+                    if (_errorText != null) _revalidate();
+                  },
+                  style: const TextStyle(
+                    fontFamily: 'Manrope',
+                    fontSize: 15,
+                    fontWeight: FontWeight.w400,
+                    color: AppColors.lightTextPrimary,
+                    height: 1.3,
+                  ),
+                  textAlignVertical:
+                      _multiline ? TextAlignVertical.top : TextAlignVertical.center,
+                  decoration: InputDecoration(
+                    hintText: widget.hintText,
+                    hintStyle: const TextStyle(
+                      fontFamily: 'Manrope',
+                      fontSize: 15,
+                      color: AppColors.lightTextTertiary,
+                    ),
+                    border: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    errorBorder: InputBorder.none,
+                    focusedErrorBorder: InputBorder.none,
+                    // Hide TextFormField's built-in error — we render our own below
+                    errorStyle: const TextStyle(height: 0, fontSize: 0),
+                    counterText: '',
+                    isCollapsed: true,
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: (widget.prefixText != null) ? 12 : 14,
+                      vertical: 16,
+                    ),
+                    suffixIcon: widget.suffixIcon,
+                    suffixIconConstraints: const BoxConstraints(
+                      minWidth: 0,
+                      minHeight: 0,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+
+        // Error text BELOW the field
+        if (_errorText != null) ...[
+          const SizedBox(height: 6),
+          Row(
+            children: [
+              const Icon(
                 Icons.error_outline_rounded,
                 size: 13,
                 color: AppColors.danger,
