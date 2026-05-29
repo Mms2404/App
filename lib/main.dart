@@ -4,6 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logger/logger.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 
 void main() {
   Logger.level = kDebugMode ? Level.debug : Level.off;  // Logs only in debug mode 
@@ -19,10 +21,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      // debugShowCheckedModeBanner: false,
-      theme: AppTheme.themeData,
-      home:Onboarding(),
+    // ScreenUtil makes sure the app is responsive across different screen sizes. It should wrap the entire app.
+    // Anything that's a dimension in pixels → ScreenUtil. Anything that's a ratio, fraction, or multiplier → raw value.
+    return ScreenUtilInit(
+      designSize: const Size(375, 812),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) {
+        return MaterialApp(
+          // debugShowCheckedModeBanner: false,
+          theme: AppTheme.themeData,
+          home: const Onboarding(),
+        );
+      },
     );
   }
 }

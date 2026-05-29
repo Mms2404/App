@@ -7,6 +7,7 @@ import 'package:app/features/expense_tracker/expense_tracker/domain/entities/exp
 import 'package:app/features/expense_tracker/expense_tracker/presentation/controllers/expense_list_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ExpenseEditScreen extends ConsumerStatefulWidget {
   final Expense? expense;
@@ -136,13 +137,12 @@ class _ExpenseEditScreenState extends ConsumerState<ExpenseEditScreen> {
         elevation: 0,
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
-          icon: const Icon(Icons.arrow_back_ios, size: 18),
+          icon: Icon(Icons.arrow_back_ios, size: 18.sp),
           color: AppColors.textPrimary,
         ),
         title: Text(
           _isEdit ? 'Edit expense' : 'New expense',
           style: const TextStyle(
-            fontFamily: 'Manrope',
             color: AppColors.textPrimary,
             fontWeight: FontWeight.w600,
           ),
@@ -159,7 +159,7 @@ class _ExpenseEditScreenState extends ConsumerState<ExpenseEditScreen> {
       body: OrbBackground(
         child: SafeArea(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.fromLTRB(24, 8, 24, 32),
+            padding: EdgeInsets.fromLTRB(24.w, 8.h, 24.w, 32.h),
             child: Form(
               key: _formKey,
               child: Column(
@@ -172,7 +172,7 @@ class _ExpenseEditScreenState extends ConsumerState<ExpenseEditScreen> {
                     textInputAction: TextInputAction.next,
                     validator: (v) => AppValidators.required(v, 'Title'),
                   ),
-                  const SizedBox(height: 18),
+                  SizedBox(height: 18.h),
                   AppTextField(
                     controller: _amountCtrl,
                     labelText: 'Amount (Rs.)',
@@ -181,7 +181,7 @@ class _ExpenseEditScreenState extends ConsumerState<ExpenseEditScreen> {
                     textInputAction: TextInputAction.next,
                     validator: (v) => AppValidators.amount(v),
                   ),
-                  const SizedBox(height: 18),
+                  SizedBox(height: 18.h),
                   AppTextField(
                     controller: _categoryCtrl,
                     labelText: 'Category',
@@ -189,7 +189,7 @@ class _ExpenseEditScreenState extends ConsumerState<ExpenseEditScreen> {
                     textInputAction: TextInputAction.next,
                     validator: (v) => AppValidators.required(v, 'Category'),  
                   ),
-                  const SizedBox(height: 18),
+                  SizedBox(height: 18.h),
                   AppTextField(
                     controller: _dateCtrl,
                     labelText: 'Date (YYYY-MM-DD)',
@@ -197,7 +197,7 @@ class _ExpenseEditScreenState extends ConsumerState<ExpenseEditScreen> {
                     textInputAction: TextInputAction.next,
                     validator: (v) => AppValidators.dateYmd(v),
                   ),
-                  const SizedBox(height: 18),
+                  SizedBox(height: 18.h),
                   AppTextField(
                     controller: _descriptionCtrl,
                     labelText: 'Description (optional)',
@@ -205,28 +205,27 @@ class _ExpenseEditScreenState extends ConsumerState<ExpenseEditScreen> {
                     textInputAction: TextInputAction.done,
                   ),
                   if (_formError != null) ...[
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.h),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
                       decoration: BoxDecoration(
                         color: AppColors.danger.withValues(alpha: 0.10),
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(8.r),
                         border: Border.all(
                           color: AppColors.danger.withValues(alpha: 0.3),
-                          width: 0.5,
+                          width: 0.5.w,
                         ),
                       ),
                       child: Row(
                         children: [
                           Icon(Icons.error_outline_rounded,
-                              size: 14, color: AppColors.danger),
-                          const SizedBox(width: 8),
+                              size: 14.sp, color: AppColors.danger),
+                          SizedBox(width: 8.w),
                           Expanded(
                             child: Text(
                               _formError!,
                               style: TextStyle(
-                                fontFamily: 'Manrope',
-                                fontSize: 12,
+                                fontSize: 12.sp,
                                 fontWeight: FontWeight.w500,
                                 color: AppColors.danger,
                               ),
@@ -236,7 +235,7 @@ class _ExpenseEditScreenState extends ConsumerState<ExpenseEditScreen> {
                       ),
                     ),
                   ],
-                  const SizedBox(height: 32),
+                  SizedBox(height: 32.h),
                   AppButton(
                     label: _isEdit ? 'Update' : 'Add expense',
                     loading: _isSaving,

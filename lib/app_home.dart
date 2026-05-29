@@ -3,12 +3,13 @@ import 'package:app/core/constants/colors.dart';
 import 'package:app/core/utils/rive.dart';
 import 'package:app/features/chat/chat_gateway.dart';
 import 'package:app/features/expense_tracker/expense_tracker_gateway.dart';
-import 'package:app/features/ledger.dart';
+import 'package:app/features/music.dart';
 import 'package:app/features/onboarding.dart';
 import 'package:app/features/purchase/screens/purchase.dart';
 import 'package:app/features/search/presentation/screens/search.dart';
 import 'package:app/core/widgets/side_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rive/rive.dart';
 
 class Home extends StatefulWidget {
@@ -98,7 +99,7 @@ void _setChromeVisible(bool visible) {
     Purchase(),
     ExpenseTrackerGateway(onChromeOverride: _setChromeVisible),  // passing the override callback to the gateway
     ChatGateway(onChromeOverride: _setChromeVisible),
-    Ledger(),
+    Music(),
   ];
 
   @override
@@ -112,12 +113,12 @@ void _setChromeVisible(bool visible) {
       ?Transform.translate(
         offset: Offset(0, 100 * animation.value),
         child: Container(
-          height: 70,
+          height: 70.h,
           padding: EdgeInsets.all(15),
-          margin: EdgeInsets.symmetric(horizontal: 25, vertical: 20),
+          margin: EdgeInsets.symmetric(horizontal: 25.w, vertical: 20.h),
           decoration: BoxDecoration(
             color: const Color.fromARGB(167, 49, 49, 49),
-            borderRadius: BorderRadius.circular(25),
+            borderRadius: BorderRadius.circular(25.r),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -148,14 +149,14 @@ void _setChromeVisible(bool visible) {
                         height: 4,
                         width: bottomIcons[index] == selectedNavIcon ? 20 : 0,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(10.r),
                           color: AppColors.palegreen,
                         ),
                       ),
-                      SizedBox(height: 5),
+                      SizedBox(height: 5.h),
                       SizedBox(
-                        height: 30,
-                        width: 35,
+                        height: 30.h,
+                        width: 35.w,
                         child: Opacity(
                           opacity:
                               bottomIcons[index] == selectedNavIcon ? 1 : 0.5,
@@ -193,8 +194,8 @@ void _setChromeVisible(bool visible) {
           AnimatedPositioned(
             duration: Duration(milliseconds: 400),
             curve: Curves.fastOutSlowIn,
-            width: 288,
-            left: isDrawerClosed ? -288 : 0,
+            width: 288.w,
+            left: isDrawerClosed ? -288.w : 0,
             height: MediaQuery.of(context).size.height,
             child: SideBar(onExit: _exitToOnboarding),
           ),
@@ -210,7 +211,7 @@ void _setChromeVisible(bool visible) {
               child: Transform.scale(
                 scale: scaleAnimation.value,
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(25),
+                  borderRadius: BorderRadius.circular(25.r),
                   child: screens[selectedIndex],   // make sure the screen given to body has bottom: false,
                 ),
               ),
@@ -252,9 +253,9 @@ class MenuBtn extends StatelessWidget {
       child: GestureDetector(
         onTap: press,
         child: Container(
-          margin: EdgeInsets.only(left: 16),
-          height: 40,
-          width: 40,
+          margin: EdgeInsets.only(left: 16.w),
+          height: 40.h,
+          width: 40.w,
           decoration: BoxDecoration(
             color: const Color.fromARGB(184, 49, 49, 49),
             shape: BoxShape.circle,
@@ -262,7 +263,7 @@ class MenuBtn extends StatelessWidget {
           child: Icon(
             isDrawerClosed ? Icons.menu : Icons.close,
             color: Colors.white,
-            size: 28,
+            size: 28.h,
           ),
         ),
       ),

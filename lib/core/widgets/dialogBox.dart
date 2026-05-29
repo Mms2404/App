@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:app/core/constants/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppDialog {
   /// Shows a centered dialog matching the app's dark cool palette.
@@ -72,15 +73,15 @@ class _DialogShell extends StatelessWidget {
     final maxH = media.size.height -
         media.viewInsets.bottom -
         media.padding.vertical -
-        48;
+        48.h;
 
     return SafeArea(
       child: Padding(
         padding: EdgeInsets.only(
-          left: 20,
-          right: 20,
-          top: 20,
-          bottom: media.viewInsets.bottom + 20,
+          left: 20.w,
+          right: 20.w,
+          top: 20.h,
+          bottom: media.viewInsets.bottom + 20.h,
         ),
         child: Center(
           child: ConstrainedBox(
@@ -89,7 +90,7 @@ class _DialogShell extends StatelessWidget {
               maxHeight: maxH,
             ),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(20.r),
               child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
                 child: Material(
@@ -97,10 +98,10 @@ class _DialogShell extends StatelessWidget {
                   child: Container(
                     decoration: BoxDecoration(
                       color: AppColors.bgSurface.withValues(alpha: 0.92),
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(20.r),
                       border: Border.all(
                         color: AppColors.borderStrong,
-                        width: 0.5,
+                        width: 0.5.w,
                       ),
                     ),
                     child: Column(
@@ -114,17 +115,16 @@ class _DialogShell extends StatelessWidget {
                         Flexible(
                           child: SingleChildScrollView(
                             padding: EdgeInsets.fromLTRB(
-                              24,
-                              title == null && !showClose ? 24 : 4,
-                              24,
-                              24,
+                              24.w,
+                              title == null && !showClose ? 24.h : 4.h,
+                              24.w,
+                              24.h,
                             ),
                             child: DefaultTextStyle.merge(
-                              style: const TextStyle(
-                                fontFamily: 'Manrope',
-                                fontSize: 14,
+                              style: TextStyle(
+                                fontSize: 14.sp,
                                 color: AppColors.textSecondary,
-                                height: 1.5,
+                                height: 1.5.h,
                               ),
                               child: child,
                             ),
@@ -152,19 +152,18 @@ class _DialogHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(24, 20, 16, 12),
+      padding: EdgeInsets.fromLTRB(24.w, 20.h, 16.w, 12.h),
       child: Row(
         children: [
           if (title != null)
             Expanded(
               child: Text(
                 title!,
-                style: const TextStyle(
-                  fontFamily: 'Manrope',
-                  fontSize: 17,
+                style: TextStyle(
+                  fontSize: 17.sp,
                   fontWeight: FontWeight.w600,
                   color: AppColors.textPrimary,
-                  height: 1.2,
+                  height: 1.2.h,
                 ),
               ),
             )
@@ -199,17 +198,17 @@ class _CloseButtonState extends State<_CloseButton> {
         behavior: HitTestBehavior.opaque,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 150),
-          width: 32,
-          height: 32,
+          width: 32.w,
+          height: 32.h,
           decoration: BoxDecoration(
             color: _hovering
                 ? AppColors.bgElevated
                 : Colors.transparent,
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(8.r),
           ),
           child: Icon(
             Icons.close_rounded,
-            size: 18,
+            size: 18.sp,
             color: _hovering
                 ? AppColors.textPrimary
                 : AppColors.textTertiary,

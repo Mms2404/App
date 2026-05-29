@@ -5,6 +5,7 @@ import 'package:app/core/widgets/dialogBox.dart';
 import 'package:app/features/authentication/presentation/screens/login_form.dart';
 import 'package:app/features/authentication/presentation/screens/signUp_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Onboarding extends StatelessWidget {
   const Onboarding({super.key});
@@ -18,21 +19,21 @@ class Onboarding extends StatelessWidget {
         brightness: 0.85,
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
+            padding: EdgeInsets.symmetric(horizontal: 24.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 24),
+                SizedBox(height: 24.h),
                 _BrandMark(),
-                const Spacer(flex: 2),
+                Spacer(flex: 2),
                 _HeroHeadline(),
-                const SizedBox(height: 20),
+                SizedBox(height: 20.h),
                 _Tagline(),
-                const Spacer(flex: 3),
+                Spacer(flex: 3),
                 _CtaStack(),
-                const SizedBox(height: 24),
+                SizedBox(height: 24.h),
                 _LegalFootnote(),
-                const SizedBox(height: 16),
+                SizedBox(height: 16.h),
               ],
             ),
           ),
@@ -48,21 +49,21 @@ class _BrandMark extends StatelessWidget {
     return Row(
       children: [
         Container(
-          width: 8,
-          height: 8,
+          width: 8.w,
+          height: 8.h,
           decoration: BoxDecoration(
             color: AppColors.accent,
             borderRadius: BorderRadius.circular(2),
           ),
         ),
-        const SizedBox(width: 10),
-        const Text(
+        SizedBox(width: 10.w),
+        Text(
           'MMS',
           style: TextStyle(
             fontFamily: 'Manrope',
-            fontSize: 12,
+            fontSize: 12.sp,
             fontWeight: FontWeight.w600,
-            letterSpacing: 2.4,
+            letterSpacing: 2.4.w,
             color: AppColors.textSecondary,
           ),
         ),
@@ -77,15 +78,15 @@ class _HeroHeadline extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           'Now',
           style: TextStyle(
             fontFamily: 'Manrope',
-            fontSize: 64,
+            fontSize: 64.sp,
             fontWeight: FontWeight.w700,
             color: AppColors.textPrimary,
-            height: 0.95,
-            letterSpacing: -2,
+            height: 0.95.h,
+            letterSpacing: -2.w,
           ),
         ),
         const SizedBox(height: 4),
@@ -96,22 +97,22 @@ class _HeroHeadline extends StatelessWidget {
               'or',
               style: TextStyle(
                 fontFamily: 'Manrope',
-                fontSize: 32,
+                fontSize: 32.sp,
                 fontWeight: FontWeight.w300,
                 fontStyle: FontStyle.italic,
                 color: AppColors.accent,
-                height: 1,
+                height: 1.h,
               ),
             ),
-            const SizedBox(width: 12),
+            SizedBox(width: 12.w),
             Expanded(
               child: Container(
-                height: 1,
+                height: 1.h,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      AppColors.accent.withOpacity(0.6),
-                      AppColors.accent.withOpacity(0),
+                      AppColors.accent.withValues(alpha: 0.6),
+                      AppColors.accent.withValues(alpha: 0),
                     ],
                   ),
                 ),
@@ -119,16 +120,16 @@ class _HeroHeadline extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 4),
-        const Text(
+        SizedBox(height: 4.h),
+        Text(
           'never.',
           style: TextStyle(
             fontFamily: 'Manrope',
-            fontSize: 64,
+            fontSize: 64.sp,
             fontWeight: FontWeight.w700,
             color: AppColors.textPrimary,
-            height: 0.95,
-            letterSpacing: -2,
+            height: 0.95.h,
+            letterSpacing: -2.w,
           ),
         ),
       ],
@@ -140,15 +141,15 @@ class _Tagline extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(right: 40),
+      padding: EdgeInsets.only(right: 40.w),
       child: Text(
         'Chat. Shop. Track. Search.\nFive working apps under one roof.',
         style: TextStyle(
           fontFamily: 'Manrope',
-          fontSize: 15,
+          fontSize: 15.sp,
           fontWeight: FontWeight.w400,
           color: AppColors.textSecondary,
-          height: 1.5,
+          height: 1.5.h,
         ),
       ),
     );
@@ -170,7 +171,7 @@ class _CtaStack extends StatelessWidget {
             child: LoginForm(),
           ),
         ),
-        const SizedBox(height: 12),
+        SizedBox(height: 12.h),
         AppButton(
           label: 'Create account',
           variant: AppButtonVariant.secondary,
@@ -193,9 +194,9 @@ class _LegalFootnote extends StatelessWidget {
         TextSpan(
           style: TextStyle(
             fontFamily: 'Manrope',
-            fontSize: 11,
+            fontSize: 11.sp,
             color: AppColors.textTertiary,
-            height: 1.5,
+            height: 1.5.h,
           ),
           children: [
             const TextSpan(text: 'By continuing you agree to our '),

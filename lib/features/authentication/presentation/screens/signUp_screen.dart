@@ -5,6 +5,7 @@ import 'package:app/core/widgets/buttons.dart';
 import 'package:app/core/widgets/textField.dart';
 import 'package:app/features/authentication/presentation/screens/verification_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -65,14 +66,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
         brightness: 0.6,
         child: SafeArea(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.fromLTRB(24, 8, 24, 32),
+            padding: EdgeInsets.fromLTRB(24.w, 8.h, 24.w, 32.h),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 _Header(onBack: () => Navigator.pop(context)),
-                const SizedBox(height: 32),
+                SizedBox(height: 32.h),
                 _TitleBlock(),
-                const SizedBox(height: 32),
+                SizedBox(height: 32.h),
                 Form(
                   key: _formKey,
                   child: Column(
@@ -93,7 +94,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           return null;
                         },
                       ),
-                      const SizedBox(height: 18),
+                      SizedBox(height: 18.h),
                       AppTextField(
                         controller: _emailCtrl,
                         labelText: 'Email',
@@ -111,7 +112,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           return null;
                         },
                       ),
-                      const SizedBox(height: 18),
+                      SizedBox(height: 18.h),
                       AppTextField(
                         controller: _phoneCtrl,
                         labelText: 'Phone number',
@@ -127,7 +128,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           return null;
                         },
                       ),
-                      const SizedBox(height: 18),
+                      SizedBox(height: 18.h),
                       AppTextField(
                         controller: _passwordCtrl,
                         labelText: 'Password',
@@ -146,7 +147,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               () => _obscurePassword = !_obscurePassword),
                         ),
                       ),
-                      const SizedBox(height: 18),
+                      SizedBox(height: 18.h),
                       AppTextField(
                         controller: _confirmPasswordCtrl,
                         labelText: 'Confirm password',
@@ -170,14 +171,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   !_obscureConfirmPassword),
                         ),
                       ),
-                      const SizedBox(height: 32),
+                      SizedBox(height: 32.h),
                       AppButton(
                         label: 'Create account',
                         trailingIcon: Icons.arrow_forward_rounded,
                         loading: _isSubmitting,
                         onPressed: _isSubmitting ? null : _submit,
                       ),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16.h),
                       _LegalFootnote(),
                     ],
                   ),
@@ -217,47 +218,44 @@ class _TitleBlock extends StatelessWidget {
         Row(
           children: [
             Container(
-              width: 4,
-              height: 4,
+              width: 4.w,
+              height: 4.h,
               decoration: BoxDecoration(
                 color: AppColors.accent,
                 borderRadius: BorderRadius.circular(1),
               ),
             ),
-            const SizedBox(width: 8),
+            SizedBox(width: 8.w),
             Text(
               'GET STARTED',
               style: TextStyle(
-                fontFamily: 'Manrope',
-                fontSize: 11,
+                fontSize: 11.sp,
                 fontWeight: FontWeight.w600,
-                letterSpacing: 1.6,
+                letterSpacing: 1.6.w,
                 color: AppColors.accent,
               ),
             ),
           ],
         ),
-        const SizedBox(height: 12),
-        const Text(
+        SizedBox(height: 12.h),
+        Text(
           'Create your account',
           style: TextStyle(
-            fontFamily: 'Manrope',
-            fontSize: 32,
+            fontSize: 32.sp,
             fontWeight: FontWeight.w700,
             color: AppColors.textPrimary,
-            height: 1.1,
-            letterSpacing: -0.8,
+            height: 1.1.h,
+            letterSpacing: -0.8.w,
           ),
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: 8.h),
         Text(
           'A few details and you\'re in.',
           style: TextStyle(
-            fontFamily: 'Manrope',
-            fontSize: 14,
+            fontSize: 14.sp,
             fontWeight: FontWeight.w400,
             color: AppColors.textSecondary,
-            height: 1.4,
+            height: 1.4.h,
           ),
         ),
       ],
@@ -286,17 +284,17 @@ class _IconButtonState extends State<_IconButton> {
       onTap: widget.onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 120),
-        width: 40,
-        height: 40,
+        width: 40.w,
+        height: 40.h,
         decoration: BoxDecoration(
           color:
               _pressed ? AppColors.bgElevated : AppColors.bgSurface,
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: AppColors.border, width: 0.5),
+          borderRadius: BorderRadius.circular(10.r),
+          border: Border.all(color: AppColors.border, width: 0.5.w),
         ),
         child: Icon(
           widget.icon,
-          size: 18,
+          size: 18.sp,
           color: AppColors.textPrimary,
         ),
       ),
@@ -316,12 +314,12 @@ class _VisibilityToggle extends StatelessWidget {
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
       child: Padding(
-        padding: const EdgeInsets.only(right: 14, left: 8),
+        padding: EdgeInsets.only(right: 14.w, left: 8.w),
         child: Icon(
           obscured
               ? Icons.visibility_off_outlined
               : Icons.visibility_outlined,
-          size: 18,
+          size: 18.sp,
           color: AppColors.textTertiary,
         ),
       ),
@@ -336,10 +334,9 @@ class _LegalFootnote extends StatelessWidget {
       child: Text.rich(
         TextSpan(
           style: TextStyle(
-            fontFamily: 'Manrope',
-            fontSize: 11,
+            fontSize: 11.sp,
             color: AppColors.textTertiary,
-            height: 1.5,
+            height: 1.5.h,
           ),
           children: [
             const TextSpan(text: 'By creating an account you agree to our '),

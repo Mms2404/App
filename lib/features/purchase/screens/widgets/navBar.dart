@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:app/core/constants/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 class Navbar extends StatelessWidget {
@@ -11,18 +12,18 @@ class Navbar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: AppColors.lightBg,
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+      padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 12.w),
       child: GNav(
         color: AppColors.lightTextTertiary,
         activeColor: AppColors.success,
-        tabBackgroundColor: AppColors.success.withOpacity(0.10),
+        tabBackgroundColor: AppColors.success.withValues(alpha: 0.10),
         tabActiveBorder: Border.all(
-          color: AppColors.success.withOpacity(0.35),
-          width: 0.8,
+          color: AppColors.success.withValues(alpha: 0.35),
+          width: 0.8.w,
         ),
         tabBorderRadius: 14,
         gap: 10,
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
         mainAxisAlignment: MainAxisAlignment.center,
         onTabChange: (v) => onTabChange?.call(v),
         tabs: const [

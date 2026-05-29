@@ -1,6 +1,7 @@
 import 'package:app/core/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppTextField extends StatefulWidget {
   final TextEditingController controller;
@@ -86,23 +87,22 @@ class _AppTextFieldState extends State<AppTextField> {
         AnimatedDefaultTextStyle(
           duration: const Duration(milliseconds: 200),
           style: TextStyle(
-            fontFamily: 'Manrope',
-            fontSize: 11,
+            fontSize: 11.sp,
             fontWeight: FontWeight.w600,
-            letterSpacing: 1.1,
+            letterSpacing: 1.1.w,
             color: _labelColor,
           ),
           child: Text(widget.labelText.toUpperCase()),
         ),
-        const SizedBox(height: 6),
+        SizedBox(height: 6.h),
         Container(
-          height: 52,
+          height: 52.h,
           decoration: BoxDecoration(
             color: AppColors.bgSurface,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(12.r),
             border: Border.all(
               color: _borderColor,
-              width: _errorText != null ? 1.2 : 1,
+              width: _errorText != null ? 1.2.w : 1.w,
             ),
           ),
           child: TextFormField(
@@ -123,13 +123,12 @@ class _AppTextFieldState extends State<AppTextField> {
     return result;
   },
             cursorColor: AppColors.textPrimary,
-            cursorWidth: 1.5,
-            style: const TextStyle(
-              fontFamily: 'Manrope',
-              fontSize: 15,
+            cursorWidth: 1.5.w,
+            style: TextStyle(
+              fontSize: 15.sp,
               fontWeight: FontWeight.w400,
               color: AppColors.textPrimary,
-              height: 1.2,
+              height: 1.2.h,
             ),
             textAlignVertical: TextAlignVertical.center,
             onChanged: (_) {
@@ -143,17 +142,17 @@ class _AppTextFieldState extends State<AppTextField> {
               errorStyle: const TextStyle(height: 0, fontSize: 0),
               focusedErrorBorder: InputBorder.none,
               isCollapsed: true,
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 14,
-                vertical: 16,
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: 14.w,
+                vertical: 16.h,
               ),
               prefixIcon: widget.prefixIcon != null
                   ? Padding(
-                      padding: const EdgeInsets.only(left: 14, right: 10),
+                      padding: EdgeInsets.only(left: 14.w, right: 10.w),
                       child: IconTheme(
                         data: IconThemeData(
                           color: _iconColor,
-                          size: 18,
+                          size: 18.sp,
                         ),
                         child: widget.prefixIcon!,
                       ),
@@ -172,24 +171,24 @@ class _AppTextFieldState extends State<AppTextField> {
           ),
         ),
         if (_errorText != null) ...[
-          const SizedBox(height: 6),
+          SizedBox(height: 6.h),
           Row(
             children: [
               Icon(
                 Icons.error_outline_rounded,
-                size: 13,
+                size: 13.sp,
                 color: AppColors.danger,
               ),
-              const SizedBox(width: 4),
+              SizedBox(width: 4.w),
               Expanded(
                 child: Text(
                   _errorText!,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontFamily: 'Manrope',
-                    fontSize: 12,
+                    fontSize: 12.sp,
                     fontWeight: FontWeight.w500,
                     color: AppColors.danger,
-                    height: 1.3,
+                    height: 1.3.h,
                   ),
                 ),
               ),
@@ -293,32 +292,31 @@ class _LightTextFieldState extends State<LightTextField> {
         AnimatedDefaultTextStyle(
           duration: const Duration(milliseconds: 200),
           style: TextStyle(
-            fontFamily: 'Manrope',
-            fontSize: 11,
+            fontSize: 11.sp,
             fontWeight: FontWeight.w600,
-            letterSpacing: 1.1,
+            letterSpacing: 1.1.w,
             color: _labelColor,
           ),
           child: Text(widget.labelText.toUpperCase()),
         ),
-        const SizedBox(height: 6),
+        SizedBox(height: 6.h),
 
         // Field container
         AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           decoration: BoxDecoration(
             color: AppColors.lightSurface,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(12.r),
             border: Border.all(
               color: _borderColor,
-              width: (_errorText != null || _isFocused) ? 1 : 0.5,
+              width: (_errorText != null || _isFocused) ? 1.w : 0.5.w,
             ),
             boxShadow: _isFocused && _errorText == null
                 ? [
                     BoxShadow(
-                      color: AppColors.success.withOpacity(0.12),
-                      blurRadius: 16,
-                      spreadRadius: -4,
+                      color: AppColors.success.withValues(alpha:0.12),
+                      blurRadius: 16.r,
+                      spreadRadius: -4.r,
                     ),
                   ]
                 : null,
@@ -332,12 +330,12 @@ class _LightTextFieldState extends State<LightTextField> {
               if (widget.prefixIcon != null)
                 Padding(
                   padding: EdgeInsets.only(
-                    left: 14,
-                    right: 10,
-                    top: _multiline ? 16 : 0,
+                    left: 14.w,
+                    right: 10.w,
+                    top: _multiline ? 16.h : 0.h,
                   ),
                   child: IconTheme(
-                    data: IconThemeData(color: _iconColor, size: 18),
+                    data: IconThemeData(color: _iconColor, size: 18.sp),
                     child: widget.prefixIcon!,
                   ),
                 ),
@@ -345,20 +343,19 @@ class _LightTextFieldState extends State<LightTextField> {
               // Prefix text (e.g. +91) with a divider
               if (widget.prefixText != null) ...[
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 14),
+                  padding: EdgeInsets.symmetric(horizontal: 14.w),
                   child: Text(
                     widget.prefixText!,
-                    style: const TextStyle(
-                      fontFamily: 'Manrope',
-                      fontSize: 15,
+                    style: TextStyle(
+                      fontSize: 15.sp,
                       fontWeight: FontWeight.w600,
                       color: AppColors.lightTextPrimary,
                     ),
                   ),
                 ),
                 Container(
-                  width: 0.5,
-                  height: 24,
+                  width: 0.5.w,
+                  height: 24.h,
                   color: AppColors.lightBorder,
                 ),
               ],
@@ -377,7 +374,7 @@ class _LightTextFieldState extends State<LightTextField> {
                   maxLength: widget.maxLength,
                   inputFormatters: widget.inputFormatters,
                   cursorColor: AppColors.lightTextPrimary,
-                  cursorWidth: 1.5,
+                  cursorWidth: 1.5.w,
                   // Wires the validator into Form.validate() AND syncs our
                   // own _errorText so the error shows below the field.
                   validator: (value) {
@@ -391,20 +388,18 @@ class _LightTextFieldState extends State<LightTextField> {
                   onChanged: (_) {
                     if (_errorText != null) _revalidate();
                   },
-                  style: const TextStyle(
-                    fontFamily: 'Manrope',
-                    fontSize: 15,
+                  style: TextStyle(
+                    fontSize: 15.sp,
                     fontWeight: FontWeight.w400,
                     color: AppColors.lightTextPrimary,
-                    height: 1.3,
+                    height: 1.3.h,
                   ),
                   textAlignVertical:
                       _multiline ? TextAlignVertical.top : TextAlignVertical.center,
                   decoration: InputDecoration(
                     hintText: widget.hintText,
-                    hintStyle: const TextStyle(
-                      fontFamily: 'Manrope',
-                      fontSize: 15,
+                    hintStyle: TextStyle(
+                      fontSize: 15.sp,
                       color: AppColors.lightTextTertiary,
                     ),
                     border: InputBorder.none,
@@ -413,12 +408,12 @@ class _LightTextFieldState extends State<LightTextField> {
                     errorBorder: InputBorder.none,
                     focusedErrorBorder: InputBorder.none,
                     // Hide TextFormField's built-in error — we render our own below
-                    errorStyle: const TextStyle(height: 0, fontSize: 0),
+                    errorStyle: TextStyle(height: 0, fontSize: 0),
                     counterText: '',
                     isCollapsed: true,
                     contentPadding: EdgeInsets.symmetric(
-                      horizontal: (widget.prefixText != null) ? 12 : 14,
-                      vertical: 16,
+                      horizontal: (widget.prefixText != null) ? 12.w : 14.w,
+                      vertical: 16.h,
                     ),
                     suffixIcon: widget.suffixIcon,
                     suffixIconConstraints: const BoxConstraints(
@@ -437,21 +432,20 @@ class _LightTextFieldState extends State<LightTextField> {
           const SizedBox(height: 6),
           Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.error_outline_rounded,
-                size: 13,
+                size: 13.sp,
                 color: AppColors.danger,
               ),
-              const SizedBox(width: 4),
+              SizedBox(width: 4.w),
               Expanded(
                 child: Text(
                   _errorText!,
-                  style: const TextStyle(
-                    fontFamily: 'Manrope',
-                    fontSize: 12,
+                  style: TextStyle(
+                    fontSize: 12.sp,
                     fontWeight: FontWeight.w500,
                     color: AppColors.danger,
-                    height: 1.3,
+                    height: 1.3.h,
                   ),
                 ),
               ),

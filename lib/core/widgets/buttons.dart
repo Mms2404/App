@@ -1,5 +1,6 @@
 import 'package:app/core/constants/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 enum AppButtonVariant { primary, secondary, danger, ghost }
 enum AppButtonShape { common, top, bottom }
@@ -8,20 +9,20 @@ enum AppButtonSize { regular, compact }
 /// Static styles, kept for cases where you only need a `ButtonStyle`.
 /// For real button instances, prefer `AppButton` below.
 class AppButtonStyles {
-  static const _commonRadius = BorderRadius.all(Radius.circular(20));
+  static final _commonRadius = BorderRadius.all(Radius.circular(20.r));
 
-  static const _topRadius = BorderRadius.only(
-    topLeft: Radius.circular(10),
-    topRight: Radius.circular(25),
-    bottomLeft: Radius.circular(25),
-    bottomRight: Radius.circular(25),
+  static final _topRadius = BorderRadius.only(
+    topLeft: Radius.circular(10.r),
+    topRight: Radius.circular(25.r),
+    bottomLeft: Radius.circular(25.r),
+    bottomRight: Radius.circular(25.r),
   );
 
-  static const _bottomRadius = BorderRadius.only(
-    topLeft: Radius.circular(25),
-    topRight: Radius.circular(25),
-    bottomLeft: Radius.circular(25),
-    bottomRight: Radius.circular(10),
+  static final _bottomRadius = BorderRadius.only(
+    topLeft: Radius.circular(25.r),
+    topRight: Radius.circular(25.r),
+    bottomLeft: Radius.circular(25.r),
+    bottomRight: Radius.circular(10.r),
   );
 
   static ButtonStyle _build(BorderRadius radius) {
@@ -30,12 +31,11 @@ class AppButtonStyles {
       foregroundColor: AppColors.bgBase,
       disabledBackgroundColor: AppColors.bgElevated,
       disabledForegroundColor: AppColors.textDisabled,
-      minimumSize: const Size(double.infinity, 52),
+      minimumSize: Size(double.infinity, 52.h ),
       elevation: 0,
       shadowColor: Colors.transparent,
-      textStyle: const TextStyle(
-        fontFamily: 'Manrope',
-        fontSize: 15,
+      textStyle: TextStyle(
+        fontSize: 15.sp,
         fontWeight: FontWeight.w600,
         letterSpacing: 0.2,
       ),
@@ -95,10 +95,10 @@ class _AppButtonState extends State<AppButton> {
   }
 
   double get _height =>
-      widget.size == AppButtonSize.compact ? 40 : 52;
+      widget.size == AppButtonSize.compact ? 40.h : 52.h;
 
   double get _fontSize =>
-      widget.size == AppButtonSize.compact ? 13 : 15;
+      widget.size == AppButtonSize.compact ? 13.sp : 15.sp;
 
   _ButtonColors _colors() {
     switch (widget.variant) {
@@ -118,10 +118,10 @@ class _AppButtonState extends State<AppButton> {
         );
       case AppButtonVariant.danger:
         return _ButtonColors(
-          bg: AppColors.danger.withOpacity(0.12),
+          bg: AppColors.danger.withValues(alpha: 0.12),
           fg: AppColors.danger,
-          border: AppColors.danger.withOpacity(0.4),
-          pressedBg: AppColors.danger.withOpacity(0.20),
+          border: AppColors.danger.withValues(alpha: 0.4),
+          pressedBg: AppColors.danger.withValues(alpha: 0.20),
         );
       case AppButtonVariant.ghost:
         return _ButtonColors(
@@ -147,7 +147,7 @@ class _AppButtonState extends State<AppButton> {
         : (colors.border ?? Colors.transparent);
 
     final button = AnimatedScale(
-      scale: _pressed && !disabled ? 0.98 : 1.0,
+      scale: _pressed && !disabled ? 0.98: 1.0,
       duration: const Duration(milliseconds: 100),
       curve: Curves.easeOut,
       child: AnimatedContainer(
@@ -158,7 +158,7 @@ class _AppButtonState extends State<AppButton> {
           borderRadius: _radius,
           border: Border.all(
             color: borderColor,
-            width: colors.border != null ? 0.8 : 0,
+            width: colors.border != null ? 0.8.w : 0,
           ),
         ),
         child: Material(
@@ -169,17 +169,17 @@ class _AppButtonState extends State<AppButton> {
             onTapUp: (_) => setState(() => _pressed = false),
             onTapCancel: () => setState(() => _pressed = false),
             borderRadius: _radius,
-            splashColor: fg.withOpacity(0.08),
+            splashColor: fg.withValues(alpha: 0.08),
             highlightColor: Colors.transparent,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: Center(
                 child: widget.loading
                     ? SizedBox(
-                        height: 18,
-                        width: 18,
+                        height: 18.h,
+                        width: 18.w,
                         child: CircularProgressIndicator(
-                          strokeWidth: 2,
+                          strokeWidth: 2.w,
                           valueColor: AlwaysStoppedAnimation(fg),
                         ),
                       )
@@ -188,17 +188,16 @@ class _AppButtonState extends State<AppButton> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           if (widget.leadingIcon != null) ...[
-                            Icon(widget.leadingIcon, size: 16, color: fg),
-                            const SizedBox(width: 8),
+                            Icon(widget.leadingIcon, size: 16.sp, color: fg),
+                            SizedBox(width: 8.w),
                           ],
                           Flexible(
                             child: Text(
                               widget.label,
                               style: TextStyle(
-                                fontFamily: 'Manrope',
                                 fontSize: _fontSize,
                                 fontWeight: FontWeight.w600,
-                                letterSpacing: 0.2,
+                                letterSpacing: 0.2.w,
                                 color: fg,
                               ),
                               overflow: TextOverflow.ellipsis,
@@ -206,8 +205,8 @@ class _AppButtonState extends State<AppButton> {
                             ),
                           ),
                           if (widget.trailingIcon != null) ...[
-                            const SizedBox(width: 8),
-                            Icon(widget.trailingIcon, size: 16, color: fg),
+                            SizedBox(width: 8.w),
+                            Icon(widget.trailingIcon, size: 16.sp, color: fg),
                           ],
                         ],
                       ),

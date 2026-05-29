@@ -7,6 +7,7 @@ import 'package:app/core/widgets/textField.dart';
 import 'package:app/features/authentication/presentation/screens/signUp_screen.dart';
 import 'package:app/app_home.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rive/rive.dart';
 
 class LoginForm extends StatefulWidget {
@@ -87,7 +88,7 @@ class _LoginFormState extends State<LoginForm> {
                 validator: (v) => AppValidators.email(v),
                 prefixIcon: const Icon(Icons.mail_outline_rounded),
               ),
-              const SizedBox(height: 18),
+              SizedBox(height: 18.h),
               AppTextField(
                 controller: _passwordCtrl,
                 labelText: 'Password',
@@ -97,29 +98,28 @@ class _LoginFormState extends State<LoginForm> {
                 onFieldSubmitted: (_) => _handleSubmit(),
                 prefixIcon: const Icon(Icons.lock_outline_rounded),
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: 12.h),
               Align(
                 alignment: Alignment.centerRight,
                 child: TextButton(
                   onPressed: _isShowLoading ? null : () {},
                   style: TextButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 4, vertical: 6),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 4.w, vertical: 6.h),
                     minimumSize: Size.zero,
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
                   child: Text(
                     'Forgot password?',
                     style: TextStyle(
-                      fontFamily: 'Manrope',
-                      fontSize: 12,
+                      fontSize: 12.sp,
                       fontWeight: FontWeight.w500,
                       color: AppColors.textSecondary,
                     ),
                   ),
                 ),
               ),
-              const SizedBox(height: 24),
+              SizedBox(height: 24.h),
               AppButton(
                 label: 'Log in',
                 shape: AppButtonShape.top,
@@ -127,9 +127,9 @@ class _LoginFormState extends State<LoginForm> {
                 loading: _isShowLoading,
                 onPressed: _isShowLoading ? null : _handleSubmit,
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20.h),
               _OrDivider(),
-              const SizedBox(height: 20),
+              SizedBox(height: 20.h),
               AppButton(
                 label: "Don't have an account?",
                 variant: AppButtonVariant.secondary,
@@ -152,7 +152,7 @@ class _LoginFormState extends State<LoginForm> {
         // Rive check/error animation overlay
         if (_isShowLoading)
           _RiveOverlay(
-            size: 100,
+            size: 100.w,
             child: RiveAnimation.asset(
               'assets/rive/check_error.riv',
               onInit: (artboard) {
@@ -174,15 +174,14 @@ class _OrDivider extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: Container(height: 0.5, color: AppColors.border),
+          child: Container(height: 0.5.h, color: AppColors.border),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
+          padding: EdgeInsets.symmetric(horizontal: 12.w),
           child: Text(
             'or',
             style: TextStyle(
-              fontFamily: 'Manrope',
-              fontSize: 11,
+              fontSize: 11.sp,
               fontWeight: FontWeight.w500,
               letterSpacing: 1.4,
               color: AppColors.textTertiary,
@@ -190,7 +189,7 @@ class _OrDivider extends StatelessWidget {
           ),
         ),
         Expanded(
-          child: Container(height: 0.5, color: AppColors.border),
+          child: Container(height: 0.5.h, color: AppColors.border),
         ),
       ],
     );
@@ -208,23 +207,23 @@ class _RiveOverlay extends StatelessWidget {
     return Positioned.fill(
       child: IgnorePointer(
         child: Container(
-          color: AppColors.bgBase.withOpacity(0.4),
+          color: AppColors.bgBase.withValues(alpha: 0.4),
           alignment: Alignment.center,
           child: Container(
-            width: size + 24,
-            height: size + 24,
+            width: size.w + 24.w,
+            height: size.h + 24.h,
             decoration: BoxDecoration(
-              color: AppColors.bgSurface.withOpacity(0.85),
+              color: AppColors.bgSurface.withValues(alpha: 0.85),
               borderRadius: BorderRadius.circular(20),
               border: Border.all(
                 color: AppColors.borderStrong,
-                width: 0.5,
+                width: 0.5.w,
               ),
             ),
-            padding: const EdgeInsets.all(12),
+            padding: EdgeInsets.all(12.w),
             child: SizedBox(
-              width: size,
-              height: size,
+              width: size.w,
+              height: size.h,
               child: child,
             ),
           ),

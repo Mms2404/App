@@ -2,6 +2,7 @@ import 'package:app/core/constants/colors.dart';
 import 'package:app/features/purchase/data/models.dart';
 import 'package:app/features/purchase/providers/cart_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 class CartItem extends StatelessWidget {
@@ -11,18 +12,18 @@ class CartItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 4),
+      margin: EdgeInsets.symmetric(vertical:  4.h),
       decoration: BoxDecoration(
         color: AppColors.lightSurface,
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: AppColors.lightBorder, width: 0.5),
+        borderRadius: BorderRadius.circular(10.r),
+        border: Border.all(color: AppColors.lightBorder, width: 0.5.w),
       ),
       child: ListTile(
         leading: Container(
-          height: 50,
-          width: 50,
+          height: 50.h,
+          width: 50.w,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
+            borderRadius: BorderRadius.circular(5.r),
             image: DecorationImage(
               image: NetworkImage(item.imagePath),
               fit: BoxFit.cover,
@@ -32,7 +33,6 @@ class CartItem extends StatelessWidget {
         title: Text(
           item.name,
           style: const TextStyle(
-            fontFamily: 'Manrope',
             color: AppColors.lightTextPrimary,
             fontWeight: FontWeight.w500,
           ),
@@ -40,7 +40,6 @@ class CartItem extends StatelessWidget {
         subtitle: Text(
           'Rs. ${item.price}',
           style: const TextStyle(
-            fontFamily: 'Manrope',
             color: AppColors.lightTextSecondary,
           ),
         ),

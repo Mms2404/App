@@ -6,6 +6,7 @@ import 'package:app/features/purchase/screens/cart.dart';
 import 'package:app/features/purchase/screens/shop.dart';
 import 'package:app/features/purchase/screens/widgets/navBar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 class Home extends StatelessWidget {
@@ -74,10 +75,10 @@ class _HomeViewState extends State<_HomeView> {
         leading: IconButton(
           tooltip: 'Exit',
           onPressed: () => Navigator.of(context).pop(),
-          icon: const Icon(
+          icon: Icon(
             Icons.arrow_back_ios,
             color: AppColors.lightTextPrimary,
-            size: 18,
+            size: 18.sp,
           ),
         ),
       ),

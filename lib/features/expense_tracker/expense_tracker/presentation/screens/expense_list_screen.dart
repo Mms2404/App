@@ -7,6 +7,7 @@ import 'package:app/features/expense_tracker/expense_tracker/presentation/screen
 import 'package:app/features/search/presentation/widgets/ui_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ExpenseListScreen extends ConsumerStatefulWidget {
   const ExpenseListScreen({super.key});
@@ -113,31 +114,29 @@ class _ExpenseListScreenState extends ConsumerState<ExpenseListScreen> {
   Widget _buildList(List<Expense> expenses, {String? errorBanner}) {
     if (expenses.isEmpty) {
       return Padding(
-        padding: const EdgeInsets.all(24),
+        padding: EdgeInsets.all(24.w),
         child: Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(
                 Icons.receipt_long_outlined,
-                size: 40,
+                size: 40.sp,
                 color: AppColors.textTertiary,
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: 12.h),
               Text(
                 'No expenses yet',
                 style: TextStyle(
-                  fontFamily: 'Manrope',
-                  fontSize: 14,
+                  fontSize: 14.sp,
                   color: AppColors.textSecondary,
                 ),
               ),
-              const SizedBox(height: 4),
+              SizedBox(height: 4.h),
               Text(
                 'Tap + to add your first expense',
                 style: TextStyle(
-                  fontFamily: 'Manrope',
-                  fontSize: 12,
+                  fontSize: 12.sp,
                   color: AppColors.textTertiary,
                 ),
               ),
@@ -152,13 +151,13 @@ class _ExpenseListScreenState extends ConsumerState<ExpenseListScreen> {
         : _calculateMonthly(expenses, _selectedMonth, _selectedYear);
 
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(16.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (errorBanner != null) ...[
             _RefreshErrorBanner(message: errorBanner),
-            const SizedBox(height: 12),
+            SizedBox(height: 12.h),
           ],
           _SummaryCard(
             viewType: _viewType,
@@ -169,11 +168,11 @@ class _ExpenseListScreenState extends ConsumerState<ExpenseListScreen> {
             onMonthChanged: (m) => setState(() => _selectedMonth = m),
             onYearChanged: (y) => setState(() => _selectedYear = y),
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16.h),
           Expanded(
             child: ListView.separated(
               itemCount: expenses.length,
-              separatorBuilder: (_, __) => const SizedBox(height: 8),
+              separatorBuilder: (_, __) => SizedBox(height: 8.h),
               itemBuilder: (_, i) => _ExpenseTile(
                 expense: expenses[i],
                 onTap: () => _openEdit(expenses[i]),
@@ -208,11 +207,11 @@ class _SummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
         color: AppColors.bgSurface,
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: AppColors.border, width: 0.5),
+        borderRadius: BorderRadius.circular(14.r),
+        border: Border.all(color: AppColors.border, width: 0.5.w),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -226,14 +225,14 @@ class _SummaryCard extends StatelessWidget {
                 label: (v) => '$v expenses',
               ),
               if (viewType == 'Monthly') ...[
-                const SizedBox(width: 8),
+                SizedBox(width: 8.w),
                 _Dropdown<int>(
                   value: selectedMonth,
                   items: List.generate(12, (i) => i + 1),
                   onChanged: onMonthChanged,
                   label: (m) => _monthName(m),
                 ),
-                const SizedBox(width: 8),
+                SizedBox(width: 8.w),
                 _Dropdown<int>(
                   value: selectedYear,
                   items: List.generate(5, (i) => DateTime.now().year - i),
@@ -243,15 +242,14 @@ class _SummaryCard extends StatelessWidget {
               ],
             ],
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12.h),
           Text(
             'Rs. ${amount.toStringAsFixed(2)}',
-            style: const TextStyle(
-              fontFamily: 'Manrope',
-              fontSize: 28,
+            style: TextStyle(
+              fontSize: 28.sp,
               fontWeight: FontWeight.w700,
               color: AppColors.textPrimary,
-              letterSpacing: -0.5,
+              letterSpacing: -0.5.w,
             ),
           ),
         ],
@@ -284,19 +282,18 @@ class _Dropdown<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      padding: EdgeInsets.symmetric(horizontal: 10.w),
       decoration: BoxDecoration(
         color: AppColors.bgElevated,
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(8.r),
       ),
       child: DropdownButton<T>(
         value: value,
         dropdownColor: AppColors.bgElevated,
         underline: const SizedBox.shrink(),
-        icon: const Icon(Icons.expand_more_rounded, size: 18, color: AppColors.textSecondary),
-        style: const TextStyle(
-          fontFamily: 'Manrope',
-          fontSize: 12,
+        icon: Icon(Icons.expand_more_rounded, size: 18.sp, color: AppColors.textSecondary),
+        style:  TextStyle(
+          fontSize: 12.sp,
           fontWeight: FontWeight.w500,
           color: AppColors.textPrimary,
         ),
@@ -320,47 +317,45 @@ class _ExpenseTile extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+        padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 12.h),
         decoration: BoxDecoration(
           color: AppColors.bgSurface,
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: AppColors.border, width: 0.5),
+          borderRadius: BorderRadius.circular(10.r),
+          border: Border.all(color: AppColors.border, width: 0.5.w),
         ),
         child: Row(
           children: [
             Container(
-              width: 36,
-              height: 36,
+              width: 36.w,
+              height: 36.h,
               decoration: BoxDecoration(
-                color: AppColors.accent.withOpacity(0.12),
-                borderRadius: BorderRadius.circular(8),
+                color: AppColors.accent.withValues(alpha: 0.12),
+                borderRadius: BorderRadius.circular(8.r),
               ),
               child: Icon(
                 Icons.receipt_outlined,
-                size: 16,
+                size: 16.sp,
                 color: AppColors.accent,
               ),
             ),
-            const SizedBox(width: 12),
+            SizedBox(width: 12.w),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     expense.title,
-                    style: const TextStyle(
-                      fontFamily: 'Manrope',
-                      fontSize: 14,
+                    style:TextStyle(
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w600,
                       color: AppColors.textPrimary,
                     ),
                   ),
-                  const SizedBox(height: 2),
+                  SizedBox(height: 2.h),
                   Text(
                     '${expense.category} · ${expense.date}',
                     style: TextStyle(
-                      fontFamily: 'Manrope',
-                      fontSize: 11,
+                      fontSize: 11.sp,
                       color: AppColors.textTertiary,
                     ),
                   ),
@@ -369,9 +364,8 @@ class _ExpenseTile extends StatelessWidget {
             ),
             Text(
               'Rs. ${expense.amount}',
-              style: const TextStyle(
-                fontFamily: 'Manrope',
-                fontSize: 14,
+              style: TextStyle(
+                fontSize: 14.sp,
                 fontWeight: FontWeight.w600,
                 color: AppColors.textPrimary,
               ),
@@ -390,22 +384,21 @@ class _RefreshErrorBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
       decoration: BoxDecoration(
-        color: AppColors.danger.withOpacity(0.10),
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: AppColors.danger.withOpacity(0.3), width: 0.5),
+        color: AppColors.danger.withValues(alpha: 0.10),
+        borderRadius: BorderRadius.circular(8.r),
+        border: Border.all(color: AppColors.danger.withValues(alpha: 0.3), width: 0.5.w),
       ),
       child: Row(
         children: [
-          Icon(Icons.cloud_off_outlined, size: 13, color: AppColors.danger),
-          const SizedBox(width: 8),
+          Icon(Icons.cloud_off_outlined, size: 13.sp, color: AppColors.danger),
+          SizedBox(width: 8.w),
           Expanded(
             child: Text(
               message,
               style: TextStyle(
-                fontFamily: 'Manrope',
-                fontSize: 11,
+                fontSize: 11.sp,
                 color: AppColors.danger,
               ),
             ),

@@ -14,6 +14,7 @@ import 'package:app/features/expense_tracker/expense_auth/domain/auth_failure.da
 import 'package:app/features/expense_tracker/expense_auth/presentation/controllers/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ExpenseSignUpScreen extends ConsumerStatefulWidget {
   const ExpenseSignUpScreen({super.key});
@@ -85,14 +86,14 @@ class _ExpenseSignUpScreenState extends ConsumerState<ExpenseSignUpScreen> {
         child: SafeArea(
           child: Center(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
+              padding: EdgeInsets.symmetric(horizontal: 24.w),
               child: Form(
                 key: _formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     _Header(),
-                    const SizedBox(height: 32),
+                    SizedBox(height: 32.h),
                     AppTextField(
                       controller: _usernameCtrl,
                       labelText: 'Username',
@@ -100,7 +101,7 @@ class _ExpenseSignUpScreenState extends ConsumerState<ExpenseSignUpScreen> {
                       textInputAction: TextInputAction.next,
                       validator: (v) => AppValidators.required(v, 'Username'),
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.h),
                     AppTextField(
                       controller: _emailCtrl,
                       labelText: 'Email',
@@ -109,7 +110,7 @@ class _ExpenseSignUpScreenState extends ConsumerState<ExpenseSignUpScreen> {
                       textInputAction: TextInputAction.next,
                       validator: (v) => AppValidators.email(v),
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.h),
                     AppTextField(
                       controller: _passwordCtrl,
                       labelText: 'Password',
@@ -118,7 +119,7 @@ class _ExpenseSignUpScreenState extends ConsumerState<ExpenseSignUpScreen> {
                       textInputAction: TextInputAction.next,
                       validator: (v) => AppValidators.password(v),
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.h),
                     AppTextField(
                       controller: _confirmCtrl,
                       labelText: 'Confirm password',
@@ -129,25 +130,24 @@ class _ExpenseSignUpScreenState extends ConsumerState<ExpenseSignUpScreen> {
                       validator: (v) => AppValidators.confirmPassword(v, _passwordCtrl.text),
                     ),
                     if (failure != null) ...[
-                      const SizedBox(height: 12),
+                      SizedBox(height: 12.h),
                       _ErrorBanner(message: failure.message),
                     ],
-                    const SizedBox(height: 24),
+                    SizedBox(height: 24.h),
                     AppButton(
                       label: 'Create account',
                       trailingIcon: Icons.arrow_forward_rounded,
                       loading: isLoading,
                       onPressed: isLoading ? null : _submit,
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.h),
                     Center(
                       child: GestureDetector(
                         onTap: isLoading ? null : () => Navigator.pop(context),
                         child: Text(
                           'Already have an account? Log in.',
                           style: TextStyle(
-                            fontFamily: 'Manrope',
-                            fontSize: 12,
+                            fontSize: 12.sp,
                             color: AppColors.textTertiary,
                           ),
                         ),
@@ -173,46 +173,43 @@ class _Header extends StatelessWidget {
         Row(
           children: [
             Container(
-              width: 4,
-              height: 4,
+              width: 4.w,
+              height: 4.h,
               decoration: BoxDecoration(
                 color: AppColors.accent,
-                borderRadius: BorderRadius.circular(1),
+                borderRadius: BorderRadius.circular(1.r),
               ),
             ),
-            const SizedBox(width: 8),
+            SizedBox(width: 8.w),
             Text(
               'EXPENSE TRACKER',
               style: TextStyle(
-                fontFamily: 'Manrope',
-                fontSize: 11,
+                fontSize: 11.sp,
                 fontWeight: FontWeight.w600,
-                letterSpacing: 1.6,
+                letterSpacing: 1.6.w,
                 color: AppColors.accent,
               ),
             ),
           ],
         ),
-        const SizedBox(height: 12),
-        const Text(
+        SizedBox(height: 12.h),
+        Text(
           'Start tracking.',
           style: TextStyle(
-            fontFamily: 'Manrope',
-            fontSize: 32,
+            fontSize: 32.sp,
             fontWeight: FontWeight.w700,
             color: AppColors.textPrimary,
-            height: 1.1,
-            letterSpacing: -0.8,
+            height: 1.1.h,
+            letterSpacing: -0.8.w,
           ),
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: 8.h),
         Text(
           'Create an account to manage your expenses.',
           style: TextStyle(
-            fontFamily: 'Manrope',
-            fontSize: 14,
+            fontSize: 14.sp,
             color: AppColors.textSecondary,
-            height: 1.4,
+            height: 1.4.h,
           ),
         ),
       ],
@@ -227,28 +224,27 @@ class _ErrorBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
         color: AppColors.danger.withValues(alpha: 0.10),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(8.r),
         border: Border.all(
           color: AppColors.danger.withValues(alpha: 0.3),
-          width: 0.5,
+          width: 0.5.w,
         ),
       ),
       child: Row(
         children: [
-          Icon(Icons.error_outline_rounded, size: 14, color: AppColors.danger),
-          const SizedBox(width: 8),
+          Icon(Icons.error_outline_rounded, size: 14.sp, color: AppColors.danger),
+          SizedBox(width: 8.w),
           Expanded(
             child: Text(
               message,
               style: TextStyle(
-                fontFamily: 'Manrope',
-                fontSize: 12,
+                fontSize: 12.sp,
                 fontWeight: FontWeight.w500,
                 color: AppColors.danger,
-                height: 1.3,
+                height: 1.3.h,
               ),
             ),
           ),

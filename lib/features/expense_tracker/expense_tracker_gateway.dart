@@ -15,7 +15,7 @@
 // them. It's the "feature root" for the expense tracker as a whole.
 // -----------------------------------------------------------------------------
 
-import 'package:app/features/expense_tracker/expense_auth/expense_login_screen.dart';
+import 'package:app/features/expense_tracker/expense_auth/presentation/expense_login_screen.dart';
 import 'package:app/features/expense_tracker/expense_auth/presentation/controllers/auth_controller.dart';
 import 'package:app/features/expense_tracker/expense_tracker/presentation/screens/expense_list_screen.dart';
 import 'package:flutter/material.dart';

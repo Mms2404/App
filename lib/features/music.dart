@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class Ledger extends StatelessWidget {
-  const Ledger({super.key});
+class Music extends StatelessWidget {
+  const Music({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text("Ledger screen")
+      child: Text("Music screen")
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:app/core/constants/colors.dart';
 import 'package:app/features/purchase/data/models.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PotTile extends StatelessWidget {
   final Pots pot;
@@ -11,30 +12,30 @@ class PotTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8),
+      padding: EdgeInsets.all(8.w),
       child: Card(
         elevation: 0,
         color: AppColors.lightSurface,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-          side: BorderSide(color: AppColors.lightBorder, width: 0.5),
+          borderRadius: BorderRadius.circular(12.r),
+          side: BorderSide(color: AppColors.lightBorder, width: 0.5.w),
         ),
         child: Container(
-          height: 220,
-          width: 200,
+          height: 220.h,
+          width: 200.w,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(12.r),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 5, top: 5),
+                padding: EdgeInsets.only(left: 5.w, top: 5.h),
                 child: Container(
-                  height: 150,
-                  width: 190,
+                  height: 150.h,
+                  width: 190.w,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(8.r),
                     image: DecorationImage(
                       image: NetworkImage(pot.imagePath),
                       fit: BoxFit.cover,
@@ -44,40 +45,37 @@ class PotTile extends StatelessWidget {
               ),
               Divider(
                 thickness: 1,
-                color: Colors.grey.withOpacity(0.3),
-                indent: 10,
-                endIndent: 10,
+                color: Colors.grey.withValues(alpha: 0.3),
+                indent: 10.w,
+                endIndent: 10.w,
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 6),
+                padding: EdgeInsets.symmetric(horizontal: 6.w),
                 child: Text(
                   pot.name,
-                  style: const TextStyle(
-                    fontFamily: 'Manrope',
-                    fontSize: 16,
+                  style: TextStyle(
+                    fontSize: 16 .sp,
                     color: AppColors.lightTextPrimary,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 6),
+                padding: EdgeInsets.symmetric(horizontal: 6.w),
                 child: Text(
                   pot.material,
-                  style: const TextStyle(
-                    fontFamily: 'Manrope',
-                    fontSize: 14,
+                  style: TextStyle(
+                    fontSize: 14.sp,
                     color: AppColors.success,
                   ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5),
+                padding: EdgeInsets.symmetric(horizontal: 5.w),
                 child: Text(
                   'Height : ${pot.height}  ,  Width : ${pot.width}',
-                  style: const TextStyle(
-                    fontFamily: 'Manrope',
-                    fontSize: 12,
+                  style: TextStyle(
+                    fontSize: 12.sp,
                     color: AppColors.lightTextTertiary,
                   ),
                 ),
@@ -92,21 +90,20 @@ class PotTile extends StatelessWidget {
                     children: [
                       Text(
                         '  Price : Rs.${pot.price}',
-                        style: const TextStyle(
-                          fontFamily: 'Manrope',
+                        style: TextStyle(
                           color: AppColors.lightTextPrimary,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
                       Container(
-                        padding: const EdgeInsets.all(12),
+                        padding: EdgeInsets.all(12.w),
                         decoration: const BoxDecoration(
                           color: AppColors.success,
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(10),
                           ),
                         ),
-                        child: const Icon(Icons.add, color: Colors.white, size: 16),
+                        child: Icon(Icons.add, color: Colors.white, size: 16.sp),
                       ),
                     ],
                   ),

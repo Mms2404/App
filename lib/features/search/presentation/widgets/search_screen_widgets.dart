@@ -2,6 +2,7 @@ import 'package:app/core/constants/colors.dart';
 import 'package:app/features/search/presentation/widgets/ui_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 /// Top header: brand dot + "Search" title + "AI + Video" badge.
@@ -11,45 +12,43 @@ class SearchHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20,vertical:20),
+      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
       child: Column(
         children: [
-        SizedBox(height: 18),
+        SizedBox(height: 18.h),
           Row(
             children: [
               Container(
-                width: 6,
-                height: 6,
+                width: 6.w,
+                height: 6.h,
                 decoration: BoxDecoration(
                   color: AppColors.accent,
-                  borderRadius: BorderRadius.circular(2),
+                  borderRadius: BorderRadius.circular(2.r),
                   boxShadow: [
                     BoxShadow(
-                      color: AppColors.accent.withOpacity(0.6),
+                      color: AppColors.accent.withValues(alpha: 0.6),
                       blurRadius: 8,
                     ),
                   ],
                 ),
               ),
-              const SizedBox(width: 10),
-              const Text(
+              SizedBox(width: 10.w),
+              Text(
                 'Search',
                 style: TextStyle(
-                  fontFamily: 'Manrope',
-                  fontSize: 22,
+                  fontSize: 22.sp,
                   fontWeight: FontWeight.w700,
                   color: AppColors.textPrimary,
-                  letterSpacing: -0.5,
+                  letterSpacing: -0.5.w,
                 ),
               ),
               const Spacer(),
-              const Text(
+              Text(
                 'AI + Video',
                 style: TextStyle(
-                  fontFamily: 'Manrope',
-                  fontSize: 11,
+                  fontSize: 11.sp,
                   fontWeight: FontWeight.w600,
-                  letterSpacing: 1.4,
+                  letterSpacing: 1.4.w,
                   color: AppColors.textTertiary,
                 ),
               ),
@@ -94,22 +93,22 @@ class _AppSearchBarState extends State<AppSearchBar> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: EdgeInsets.symmetric(horizontal: 20.w),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         decoration: BoxDecoration(
           color: AppColors.bgSurface,
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: BorderRadius.circular(14.r),
           border: Border.all(
             color: _focused
-                ? AppColors.accent.withOpacity(0.5)
+                ? AppColors.accent.withValues(alpha: 0.5)
                 : AppColors.border,
-            width: _focused ? 1 : 0.5,
+            width: _focused ? 1.w : 0.5.w,
           ),
           boxShadow: _focused
               ? [
                   BoxShadow(
-                    color: AppColors.accent.withOpacity(0.15),
+                    color: AppColors.accent.withValues(alpha: 0.15),
                     blurRadius: 20,
                     spreadRadius: -4,
                   ),
@@ -119,10 +118,10 @@ class _AppSearchBarState extends State<AppSearchBar> {
         child: Row(
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 16, right: 12),
+              padding: EdgeInsets.only(left: 16.w, right: 12.w),
               child: Icon(
                 Icons.search_rounded,
-                size: 20,
+                size: 20.sp,
                 color: _focused ? AppColors.accent : AppColors.textTertiary,
               ),
             ),
@@ -131,23 +130,21 @@ class _AppSearchBarState extends State<AppSearchBar> {
                 controller: widget.controller,
                 focusNode: widget.focusNode,
                 cursorColor: AppColors.textPrimary,
-                cursorWidth: 1.5,
-                style: const TextStyle(
-                  fontFamily: 'Manrope',
-                  fontSize: 15,
+                cursorWidth: 1.5.w,
+                style: TextStyle(
+                  fontSize: 15.sp,
                   color: AppColors.textPrimary,
-                  height: 1.2,
+                  height: 1.2.h,
                 ),
-                decoration: const InputDecoration(
+                decoration:InputDecoration(
                   hintText: 'Ask anything…',
                   hintStyle: TextStyle(
-                    fontFamily: 'Manrope',
-                    fontSize: 15,
+                    fontSize: 15.sp,
                     color: AppColors.textTertiary,
                   ),
                   border: InputBorder.none,
                   isCollapsed: true,
-                  contentPadding: EdgeInsets.symmetric(vertical: 16),
+                  contentPadding: EdgeInsets.symmetric(vertical: 16.h),
                 ),
                 textInputAction: TextInputAction.search,
                 onSubmitted: (_) => widget.onSubmit(),
@@ -160,11 +157,11 @@ class _AppSearchBarState extends State<AppSearchBar> {
                   widget.controller.clear();
                   setState(() {});
                 },
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8.w),
                   child: Icon(
                     Icons.close_rounded,
-                    size: 18,
+                    size: 18.sp,
                     color: AppColors.textTertiary,
                   ),
                 ),
@@ -172,30 +169,30 @@ class _AppSearchBarState extends State<AppSearchBar> {
             GestureDetector(
               onTap: widget.isLoading ? null : widget.onSubmit,
               child: Container(
-                margin: const EdgeInsets.all(6),
-                width: 40,
-                height: 40,
+                margin: EdgeInsets.all(6.w),
+                width: 40.w,
+                height: 40.h,
                 decoration: BoxDecoration(
                   color: widget.isLoading
                       ? AppColors.bgElevated
                       : AppColors.accent,
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(10.r),
                 ),
                 child: widget.isLoading
                     ? Center(
                         child: SizedBox(
-                          width: 14,
-                          height: 14,
+                          width: 14.w,
+                          height: 14.h ,
                           child: CircularProgressIndicator(
-                            strokeWidth: 1.6,
+                            strokeWidth: 1.6.w,
                             valueColor:
                                 AlwaysStoppedAnimation(AppColors.accent),
                           ),
                         ),
                       )
-                    : const Icon(
+                    : Icon(
                         Icons.arrow_upward_rounded,
-                        size: 18,
+                        size: 18.sp,
                         color: AppColors.bgBase,
                       ),
               ),
@@ -215,13 +212,13 @@ class AnswerCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 370,
+      height: 370.h,
       width: double.infinity,
-      padding: const EdgeInsets.fromLTRB(18, 16, 18, 16),
+      padding: EdgeInsets.fromLTRB(18.w, 16.h, 18.w, 16.h),
       decoration: BoxDecoration(
         color: AppColors.bgSurface,
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: AppColors.border, width: 0.5),
+        borderRadius: BorderRadius.circular(14.r),
+        border: Border.all(color: AppColors.border, width: 0.5.w),
       ),
       child: SingleChildScrollView(
         child: SelectionArea(
@@ -229,63 +226,56 @@ class AnswerCard extends StatelessWidget {
             data: markdown,
             // selectable: true,    // SelectionArea is used instead for better mobile support
             styleSheet: MarkdownStyleSheet(
-              p: const TextStyle(
-                fontFamily: 'Manrope',
-                fontSize: 14,
+              p: TextStyle(
+                fontSize: 14.sp,
                 color: AppColors.textPrimary,
-                height: 1.6,
+                height: 1.6.h,
               ),
-              h1: const TextStyle(
-                fontFamily: 'Manrope',
-                fontSize: 19,
+              h1: TextStyle(
+                fontSize: 19.sp,
                 fontWeight: FontWeight.w700,
                 color: AppColors.textPrimary,
-                height: 1.3,
+                height: 1.3.h,
               ),
-              h2: const TextStyle(
-                fontFamily: 'Manrope',
-                fontSize: 16,
+              h2: TextStyle(
+                fontSize: 16.sp,
                 fontWeight: FontWeight.w600,
                 color: AppColors.textPrimary,
-                height: 1.3,
+                height: 1.3.h,
               ),
-              h3: const TextStyle(
-                fontFamily: 'Manrope',
-                fontSize: 14,
+              h3: TextStyle(
+                fontSize: 14.sp ,
                 fontWeight: FontWeight.w600,
                 color: AppColors.textPrimary,
-                height: 1.3,
+                height: 1.3.h,
               ),
-              listBullet: const TextStyle(
-                fontFamily: 'Manrope',
-                fontSize: 14,
+              listBullet: TextStyle(
+                fontSize: 14.sp,
                 color: AppColors.textPrimary,
-                height: 1.6,
+                height: 1.6.h,
               ),
-              code: const TextStyle(
-                fontFamily: 'monospace',
-                fontSize: 13,
+              code: TextStyle(
+                fontSize: 13.sp,
                 color: AppColors.accent,
                 backgroundColor: AppColors.bgElevated,
               ),
               codeblockDecoration: BoxDecoration(
                 color: AppColors.bgElevated,
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(8.r),
               ),
-              codeblockPadding: const EdgeInsets.all(12),
-              blockquote: const TextStyle(
-                fontFamily: 'Manrope',
-                fontSize: 14,
+              codeblockPadding: EdgeInsets.all(12.w),
+              blockquote: TextStyle(
+                fontSize: 14.sp,
                 color: AppColors.textSecondary,
                 fontStyle: FontStyle.italic,
-                height: 1.5,
+                height: 1.5.h,
               ),
-              blockquoteDecoration: const BoxDecoration(
+              blockquoteDecoration:BoxDecoration(
                 border: Border(
-                  left: BorderSide(color: AppColors.accent, width: 2),
+                  left: BorderSide(color: AppColors.accent, width: 2.w),
                 ),
               ),
-              blockquotePadding: const EdgeInsets.only(left: 12),
+              blockquotePadding: EdgeInsets.only(left: 12.w),
               a: TextStyle(
                 color: AppColors.accent,
                 decoration: TextDecoration.underline,
@@ -341,38 +331,38 @@ class _VideoCardState extends State<VideoCard> {
         height: 100,
         width: double.infinity,
         duration: const Duration(milliseconds: 120),
-        margin: const EdgeInsets.only(bottom: 10),
-        padding: const EdgeInsets.all(10),
+        margin: EdgeInsets.only(bottom: 10.h),
+        padding: EdgeInsets.all(10.w),
         decoration: BoxDecoration(
           color: _pressed ? AppColors.bgElevated : AppColors.bgSurface,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: AppColors.border, width: 0.5),
+          borderRadius: BorderRadius.circular(12.r),
+          border: Border.all(color: AppColors.border, width: 0.5.w),
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(8.r),
               child: AspectRatio(
                 aspectRatio: 16 / 9,
                 child: Container(
-                  width: 120,
+                  width: 120.w,
                   color: AppColors.bgElevated,
                   child: thumb.isNotEmpty
                       ? Image.network(
                           thumb,
                           fit: BoxFit.cover,
-                          errorBuilder: (_, __, ___) => const Icon(
+                          errorBuilder: (_, __, ___) => Icon(
                             Icons.broken_image_outlined,
                             color: AppColors.textTertiary,
-                            size: 18,
+                            size: 18.sp,
                           ),
                         )
                       : null,
                 ),
               ),
             ),
-            const SizedBox(width: 12),
+            SizedBox(width: 12.w),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -381,31 +371,29 @@ class _VideoCardState extends State<VideoCard> {
                     title,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      fontFamily: 'Manrope',
-                      fontSize: 13,
+                    style: TextStyle(
+                      fontSize: 13.sp ,
                       fontWeight: FontWeight.w600,
                       color: AppColors.textPrimary,
-                      height: 1.35,
+                      height: 1.35.h,
                     ),
                   ),
-                  const SizedBox(height: 6),
+                  SizedBox(height: 6.h),
                   Row(
                     children: [
-                      const Icon(
+                      Icon(
                         Icons.play_arrow_rounded,
-                        size: 12,
+                        size: 12.sp,
                         color: AppColors.textTertiary,
                       ),
-                      const SizedBox(width: 2),
+                      SizedBox(width: 2.w),
                       Expanded(
                         child: Text(
                           channel,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            fontFamily: 'Manrope',
-                            fontSize: 11,
+                          style: TextStyle(
+                            fontSize: 11.sp,
                             color: AppColors.textTertiary,
                           ),
                         ),
@@ -436,25 +424,24 @@ class SearchEmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: EdgeInsets.symmetric(horizontal: 20.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 24),
-          const Text(
+          SizedBox(height: 24.h),
+          Text(
             'TRY ASKING',
             style: TextStyle(
-              fontFamily: 'Manrope',
-              fontSize: 11,
+              fontSize: 11.sp,
               fontWeight: FontWeight.w600,
-              letterSpacing: 1.6,
+              letterSpacing: 1.6.w,
               color: AppColors.textTertiary,
             ),
           ),
-          const SizedBox(height: 14),
+          SizedBox(height: 14.h),
           Wrap(
-            spacing: 8,
-            runSpacing: 8,
+            spacing: 8.w,
+            runSpacing: 8.h,
             children: suggestions
                 .map((s) => SuggestionChip(
                       text: s,

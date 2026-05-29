@@ -6,6 +6,7 @@ import 'package:app/features/purchase/providers/shop_catalog.dart';
 import 'package:app/features/purchase/screens/widgets/pot_tile.dart';
 import 'package:app/features/purchase/screens/widgets/succulent_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 class Shop extends StatefulWidget {
@@ -77,14 +78,14 @@ class _ShopState extends State<Shop> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10),
+      padding: EdgeInsets.all(10.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           LightSearchBar(
             controller: _searchController,
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20),
           Expanded(
             child: Consumer<ShopCatalog>(
               builder: (_, catalog, __) {
@@ -106,17 +107,17 @@ class _ShopState extends State<Shop> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
+                      Text(
                         'Highlights ..',
                         style: TextStyle(
-                          fontSize: 25,
+                          fontSize: 25.sp,
                           color: AppColors.lightTextPrimary,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      const SizedBox(height: 10),
+                      SizedBox(height: 10.h),
                       _HorizontalRow(
-                        height: 340,
+                        height: 340.h,
                         emptyMessage: _query.isNotEmpty
                             ? 'No matching succulents'
                             : 'No succulents available',
@@ -126,18 +127,18 @@ class _ShopState extends State<Shop> {
                           onTap: () => _addToCart(succulents[i]),
                         ),
                       ),
-                      const SizedBox(height: 20),
-                      const Text(
+                      SizedBox(height: 20.h),
+                      Text(
                         'Choose a pot ..',
                         style: TextStyle(
-                          fontSize: 25,
+                          fontSize: 25.sp,
                           color: AppColors.lightTextPrimary,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      const SizedBox(height: 10),
+                      SizedBox(height: 10.h),
                       _HorizontalRow(
-                        height: 320,
+                        height: 320.h,
                         emptyMessage: _query.isNotEmpty
                             ? 'No matching pots'
                             : 'No pots available',
@@ -181,9 +182,9 @@ class _HorizontalRow extends StatelessWidget {
           ? Center(
               child: Text(
                 emptyMessage,
-                style: const TextStyle(
+                style: TextStyle(
                   color: AppColors.lightTextTertiary,
-                  fontSize: 13,
+                  fontSize: 13.sp,
                 ),
               ),
             )
@@ -207,19 +208,18 @@ class _LightLoading extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           SizedBox(
-            width: 32,
-            height: 32,
+            width: 32.w,
+            height: 32.h,
             child: CircularProgressIndicator(
-              strokeWidth: 2,
+              strokeWidth: 2.w,
               valueColor: AlwaysStoppedAnimation(AppColors.success),
             ),
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16.h),
           Text(
             message,
-            style: const TextStyle(
-              fontFamily: 'Manrope',
-              fontSize: 13,
+            style: TextStyle(
+              fontSize: 13.sp,
               color: AppColors.lightTextSecondary,
             ),
           ),
@@ -241,57 +241,56 @@ class _LightError extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(
+          Icon(
             Icons.cloud_off_outlined,
-            size: 32,
+            size: 32.sp,
             color: AppColors.danger,
           ),
-          const SizedBox(height: 12),
-          const Text(
+          SizedBox(height: 12.h),
+          Text(
             'Something went wrong',
             style: TextStyle(
               fontFamily: 'Manrope',
-              fontSize: 15,
+              fontSize: 15.sp,
               fontWeight: FontWeight.w600,
               color: AppColors.lightTextPrimary,
             ),
           ),
-          const SizedBox(height: 6),
+          SizedBox(height: 6.h),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
+            padding: EdgeInsets.symmetric(horizontal: 24.w),
             child: Text(
               message,
               textAlign: TextAlign.center,
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                fontFamily: 'Manrope',
-                fontSize: 12,
+              style: TextStyle(
+                fontSize: 12.sp,
                 color: AppColors.lightTextTertiary,
-                height: 1.4,
+                height: 1.4.h,
               ),
             ),
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16.h),
           GestureDetector(
             onTap: onRetry,
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+              padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 10.h),
               decoration: BoxDecoration(
                 color: AppColors.lightSurface,
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(10.r),
                 border: Border.all(color: AppColors.lightBorderStrong),
               ),
-              child: const Row(
+              child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.refresh_rounded, size: 14, color: AppColors.lightTextPrimary),
-                  SizedBox(width: 6),
+                  Icon(Icons.refresh_rounded, size: 14.sp, color: AppColors.lightTextPrimary),
+                  SizedBox(width: 6.w),
                   Text(
                     'Try again',
                     style: TextStyle(
                       fontFamily: 'Manrope',
-                      fontSize: 13,
+                      fontSize: 13.sp,
                       fontWeight: FontWeight.w500,
                       color: AppColors.lightTextPrimary,
                     ),

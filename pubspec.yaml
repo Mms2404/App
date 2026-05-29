@@ -15,6 +15,7 @@ dependencies:
   cupertino_icons: ^1.0.8
 
   # Animated icons and illustrations , UI
+  flutter_screenutil: ^5.9.3
   rive: ^0.13.20
   flutter_svg: ^2.1.0
   google_nav_bar: ^5.0.7

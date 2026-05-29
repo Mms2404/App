@@ -14,6 +14,7 @@ import 'package:app/features/expense_tracker/expense_auth/presentation/controlle
 import 'package:app/features/expense_tracker/expense_auth/presentation/expense_signUp_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ExpenseLoginScreen extends ConsumerStatefulWidget {
   const ExpenseLoginScreen({super.key});
@@ -59,14 +60,14 @@ class _ExpenseLoginScreenState extends ConsumerState<ExpenseLoginScreen> {
         child: SafeArea(
           child: Center(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
+              padding: EdgeInsets.symmetric(horizontal: 24.w),
               child: Form(
                 key: _formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     _Header(),
-                    const SizedBox(height: 40),
+                    SizedBox(height: 40.h),
                     AppTextField(
                       controller: _usernameCtrl,
                       labelText: 'Username',
@@ -74,7 +75,7 @@ class _ExpenseLoginScreenState extends ConsumerState<ExpenseLoginScreen> {
                       textInputAction: TextInputAction.next,
                       validator: (v) => AppValidators.required(v, 'Username'),
                     ),
-                    const SizedBox(height: 18),
+                    SizedBox(height: 18.h),
                     AppTextField(
                       controller: _passwordCtrl,
                       labelText: 'Password',
@@ -85,17 +86,17 @@ class _ExpenseLoginScreenState extends ConsumerState<ExpenseLoginScreen> {
                       validator: (v) => AppValidators.password(v),
                     ),
                     if (failure != null) ...[
-                      const SizedBox(height: 12),
+                      SizedBox(height: 12.h),
                       _ErrorBanner(message: failure.message),
                     ],
-                    const SizedBox(height: 28),
+                    SizedBox(height: 28.h),
                     AppButton(
                       label: 'Log in',
                       trailingIcon: Icons.arrow_forward_rounded,
                       loading: isLoading,
                       onPressed: isLoading ? null : _submit,
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.h),
                     Center(
                       child: GestureDetector(
                         onTap: () {
@@ -110,7 +111,7 @@ class _ExpenseLoginScreenState extends ConsumerState<ExpenseLoginScreen> {
                           'New to Expense Tracker? Sign up.',
                           style: TextStyle(
                             fontFamily: 'Manrope',
-                            fontSize: 12,
+                            fontSize: 12.sp,
                             color: AppColors.textTertiary,
                           ),
                         ),
@@ -136,46 +137,44 @@ class _Header extends StatelessWidget {
         Row(
           children: [
             Container(
-              width: 4,
-              height: 4,
+              width: 4.w,
+              height: 4.h,
               decoration: BoxDecoration(
                 color: AppColors.accent,
-                borderRadius: BorderRadius.circular(1),
+                borderRadius: BorderRadius.circular(1.r),
               ),
             ),
-            const SizedBox(width: 8),
+            SizedBox(width: 8.w),
             Text(
               'EXPENSE TRACKER',
               style: TextStyle(
-                fontFamily: 'Manrope',
-                fontSize: 11,
+                fontSize: 11.sp,
                 fontWeight: FontWeight.w600,
-                letterSpacing: 1.6,
+                letterSpacing: 1.6.w,
                 color: AppColors.accent,
               ),
             ),
           ],
         ),
-        const SizedBox(height: 12),
-        const Text(
+        SizedBox(height: 12.h),
+        Text(
           'Welcome back.',
           style: TextStyle(
             fontFamily: 'Manrope',
-            fontSize: 32,
+            fontSize: 32.sp,
             fontWeight: FontWeight.w700,
             color: AppColors.textPrimary,
-            height: 1.1,
-            letterSpacing: -0.8,
+            height: 1.1.h,
+            letterSpacing: -0.8.w,
           ),
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: 8.h),
         Text(
           'Log in to continue managing your expenses.',
           style: TextStyle(
-            fontFamily: 'Manrope',
-            fontSize: 14,
+            fontSize: 14.sp,
             color: AppColors.textSecondary,
-            height: 1.4,
+            height: 1.4.h,
           ),
         ),
       ],
@@ -190,32 +189,31 @@ class _ErrorBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
       decoration: BoxDecoration(
         color: AppColors.danger.withValues(alpha: 0.10),
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
           color: AppColors.danger.withValues(alpha: 0.3),
-          width: 0.5,
+          width: 0.5.w,
         ),
       ),
       child: Row(
         children: [
           Icon(
             Icons.error_outline_rounded,
-            size: 14,
+            size: 14.sp,
             color: AppColors.danger,
           ),
-          const SizedBox(width: 8),
+          SizedBox(width: 8.w),
           Expanded(
             child: Text(
               message,
               style: TextStyle(
-                fontFamily: 'Manrope',
-                fontSize: 12,
+                fontSize: 12.sp,
                 fontWeight: FontWeight.w500,
                 color: AppColors.danger,
-                height: 1.3,
+                height: 1.3.h,
               ),
             ),
           ),

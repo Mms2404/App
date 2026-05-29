@@ -5,6 +5,7 @@ import 'package:app/features/search/actions/youtube.dart';
 import 'package:app/features/search/presentation/widgets/search_screen_widgets.dart';
 import 'package:app/features/search/presentation/widgets/ui_states.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Search extends StatefulWidget {
   const Search({super.key});
@@ -145,7 +146,7 @@ class _SearchState extends State<Search> {
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              const SizedBox(height: 12),
+              SizedBox(height: 12.h),
               const SearchHeader(),
               AppSearchBar(
                 controller: _controller,
@@ -153,7 +154,7 @@ class _SearchState extends State<Search> {
                 onSubmit: () => _sendPrompt(),
                 isLoading: _isLoading,
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16.h),
               Expanded(child: _buildContent()),
             ],
           ),
@@ -183,7 +184,7 @@ class _SearchState extends State<Search> {
 
     return SingleChildScrollView(
       controller: _scrollController,
-      padding: const EdgeInsets.fromLTRB(20, 0, 20, 32),
+      padding: EdgeInsets.fromLTRB(20.w, 0, 20.w, 32.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -192,9 +193,9 @@ class _SearchState extends State<Search> {
               icon: Icons.auto_awesome_rounded,
               label: 'Answer',
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12.h),
             AnswerCard(markdown: _response),
-            const SizedBox(height: 28),
+            SizedBox(height: 28.h),
           ],
           if (_videos.isNotEmpty) ...[
             SectionHeader(
@@ -202,11 +203,11 @@ class _SearchState extends State<Search> {
               label: 'Videos',
               trailing: '${_videos.length}',
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12.h),
             ..._videos.map((v) => VideoCard(video: v)),
           ],
           if (_isLoading) ...[
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
             const InlineLoading(),
           ],
         ],

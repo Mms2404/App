@@ -1,5 +1,6 @@
 import 'package:app/core/constants/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SideBar extends StatefulWidget {
   final VoidCallback? onExit;
@@ -81,16 +82,16 @@ class _SideBarState extends State<SideBar> {
           ),
           SafeArea(
             child: SizedBox(
-              width: 260,
+              width: 260.w,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const SizedBox(height: 60),
+                  SizedBox(height: 60.h),
                   _SectionLabel(
                     'Workspace',
                     color: _sidebarTextTertiary,
                   ),
-                  const SizedBox(height: 4),
+                 SizedBox(height: 4.h),
                   Expanded(
                     child: SingleChildScrollView(
                       child: Column(
@@ -109,19 +110,19 @@ class _SideBarState extends State<SideBar> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    padding:EdgeInsets.symmetric(horizontal: 16.w),
                     child: Container(
-                      height: 0.5,
+                      height: 0.5.h,
                       color: _sidebarBorder,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8.h),
                   _ExitTile(
                     confirming: _confirmingExit,
                     onTap: _handleExitTap,
                     textSecondary: _sidebarTextSecondary,
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16.h),
                 ],
               ),
             ),
@@ -147,15 +148,14 @@ class _SectionLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: EdgeInsets.symmetric(horizontal: 20.w),
       child: Text(
         text.toUpperCase(),
         style: TextStyle(
-          fontFamily: 'Manrope',
           color: color,
-          fontSize: 10,
+          fontSize: 10.sp,
           fontWeight: FontWeight.w600,
-          letterSpacing: 1.4,
+          letterSpacing: 1.4.w,
         ),
       ),
     );
@@ -196,7 +196,7 @@ class _ExpandableTileState extends State<_ExpandableTile> {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
+          padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 2.h),
           child: MouseRegion(
             onEnter: (_) => setState(() => _hovering = true),
             onExit: (_) => setState(() => _hovering = false),
@@ -206,19 +206,19 @@ class _ExpandableTileState extends State<_ExpandableTile> {
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 200),
                 curve: Curves.easeOut,
-                height: 44,
-                padding: const EdgeInsets.symmetric(horizontal: 12),
+                height: 44.h,
+                padding: EdgeInsets.symmetric(horizontal: 12.w),
                 decoration: BoxDecoration(
                   color: expanded
                       ? accent.withValues(alpha: 0.10)
                       : _hovering
                           ? widget.surface
                           : Colors.transparent,
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(10.r),
                   border: expanded
                       ? Border.all(
                           color: accent.withValues(alpha: 0.25),
-                          width: 0.5,
+                          width: 0.5.w,
                         )
                       : null,
                 ),
@@ -226,16 +226,15 @@ class _ExpandableTileState extends State<_ExpandableTile> {
                   children: [
                     Icon(
                       widget.item.icon,
-                      size: 18,
+                      size: 18.sp,
                       color: expanded ? accent : widget.textSecondary,
                     ),
-                    const SizedBox(width: 12),
+                    SizedBox(width: 12.w),
                     Expanded(
                       child: Text(
                         widget.item.label,
                         style: TextStyle(
-                          fontFamily: 'Manrope',
-                          fontSize: 14,
+                          fontSize: 14.sp,
                           fontWeight: expanded
                               ? FontWeight.w600
                               : FontWeight.w400,
@@ -250,7 +249,7 @@ class _ExpandableTileState extends State<_ExpandableTile> {
                       turns: expanded ? 0.25 : 0,
                       child: Icon(
                         Icons.chevron_right_rounded,
-                        size: 16,
+                        size: 16.sp,
                         color: expanded ? accent : widget.textTertiary,
                       ),
                     ),
@@ -266,25 +265,24 @@ class _ExpandableTileState extends State<_ExpandableTile> {
           alignment: Alignment.topCenter,
           child: expanded
               ? Padding(
-                  padding: const EdgeInsets.fromLTRB(24, 4, 24, 12),
+                  padding: EdgeInsets.fromLTRB(24.w, 4.h, 24.w, 12.h),
                   child: Container(
-                    padding: const EdgeInsets.fromLTRB(12, 10, 12, 12),
+                    padding: EdgeInsets.fromLTRB(12.w, 10.h, 12.w, 12.h),
                     decoration: BoxDecoration(
                       color: widget.surface.withValues(alpha: 0.5),
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(8.r),
                       border: Border(
                         left: BorderSide(
                           color: accent.withValues(alpha: 0.4),
-                          width: 2,
+                          width: 2.w,
                         ),
                       ),
                     ),
                     child: Text(
                       widget.item.description,
                       style: TextStyle(
-                        fontFamily: 'Manrope',
-                        fontSize: 12,
-                        height: 1.5,
+                        fontSize: 12.sp,
+                        height: 1.5.h,
                         color: widget.textSecondary,
                       ),
                     ),
@@ -311,40 +309,39 @@ class _ExitTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12),
+      padding: EdgeInsets.symmetric(horizontal: 12.w),
       child: GestureDetector(
         onTap: onTap,
         behavior: HitTestBehavior.opaque,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
-          height: 44,
-          padding: const EdgeInsets.symmetric(horizontal: 12),
+          height: 44.h,
+          padding: EdgeInsets.symmetric(horizontal: 12.w),
           decoration: BoxDecoration(
             color: confirming
                 ? AppColors.danger.withValues(alpha: 0.14)
                 : Colors.transparent,
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(10.r),
             border: Border.all(
               color: confirming
                   ? AppColors.danger.withValues(alpha: 0.4)
                   : Colors.transparent,
-              width: 0.5,
+              width: 0.5.w,
             ),
           ),
           child: Row(
             children: [
               Icon(
                 Icons.logout_rounded,
-                size: 18,
+                size: 18.sp,
                 color: confirming ? AppColors.danger : textSecondary,
               ),
-              const SizedBox(width: 12),
+              SizedBox(width: 12.w),
               Expanded(
                 child: Text(
                   confirming ? 'Tap again to exit' : 'Exit',
                   style: TextStyle(
-                    fontFamily: 'Manrope',
-                    fontSize: 14,
+                    fontSize: 14.sp,
                     fontWeight:
                         confirming ? FontWeight.w600 : FontWeight.w400,
                     color: confirming

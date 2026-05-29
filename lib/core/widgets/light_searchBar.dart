@@ -1,5 +1,6 @@
 import 'package:app/core/constants/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LightSearchBar extends StatefulWidget {
   final TextEditingController controller;
@@ -39,22 +40,22 @@ class LightSearchBarState extends State<LightSearchBar> {
 
     return AnimatedContainer(
       duration: const Duration(milliseconds: 200),
-      height: 48,
+      height: 48.h,
       decoration: BoxDecoration(
         color: AppColors.lightSurface,
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(14.r),
         border: Border.all(
           color: _focused
-              ? AppColors.success.withOpacity(0.5)
+              ? AppColors.success.withValues(alpha: 0.5)
               : AppColors.lightBorder,
-          width: _focused ? 1 : 0.5,
+          width: _focused ? 1.w : 0.5.w,
         ),
         boxShadow: _focused
             ? [
                 BoxShadow(
-                  color: AppColors.success.withOpacity(0.12),
-                  blurRadius: 16,
-                  spreadRadius: -4,
+                  color: AppColors.success.withValues(alpha: 0.12),
+                  blurRadius: 16.r,
+                  spreadRadius: -4.r,
                 ),
               ]
             : null,
@@ -62,10 +63,10 @@ class LightSearchBarState extends State<LightSearchBar> {
       child: Row(
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 14, right: 10),
+            padding: EdgeInsets.only(left: 14.w, right: 10.w),
             child: Icon(
               Icons.search_rounded,
-              size: 18,
+              size: 18.sp,
               color: _focused
                   ? AppColors.success
                   : AppColors.lightTextTertiary,
@@ -76,23 +77,21 @@ class LightSearchBarState extends State<LightSearchBar> {
               controller: widget.controller,
               focusNode: _focusNode,
               cursorColor: AppColors.lightTextPrimary,
-              cursorWidth: 1.5,
-              style: const TextStyle(
-                fontFamily: 'Manrope',
-                fontSize: 14,
+              cursorWidth: 1.5.w,
+              style: TextStyle(
+                fontSize: 14.sp,
                 color: AppColors.lightTextPrimary,
-                height: 1.2,
+                height: 1.2.h,
               ),
               decoration: InputDecoration(
                 hintText: widget.hint,
-                hintStyle: const TextStyle(
-                  fontFamily: 'Manrope',
-                  fontSize: 14,
+                hintStyle: TextStyle(
+                  fontSize: 14.sp,
                   color: AppColors.lightTextTertiary,
                 ),
                 border: InputBorder.none,
                 isCollapsed: true,
-                contentPadding: const EdgeInsets.symmetric(vertical: 14),
+                contentPadding: EdgeInsets.symmetric(vertical: 14.h),
               ),
               textInputAction: TextInputAction.search,
             ),
@@ -104,21 +103,21 @@ class LightSearchBarState extends State<LightSearchBar> {
                 setState(() {});
               },
               child: Container(
-                margin: const EdgeInsets.only(right: 8),
-                width: 28,
-                height: 28,
+                margin: EdgeInsets.only(right: 8.w),
+                width: 28.w,
+                height: 28.h,
                 decoration: BoxDecoration(
                   color: AppColors.lightElevated,
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(8.r),
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.close_rounded,
-                  size: 14,
+                  size: 14.sp,
                   color: AppColors.lightTextSecondary,
                 ),
               ),
             ),
-          const SizedBox(width: 6),
+          SizedBox(width: 6.w),
         ],
       ),
     );

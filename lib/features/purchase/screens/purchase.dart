@@ -1,6 +1,7 @@
 import 'package:app/core/constants/colors.dart';
 import 'package:app/features/purchase/screens/home.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Purchase extends StatelessWidget {
   const Purchase({super.key});
@@ -11,23 +12,23 @@ class Purchase extends StatelessWidget {
       backgroundColor: AppColors.lightBg,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          padding: EdgeInsets.symmetric(horizontal: 24.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const Spacer(flex: 3),
               _IconBadge(),
-              const SizedBox(height: 32),
+              SizedBox(height: 32.h),
               _BrandTag(),
-              const SizedBox(height: 16),
+              SizedBox(height: 16.h),
               const _Headline(),
-              const SizedBox(height: 14),
+              SizedBox(height: 14.h),
               const _Subhead(),
               const Spacer(flex: 3),
               _CtaBlock(),
-              const SizedBox(height: 24),
+              SizedBox(height: 24.h),
               const _MetaRow(),
-              const SizedBox(height: 16),
+              SizedBox(height: 16.h),
             ],
           ),
         ),
@@ -41,26 +42,26 @@ class _IconBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        width: 88,
-        height: 88,
+        width: 88.w,
+        height: 88.h,
         decoration: BoxDecoration(
-          color: AppColors.success.withOpacity(0.12),
-          borderRadius: BorderRadius.circular(24),
+          color: AppColors.success.withValues(alpha: 0.12),
+          borderRadius: BorderRadius.circular(24.r),
           border: Border.all(
-            color: AppColors.success.withOpacity(0.35),
-            width: 0.8,
+            color: AppColors.success.withValues(alpha: 0.35),
+            width: 0.8.w,
           ),
           boxShadow: [
             BoxShadow(
-              color: AppColors.success.withOpacity(0.25),
-              blurRadius: 24,
-              spreadRadius: -4,
+              color: AppColors.success.withValues(alpha: 0.25),
+              blurRadius: 24.r,
+              spreadRadius: -4.r,
             ),
           ],
         ),
         child: Icon(
           Icons.spa_rounded,
-          size: 40,
+          size: 40.sp,
           color: AppColors.success,
         ),
       ),
@@ -76,21 +77,20 @@ class _BrandTag extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            width: 4,
-            height: 4,
+            width: 4.w,
+            height: 4.h,
             decoration: BoxDecoration(
               color: AppColors.success,
-              borderRadius: BorderRadius.circular(1),
+              borderRadius: BorderRadius.circular(1.r),
             ),
           ),
-          const SizedBox(width: 8),
-          const Text(
+          SizedBox(width: 8.w),
+          Text(
             'PLANT SHOP',
             style: TextStyle(
-              fontFamily: 'Manrope',
-              fontSize: 11,
+              fontSize: 11.sp,
               fontWeight: FontWeight.w600,
-              letterSpacing: 1.6,
+              letterSpacing: 1.6.w,
               color: AppColors.success,
             ),
           ),
@@ -105,16 +105,15 @@ class _Headline extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text(
+    return Text(
       'Find your\nperfect plant.',
       textAlign: TextAlign.center,
       style: TextStyle(
-        fontFamily: 'Manrope',
-        fontSize: 36,
+        fontSize: 36.sp,
         fontWeight: FontWeight.w700,
         color: AppColors.lightTextPrimary,
-        height: 1.1,
-        letterSpacing: -1,
+        height: 1.1.h,
+        letterSpacing: -1.w,
       ),
     );
   }
@@ -125,17 +124,16 @@ class _Subhead extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16),
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 16.w),
       child: Text(
         'Easy-care succulents and houseplants, delivered to your door.',
         textAlign: TextAlign.center,
         style: TextStyle(
-          fontFamily: 'Manrope',
-          fontSize: 14,
+          fontSize: 14.sp,
           fontWeight: FontWeight.w400,
           color: AppColors.lightTextSecondary,
-          height: 1.5,
+          height: 1.5.h,
         ),
       ),
     );
@@ -179,10 +177,10 @@ class _LightPrimaryButtonState extends State<_LightPrimaryButton> {
       onTap: widget.onPressed,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 120),
-        height: 52,
+        height: 52.h,
         decoration: BoxDecoration(
           color: _pressed ? const Color(0xFF2E7D4F) : AppColors.success,
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(20.r),
         ),
         child: Center(
           child: Row(
@@ -191,16 +189,15 @@ class _LightPrimaryButtonState extends State<_LightPrimaryButton> {
             children: [
               Text(
                 widget.label,
-                style: const TextStyle(
-                  fontFamily: 'Manrope',
-                  fontSize: 15,
+                style: TextStyle(
+                  fontSize: 15.sp,
                   fontWeight: FontWeight.w600,
                   color: Colors.white,
-                  letterSpacing: 0.2,
+                  letterSpacing: 0.2.w,
                 ),
               ),
-              const SizedBox(width: 8),
-              const Icon(Icons.arrow_forward_rounded, size: 16, color: Colors.white),
+              SizedBox(width: 8.w),
+              Icon(Icons.arrow_forward_rounded, size: 16.sp, color: Colors.white),
             ],
           ),
         ),
@@ -217,10 +214,10 @@ class _MetaRow extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _MetaChip(icon: Icons.local_shipping_outlined, label: 'Free delivery'),
-        const SizedBox(width: 12),
+        _MetaChip(icon: Icons.local_shipping_outlined, label: 'Door step delivery'),
+        SizedBox(width: 12.w),
         _Dot(),
-        const SizedBox(width: 12),
+        SizedBox(width: 12.w),
         _MetaChip(icon: Icons.workspace_premium_outlined, label: '30-day guarantee'),
       ],
     );
@@ -238,13 +235,12 @@ class _MetaChip extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(icon, size: 12, color: AppColors.lightTextTertiary),
-        const SizedBox(width: 6),
+        Icon(icon, size: 12.sp, color: AppColors.lightTextTertiary),
+        SizedBox(width: 6.w),
         Text(
           label,
-          style: const TextStyle(
-            fontFamily: 'Manrope',
-            fontSize: 11,
+          style: TextStyle(
+            fontSize: 11.sp,
             fontWeight: FontWeight.w500,
             color: AppColors.lightTextTertiary,
           ),
@@ -258,10 +254,10 @@ class _Dot extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 3,
-      height: 3,
+      width: 3.w,
+      height: 3.h,
       decoration: BoxDecoration(
-        color: AppColors.lightTextTertiary.withOpacity(0.4),
+        color: AppColors.lightTextTertiary.withValues(alpha: 0.4),
         borderRadius: BorderRadius.circular(1),
       ),
     );

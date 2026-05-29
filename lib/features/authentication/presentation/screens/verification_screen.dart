@@ -3,6 +3,7 @@ import 'package:app/core/utils/enum.dart';
 import 'package:app/core/widgets/buttons.dart';
 import 'package:app/app_home.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class VerificationScreen extends StatefulWidget {
   final String contactInfo;
@@ -64,13 +65,13 @@ class _VerificationScreenState extends State<VerificationScreen> {
         leading: BackButton(),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 30),
+        padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 30.h),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               _verificationMessage,
-              style: TextStyle(fontSize: 18),
+              style: TextStyle(fontSize: 18.sp),
             ),
             SizedBox(height: 8),
             Text(
@@ -78,10 +79,10 @@ class _VerificationScreenState extends State<VerificationScreen> {
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: AppColors.palegreen,
-                fontSize: 16,
+                fontSize: 16.sp,
               ),
             ),
-            SizedBox(height: 24),
+            SizedBox(height: 24.h),
             Form(
               key: _formKey,
               child: TextFormField(
@@ -104,13 +105,13 @@ class _VerificationScreenState extends State<VerificationScreen> {
                 onFieldSubmitted: (_) => _submit(),
               ),
             ),
-            SizedBox(height: 32),
+            SizedBox(height: 32.h),
             ElevatedButton(
               style:AppButtonStyles.topButton ,
               onPressed: _submit,
               child: Text('Verify'),
             ),
-            SizedBox(height: 16),
+            SizedBox(height: 16.h),
             Center(
               child: ElevatedButton(
                 onPressed: _isCodeSent ? _resendCode : null,

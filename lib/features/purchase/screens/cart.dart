@@ -3,6 +3,7 @@ import 'package:app/features/purchase/providers/cart_model.dart';
 import 'package:app/features/purchase/screens/widgets/cartItem.dart';
 import 'package:app/features/purchase/screens/checkout.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 class Cart extends StatelessWidget {
@@ -11,19 +12,19 @@ class Cart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10),
+      padding: EdgeInsets.all(10.w),
       child: Column(
         children: [
-          const Text(
+          Text(
             'My Cart',
             style: TextStyle(
-              fontSize: 30,
+              fontSize: 30.sp,
               color: AppColors.lightTextPrimary,
               fontWeight: FontWeight.w600,
               fontFamily: 'Manrope',
             ),
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20),
           Expanded(
             child: Consumer<CartModel>(
               builder: (_, cart, __) {
@@ -34,15 +35,15 @@ class Cart extends StatelessWidget {
                       children: [
                         Icon(
                           Icons.shopping_bag_outlined,
-                          size: 40,
+                          size: 40.sp,
                           color: AppColors.lightTextTertiary,
                         ),
-                        const SizedBox(height: 12),
-                        const Text(
+                        SizedBox(height: 12),
+                        Text(
                           'Your cart is empty',
                           style: TextStyle(
                             fontFamily: 'Manrope',
-                            fontSize: 14,
+                            fontSize: 14.sp,
                             color: AppColors.lightTextSecondary,
                           ),
                         ),
@@ -61,7 +62,7 @@ class Cart extends StatelessWidget {
             builder: (_, cart, __) {
               final disabled = cart.isEmpty;
               return Padding(
-                padding: const EdgeInsets.only(top: 12, bottom: 4),
+                padding: EdgeInsets.only(top: 12.h, bottom: 4.h),
                 child: _BuyButton(
                   enabled: !disabled,
                   onTap: () {
@@ -113,14 +114,14 @@ class _BuyButtonState extends State<_BuyButton> {
       onTap: widget.enabled ? widget.onTap : null,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 120),
-        height: 52,
+        height: 52.h,
         decoration: BoxDecoration(
           color: !widget.enabled
               ? AppColors.lightElevated
               : _pressed
                   ? const Color(0xFF2E7D4F)
                   : AppColors.success,
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(20.r),
         ),
         child: Center(
           child: Row(
@@ -130,18 +131,17 @@ class _BuyButtonState extends State<_BuyButton> {
               Text(
                 'Buy now',
                 style: TextStyle(
-                  fontFamily: 'Manrope',
-                  fontSize: 15,
+                  fontSize: 15.sp,
                   fontWeight: FontWeight.w600,
                   color: widget.enabled
                       ? Colors.white
                       : AppColors.lightTextTertiary,
                 ),
               ),
-              const SizedBox(width: 8),
+              SizedBox(width: 8.w),
               Icon(
                 Icons.arrow_forward_rounded,
-                size: 16,
+                size: 16.sp,
                 color: widget.enabled
                     ? Colors.white
                     : AppColors.lightTextTertiary,

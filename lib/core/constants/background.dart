@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 import 'package:app/core/utils/logger.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class OrbBackground extends StatefulWidget {
   final Widget child;
@@ -67,7 +68,7 @@ class _OrbBackgroundState extends State<OrbBackground>
     final size = MediaQuery.of(context).size;
     if (!_initialized && !size.isEmpty) {
       _initialized = true;
-      final start = Offset(size.width * 0.12, size.height * 0.82);
+      final start = Offset(size.width * 0.12.w, size.height * 0.82.h);
       setState(() {
         _orbPos = start;
         _targetPos = start;
@@ -162,7 +163,7 @@ Widget build(BuildContext context) {
             if (!mounted || _initialized) return;
             _initialized = true;
             final size = constraints.biggest;
-            final start = Offset(size.width * 0.12, size.height * 0.82);
+            final start = Offset(size.width * 0.12.w, size.height * 0.82.h);
             setState(() {
               _orbPos = start;
               _targetPos = start;
@@ -226,7 +227,7 @@ class _OrbPainter extends CustomPainter {
     final r = baseRadius * (1 + breathe);
 
     // Layer 1 — wide outer atmospheric glow
-    final outerR = r * 1.6;
+    final outerR = r * 1.6.r;
     final outerPaint = Paint()
       ..shader = RadialGradient(
         colors: [
