@@ -2,6 +2,7 @@ abstract class CartItemModel{
   String get imagePath;
   String get name ;
   String get price;
+  String get productType;
   
 }
 
@@ -15,6 +16,7 @@ class Succulents implements CartItemModel {
   @override
   final String price;
   final String description;
+  String get productType => 'succulent';
 
   Succulents({
     required this.imagePath, 
@@ -36,6 +38,7 @@ class Pots implements CartItemModel{
   final String height;
   final String width;
   final String description ;
+  String get productType => 'pot';
 
   Pots({
     required this.imagePath,

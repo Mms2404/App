@@ -146,14 +146,14 @@ void _setChromeVisible(bool visible) {
                     children: [
                       AnimatedContainer(
                         duration: Duration(milliseconds: 200),
-                        height: 4,
+                        height: 4.h,
                         width: bottomIcons[index] == selectedNavIcon ? 20 : 0,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10.r),
                           color: AppColors.palegreen,
                         ),
                       ),
-                      SizedBox(height: 5.h),
+                      SizedBox(height: 4.5.h),
                       SizedBox(
                         height: 30.h,
                         width: 35.w,

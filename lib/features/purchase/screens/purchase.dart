@@ -1,5 +1,15 @@
+// PURCHASE LANDING PAGE
+// -----------------------------------------------------------------------------
+// Changes from original:
+//   1. _IconBadge is now a GestureDetector that counts taps. Two rapid taps
+//      on the plant logo opens the admin login sheet.
+//   2. Added "Track my order" text button below the main CTA.
+// -----------------------------------------------------------------------------
+
 import 'package:app/core/constants/colors.dart';
+import 'package:app/features/purchase/screens/admin_screen.dart';
 import 'package:app/features/purchase/screens/home.dart';
+import 'package:app/features/purchase/screens/track_order_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -17,7 +27,7 @@ class Purchase extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const Spacer(flex: 3),
-              _IconBadge(),
+              _DoubleTapIconBadge(),
               SizedBox(height: 32.h),
               _BrandTag(),
               SizedBox(height: 16.h),
@@ -26,6 +36,8 @@ class Purchase extends StatelessWidget {
               const _Subhead(),
               const Spacer(flex: 3),
               _CtaBlock(),
+              SizedBox(height: 12.h),
+              _TrackOrderButton(),
               SizedBox(height: 24.h),
               const _MetaRow(),
               SizedBox(height: 16.h),
@@ -37,32 +49,57 @@ class Purchase extends StatelessWidget {
   }
 }
 
-class _IconBadge extends StatelessWidget {
+// ---------------------------------------------------------------------------
+// Plant logo badge — double-tap triggers admin login
+// ---------------------------------------------------------------------------
+class _DoubleTapIconBadge extends StatefulWidget {
+  @override
+  State<_DoubleTapIconBadge> createState() => _DoubleTapIconBadgeState();
+}
+
+class _DoubleTapIconBadgeState extends State<_DoubleTapIconBadge> {
+  int _tapCount = 0;
+
+  void _handleTap() {
+    _tapCount++;
+    if (_tapCount >= 2) {
+      _tapCount = 0;
+      showAdminLogin(context);
+    }
+    // Reset tap counter after 800ms so accidental single taps don't accumulate
+    Future.delayed(const Duration(milliseconds: 800), () {
+      if (mounted) _tapCount = 0;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Container(
-        width: 88.w,
-        height: 88.h,
-        decoration: BoxDecoration(
-          color: AppColors.success.withValues(alpha: 0.12),
-          borderRadius: BorderRadius.circular(24.r),
-          border: Border.all(
-            color: AppColors.success.withValues(alpha: 0.35),
-            width: 0.8.w,
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.success.withValues(alpha: 0.25),
-              blurRadius: 24.r,
-              spreadRadius: -4.r,
+      child: GestureDetector(
+        onTap: _handleTap,
+        child: Container(
+          width: 88.w,
+          height: 88.h,
+          decoration: BoxDecoration(
+            color: AppColors.success.withValues(alpha: 0.12),
+            borderRadius: BorderRadius.circular(24.r),
+            border: Border.all(
+              color: AppColors.success.withValues(alpha: 0.35),
+              width: 0.8.w,
             ),
-          ],
-        ),
-        child: Icon(
-          Icons.spa_rounded,
-          size: 40.sp,
-          color: AppColors.success,
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.success.withValues(alpha: 0.25),
+                blurRadius: 24.r,
+                spreadRadius: -4.r,
+              ),
+            ],
+          ),
+          child: Icon(
+            Icons.spa_rounded,
+            size: 40.sp,
+            color: AppColors.success,
+          ),
         ),
       ),
     );
@@ -155,6 +192,45 @@ class _CtaBlock extends StatelessWidget {
   }
 }
 
+// ---------------------------------------------------------------------------
+// Track order button
+// ---------------------------------------------------------------------------
+class _TrackOrderButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => const TrackOrderScreen()),
+      ),
+      child: Container(
+        height: 48.h,
+        decoration: BoxDecoration(
+          color: Colors.transparent,
+          borderRadius: BorderRadius.circular(16.r),
+          border: Border.all(color: AppColors.lightBorderStrong),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.local_shipping_outlined,
+                size: 16.sp, color: AppColors.lightTextSecondary),
+            SizedBox(width: 8.w),
+            Text(
+              'Track my order',
+              style: TextStyle(
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w600,
+                color: AppColors.lightTextSecondary,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class _LightPrimaryButton extends StatefulWidget {
   final String label;
   final VoidCallback onPressed;
@@ -197,7 +273,8 @@ class _LightPrimaryButtonState extends State<_LightPrimaryButton> {
                 ),
               ),
               SizedBox(width: 8.w),
-              Icon(Icons.arrow_forward_rounded, size: 16.sp, color: Colors.white),
+              Icon(Icons.arrow_forward_rounded,
+                  size: 16.sp, color: Colors.white),
             ],
           ),
         ),
@@ -214,11 +291,14 @@ class _MetaRow extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _MetaChip(icon: Icons.local_shipping_outlined, label: 'Door step delivery'),
+        _MetaChip(
+            icon: Icons.local_shipping_outlined, label: 'Door step delivery'),
         SizedBox(width: 12.w),
         _Dot(),
         SizedBox(width: 12.w),
-        _MetaChip(icon: Icons.workspace_premium_outlined, label: '30-day guarantee'),
+        _MetaChip(
+            icon: Icons.workspace_premium_outlined,
+            label: '30-day guarantee'),
       ],
     );
   }
@@ -227,7 +307,6 @@ class _MetaRow extends StatelessWidget {
 class _MetaChip extends StatelessWidget {
   final IconData icon;
   final String label;
-
   const _MetaChip({required this.icon, required this.label});
 
   @override

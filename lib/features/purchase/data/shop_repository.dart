@@ -15,7 +15,7 @@ class ShopRepository {
     try {
       log.d('Fetching succulents');
       final response = await _client.get(
-        Uri.parse('${ApiConfig.baseUrl}/succulents/'),
+        Uri.parse('${ApiConfig.shop_url}/succulents/'),
       );
       log.d('Succulents response: ${response.statusCode}');
 
@@ -46,7 +46,7 @@ class ShopRepository {
     try {
       log.d('Fetching pots');
       final response = await _client.get(
-        Uri.parse('${ApiConfig.baseUrl}/pots/'),
+        Uri.parse('${ApiConfig.shop_url}/pots/'),
       );
       log.d('Pots response: ${response.statusCode}');
 
