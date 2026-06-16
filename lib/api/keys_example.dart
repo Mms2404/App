@@ -1,0 +1,10 @@
+const String GEMINI_API = "YOUR_GEMINI_API_KEY";
+const String YOUTUBE_API = "YOUR_YOUTUBE_API_KEY";
+
+const String RAZORPAY_KEY_ID= "YOUR_RAZORPAY_KEY_ID";
+
+
+
+
+
+
