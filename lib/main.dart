@@ -1,5 +1,7 @@
 import 'package:app/core/constants/theme.dart';
 import 'package:app/features/onboarding.dart';
+import 'package:app/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -7,7 +9,9 @@ import 'package:logger/logger.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   Logger.level = kDebugMode ? Level.debug : Level.off;  // Logs only in debug mode 
   runApp(
     const ProviderScope(

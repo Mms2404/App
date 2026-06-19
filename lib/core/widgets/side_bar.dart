@@ -49,7 +49,7 @@ class _SideBarState extends State<SideBar> {
   _NavItem(
     Icons.music_note_rounded,
     'Music',
-    'Play audio files from your device or record voice memos with live waveforms. Two modes in one app.',
+    'Play audio files from your device or record voice memos with live waveforms. Two modes in one app. Backend on Supabase.',
   ),
 ];
 

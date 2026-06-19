@@ -48,6 +48,7 @@ dependencies:
   riverpod_annotation: ^2.6.1
   freezed_annotation: ^2.4.4
   json_annotation: ^4.9.0
+  flutter_bloc: ^9.1.1
 
   # Payment gateway
   razorpay_flutter: ^1.4.5    
@@ -55,6 +56,11 @@ dependencies:
   # -keepattributes *Annotation*
   # -dontwarn com.razorpay.**
   # -keep class com.razorpay.** {*;}
+
+  # Firebase integration
+  firebase_core: ^4.11.0
+  firebase_auth: ^6.5.3
+  cloud_firestore: ^6.6.0
 
 dev_dependencies:
   flutter_test:
