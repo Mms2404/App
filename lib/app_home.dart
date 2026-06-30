@@ -3,7 +3,8 @@ import 'package:app/core/constants/colors.dart';
 import 'package:app/core/utils/rive.dart';
 import 'package:app/features/chat/chat_gateway.dart';
 import 'package:app/features/expense_tracker/expense_tracker_gateway.dart';
-import 'package:app/features/music/music_screen.dart';
+import 'package:app/features/music/music_gateway.dart';
+import 'package:app/features/music/presentation/music_screen.dart';
 import 'package:app/features/onboarding.dart';
 import 'package:app/features/purchase/screens/purchase.dart';
 import 'package:app/features/search/presentation/screens/search.dart';
@@ -98,7 +99,7 @@ void _setChromeVisible(bool visible) {
     Search(),
     Purchase(),
     ExpenseTrackerGateway(onChromeOverride: _setChromeVisible),  // passing the override callback to the gateway
-    Music(),
+    MusicGateway(onChromeOverride: _setChromeVisible),  // passing the override callback to the gateway
     ChatGateway(onChromeOverride: _setChromeVisible),
   ];
 

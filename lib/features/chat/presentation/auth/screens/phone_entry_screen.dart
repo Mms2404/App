@@ -83,7 +83,7 @@ class _PhoneEntryScreenState extends State<PhoneEntryScreen> {
 
         return Scaffold(
           backgroundColor: AppColors.lightBg,
-          resizeToAvoidBottomInset: true,
+          resizeToAvoidBottomInset: false,
           body: SafeArea(
             child: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 24),

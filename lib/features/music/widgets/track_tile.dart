@@ -1,5 +1,5 @@
 import 'package:app/core/constants/colors.dart';
-import 'package:app/features/music/data/music_models.dart';
+import 'package:app/features/music/domain/entities/music_entities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -15,6 +15,7 @@ class TrackTile extends StatelessWidget {
   final bool isPlaying;
   final bool isCurrent;
   final VoidCallback onTap;
+  final VoidCallback? onLongPress;
 
   const TrackTile({
     super.key,
@@ -22,6 +23,7 @@ class TrackTile extends StatelessWidget {
     required this.onTap,
     this.isPlaying = false,
     this.isCurrent = false,
+    this.onLongPress,
   });
 
   @override
@@ -30,6 +32,7 @@ class TrackTile extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         onTap: onTap,
+        onLongPress: onLongPress,
         borderRadius: BorderRadius.circular(16.r),
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 8.h),

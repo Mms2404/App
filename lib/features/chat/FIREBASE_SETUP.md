@@ -163,18 +163,7 @@ service cloud.firestore {
 ```
 
 ## Step 7 — Android config
-
-In `android/build.gradle` (project level):
-```gradle
-dependencies {
-    classpath 'com.google.gms:google-services:4.4.2'
-}
 ```
-
-In `android/app/build.gradle`:
-```gradle
-apply plugin: 'com.google.gms.google-services'
-
 android {
     ...
     defaultConfig {

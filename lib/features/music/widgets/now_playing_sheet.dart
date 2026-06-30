@@ -1,5 +1,5 @@
 import 'package:app/core/constants/colors.dart';
-import 'package:app/features/music/data/music_models.dart';
+import 'package:app/features/music/domain/entities/music_entities.dart';
 import 'package:app/features/music/widgets/track_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

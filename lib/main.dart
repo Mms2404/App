@@ -7,11 +7,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logger/logger.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Supabase.initialize(
+    url: 'https://your-supabase-url.supabase.co',
+    publishableKey: 'your-supabase-publishable-key'
+    );
   Logger.level = kDebugMode ? Level.debug : Level.off;  // Logs only in debug mode 
   runApp(
     const ProviderScope(

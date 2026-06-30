@@ -30,7 +30,7 @@ class ChatRepository {
 
   /// Sends OTP. Throws on network/validation errors.
   Future<void> sendOtp(String phone) async {
-    final e164 = phone.startsWith('+') ? phone : '+91$phone';
+    final e164 = phone.startsWith('+') ? phone : '+1$phone';    // change here when using real numbers 
     final completer = Completer<void>();
 
     await _auth.verifyPhoneNumber(

@@ -1,5 +1,5 @@
 import 'package:app/core/constants/colors.dart';
-import 'package:app/features/music/data/music_models.dart';
+import 'package:app/features/music/domain/entities/music_entities.dart';
 import 'package:app/features/music/widgets/track_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,6 +11,7 @@ class LibraryView extends StatefulWidget {
   final String? currentTrackId;
   final bool isPlaying;
   final void Function(Track) onTrackTap;
+  final void Function(Track)? onTrackLongPress;
 
   const LibraryView({
     super.key,
@@ -18,6 +19,7 @@ class LibraryView extends StatefulWidget {
     required this.currentTrackId,
     required this.isPlaying,
     required this.onTrackTap,
+    this.onTrackLongPress,
   });
 
   @override
@@ -191,6 +193,9 @@ class _LibraryViewState extends State<LibraryView> {
                 isCurrent: track.id == widget.currentTrackId,
                 isPlaying: widget.isPlaying,
                 onTap: () => widget.onTrackTap(track),
+                onLongPress: widget.onTrackLongPress == null
+                    ? null
+                    : () => widget.onTrackLongPress!(track),
               )),
       ],
     );
