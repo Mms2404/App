@@ -622,7 +622,7 @@ class _FilterChip extends StatelessWidget {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 150),
         margin: EdgeInsets.only(right: 8.w),
-        padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 6.h),
+        padding: EdgeInsets.only(left: 12.w, right: 12.w, top: 8.h,),
         decoration: BoxDecoration(
           color: selected
               ? AppColors.success

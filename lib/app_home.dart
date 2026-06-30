@@ -98,8 +98,8 @@ void _setChromeVisible(bool visible) {
     Search(),
     Purchase(),
     ExpenseTrackerGateway(onChromeOverride: _setChromeVisible),  // passing the override callback to the gateway
+    Music(),
     ChatGateway(onChromeOverride: _setChromeVisible),
-    Music()
   ];
 
   @override
@@ -302,11 +302,11 @@ List<RiveIcons> bottomIcons = [
       stateMachineName: "USER_Interactivity",
       title: "Me"),
   RiveIcons("assets/rive/icons.riv",
-      artboard: "CHAT",
-      stateMachineName: "CHAT_Interactivity",
-      title: "Chat"),
-  RiveIcons("assets/rive/icons.riv",
       artboard: "REFRESH/RELOAD",
       stateMachineName: "RELOAD_Interactivity",
       title: "Blockchain"),
+  RiveIcons("assets/rive/icons.riv",
+      artboard: "CHAT",
+      stateMachineName: "CHAT_Interactivity",
+      title: "Chat"),
 ];

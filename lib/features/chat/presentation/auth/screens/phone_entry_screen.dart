@@ -95,9 +95,9 @@ class _PhoneEntryScreenState extends State<PhoneEntryScreen> {
                     child: Container(
                       width: 80, height: 80,
                       decoration: BoxDecoration(
-                        color: _accent.withOpacity(0.12),
+                        color: _accent.withValues(alpha: 0.12),
                         borderRadius: BorderRadius.circular(22),
-                        border: Border.all(color: _accent.withOpacity(0.25), width: 0.8),
+                        border: Border.all(color: _accent.withValues(alpha: 0.25), width: 0.8),
                       ),
                       child: const Icon(Icons.chat_rounded, size: 36, color: _accent),
                     ),
@@ -116,7 +116,7 @@ class _PhoneEntryScreenState extends State<PhoneEntryScreen> {
                   const SizedBox(height: 12),
                   Text(
                     isOtpStage
-                        ? 'We sent a 6-digit code to +91 ${_phoneCtrl.text.trim()}'
+                        ? 'We sent a 6-digit code to +1 ${_phoneCtrl.text.trim()}'
                         : 'Enter your name and phone number to get started.',
                     textAlign: TextAlign.center,
                     style: const TextStyle(
@@ -212,7 +212,7 @@ class _PhoneField extends StatelessWidget {
       ),
       child: Row(children: [
         Padding(padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Text('+91', style: TextStyle(fontFamily: 'Manrope', fontSize: 15,
+          child: Text('+1', style: TextStyle(fontFamily: 'Manrope', fontSize: 15,     // for testing the number format is +1 123 456 7890, but for India it should be +91 12345 67890
               fontWeight: FontWeight.w600,
               color: enabled ? AppColors.lightTextPrimary : AppColors.lightTextTertiary))),
         Container(width: 0.5, height: 24, color: AppColors.lightBorder),
@@ -272,7 +272,7 @@ class _OtpBoxState extends State<_OtpBox> {
       decoration: BoxDecoration(
         color: AppColors.lightSurface, borderRadius: BorderRadius.circular(10),
         border: Border.all(
-          color: _focused ? _accent : filled ? _accent.withOpacity(0.4) : AppColors.lightBorder,
+          color: _focused ? _accent : filled ? _accent.withValues(alpha: 0.4) : AppColors.lightBorder,
           width: _focused ? 1.2 : 0.5),
       ),
       child: TextField(
@@ -314,7 +314,7 @@ class _PrimaryButtonState extends State<_PrimaryButton> {
         duration: const Duration(milliseconds: 120), height: 52,
         decoration: BoxDecoration(
           color: disabled ? AppColors.lightElevated
-              : _pressed ? _accent.withOpacity(0.85) : _accent,
+              : _pressed ? _accent.withValues(alpha: 0.85) : _accent,
           borderRadius: BorderRadius.circular(20),
         ),
         child: Center(child: widget.loading

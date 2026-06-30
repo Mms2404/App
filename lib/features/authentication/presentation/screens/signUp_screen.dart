@@ -5,8 +5,8 @@ import 'package:app/core/widgets/buttons.dart';
 import 'package:app/core/widgets/textField.dart';
 import 'package:app/features/authentication/presentation/screens/verification_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:app/core/utils/validators.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
 
@@ -80,97 +80,57 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       AppTextField(
-                        controller: _nameCtrl,
-                        labelText: 'Full name',
-                        prefixIcon: const Icon(Icons.person_outline_rounded),
-                        textInputAction: TextInputAction.next,
-                        validator: (v) {
-                          if (v == null || v.trim().isEmpty) {
-                            return 'Enter your name';
-                          }
-                          if (v.trim().length < 2) {
-                            return 'Name is too short';
-                          }
-                          return null;
-                        },
-                      ),
-                      SizedBox(height: 18.h),
-                      AppTextField(
-                        controller: _emailCtrl,
-                        labelText: 'Email',
-                        prefixIcon: const Icon(Icons.mail_outline_rounded),
-                        keyboardType: TextInputType.emailAddress,
-                        textInputAction: TextInputAction.next,
-                        validator: (v) {
-                          final value = v?.trim() ?? '';
-                          if (value.isEmpty) return 'Email is required';
-                          final emailRegex =
-                              RegExp(r'^[\w\.-]+@[\w\.-]+\.\w+$');
-                          if (!emailRegex.hasMatch(value)) {
-                            return 'Enter a valid email';
-                          }
-                          return null;
-                        },
-                      ),
-                      SizedBox(height: 18.h),
-                      AppTextField(
-                        controller: _phoneCtrl,
-                        labelText: 'Phone number',
-                        prefixIcon: const Icon(Icons.phone_outlined),
-                        keyboardType: TextInputType.phone,
-                        textInputAction: TextInputAction.next,
-                        validator: (v) {
-                          final value = v?.trim() ?? '';
-                          if (value.isEmpty) return 'Phone is required';
-                          if (value.length < 10) {
-                            return 'Enter a 10-digit number';
-                          }
-                          return null;
-                        },
-                      ),
-                      SizedBox(height: 18.h),
-                      AppTextField(
-                        controller: _passwordCtrl,
-                        labelText: 'Password',
-                        prefixIcon: const Icon(Icons.lock_outline_rounded),
-                        obscureText: _obscurePassword,
-                        textInputAction: TextInputAction.next,
-                        validator: (v) {
-                          final value = v ?? '';
-                          if (value.isEmpty) return 'Password is required';
-                          if (value.length < 6) return 'Min 6 characters';
-                          return null;
-                        },
-                        suffixIcon: _VisibilityToggle(
-                          obscured: _obscurePassword,
-                          onTap: () => setState(
-                              () => _obscurePassword = !_obscurePassword),
-                        ),
-                      ),
-                      SizedBox(height: 18.h),
-                      AppTextField(
-                        controller: _confirmPasswordCtrl,
-                        labelText: 'Confirm password',
-                        prefixIcon: const Icon(Icons.lock_outline_rounded),
-                        obscureText: _obscureConfirmPassword,
-                        textInputAction: TextInputAction.done,
-                        validator: (v) {
-                          if (v == null || v.isEmpty) {
-                            return 'Confirm your password';
-                          }
-                          if (v != _passwordCtrl.text) {
-                            return 'Passwords don\'t match';
-                          }
-                          return null;
-                        },
-                        onFieldSubmitted: (_) => _submit(),
-                        suffixIcon: _VisibilityToggle(
-                          obscured: _obscureConfirmPassword,
-                          onTap: () => setState(() =>
-                              _obscureConfirmPassword =
-                                  !_obscureConfirmPassword),
-                        ),
-                      ),
+  controller: _nameCtrl,
+  labelText: 'Full name',
+  prefixIcon: const Icon(Icons.person_outline_rounded),
+  textInputAction: TextInputAction.next,
+  validator: (v) => AppValidators.minLength(v, 2, 'Name'),
+),
+SizedBox(height: 18.h),
+AppTextField(
+  controller: _emailCtrl,
+  labelText: 'Email',
+  prefixIcon: const Icon(Icons.mail_outline_rounded),
+  keyboardType: TextInputType.emailAddress,
+  textInputAction: TextInputAction.next,
+  validator: AppValidators.email,
+),
+SizedBox(height: 18.h),
+AppTextField(
+  controller: _phoneCtrl,
+  labelText: 'Phone number',
+  prefixIcon: const Icon(Icons.phone_outlined),
+  keyboardType: TextInputType.phone,
+  textInputAction: TextInputAction.next,
+  validator: AppValidators.phone,
+),
+SizedBox(height: 18.h),
+AppTextField(
+  controller: _passwordCtrl,
+  labelText: 'Password',
+  prefixIcon: const Icon(Icons.lock_outline_rounded),
+  obscureText: _obscurePassword,
+  textInputAction: TextInputAction.next,
+  validator: (v) => AppValidators.password(v, min: 6),
+  suffixIcon: _VisibilityToggle(
+    obscured: _obscurePassword,
+    onTap: () => setState(() => _obscurePassword = !_obscurePassword),
+  ),
+),
+SizedBox(height: 18.h),
+AppTextField(
+  controller: _confirmPasswordCtrl,
+  labelText: 'Confirm password',
+  prefixIcon: const Icon(Icons.lock_outline_rounded),
+  obscureText: _obscureConfirmPassword,
+  textInputAction: TextInputAction.done,
+  validator: (v) => AppValidators.confirmPassword(v, _passwordCtrl.text),
+  onFieldSubmitted: (_) => _submit(),
+  suffixIcon: _VisibilityToggle(
+    obscured: _obscureConfirmPassword,
+    onTap: () => setState(() => _obscureConfirmPassword = !_obscureConfirmPassword),
+  ),
+),
                       SizedBox(height: 32.h),
                       AppButton(
                         label: 'Create account',
