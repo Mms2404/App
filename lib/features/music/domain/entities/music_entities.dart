@@ -5,16 +5,16 @@
 // RecordingTile, MiniPlayer, NowPlayingSheet) need ZERO changes.
 import 'package:flutter/material.dart' show Color;
 
-enum SongCategory { pop, rock, lofi, classical, hiphop, electronic, recording, other }
+enum SongCategory { tamil ,english ,powerful ,chinese ,korean ,mm ,recording ,other }
 
 extension SongCategoryX on SongCategory {
   String get label => switch (this) {
-        SongCategory.pop => 'Pop',
-        SongCategory.rock => 'Rock',
-        SongCategory.lofi => 'Lo-fi',
-        SongCategory.classical => 'Classical',
-        SongCategory.hiphop => 'Hip-hop',
-        SongCategory.electronic => 'Electronic',
+        SongCategory.tamil => 'Tamil',
+        SongCategory.english => 'English',
+        SongCategory.powerful => 'Powerful',
+        SongCategory.chinese => 'Chinese',
+        SongCategory.korean => 'Korean',
+        SongCategory.mm => 'Mmmm..',
         SongCategory.recording => 'Recordings',
         SongCategory.other => 'Other',
       };

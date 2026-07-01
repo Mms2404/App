@@ -4,7 +4,6 @@ import 'package:app/core/utils/rive.dart';
 import 'package:app/features/chat/chat_gateway.dart';
 import 'package:app/features/expense_tracker/expense_tracker_gateway.dart';
 import 'package:app/features/music/music_gateway.dart';
-import 'package:app/features/music/presentation/music_screen.dart';
 import 'package:app/features/onboarding.dart';
 import 'package:app/features/purchase/screens/purchase.dart';
 import 'package:app/features/search/presentation/screens/search.dart';

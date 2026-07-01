@@ -22,10 +22,10 @@ class _MusicSplashScreenState extends State<MusicSplashScreen>
     super.initState();
     _ctrl = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1100),
+      duration: const Duration(milliseconds: 2100),
     )..forward();
 
-    Future.delayed(const Duration(milliseconds: 2000), () {
+    Future.delayed(const Duration(milliseconds: 2100), () {
       if (mounted) widget.onDone();
     });
   }

@@ -56,6 +56,7 @@ class _ExpenseLoginScreenState extends ConsumerState<ExpenseLoginScreen> {
     );
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: OrbBackground(
         child: SafeArea(
           child: Center(

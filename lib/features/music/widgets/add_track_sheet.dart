@@ -5,6 +5,9 @@ import 'package:app/features/music/presentation/cubit/music_cubit.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:just_audio/just_audio.dart';
+
+import 'track_tile.dart' show formatDuration;
 
 void showAddTrackSheet(BuildContext context, MusicCubit cubit) {
   showModalBottomSheet(
@@ -29,6 +32,8 @@ class _AddTrackSheetState extends State<_AddTrackSheet> {
   final _albumCtrl = TextEditingController();
   File? _file;
   SongCategory _category = SongCategory.other;
+  Duration _duration = Duration.zero;
+  bool _readingDuration = false;
 
   @override
   void dispose() {
@@ -41,12 +46,33 @@ class _AddTrackSheetState extends State<_AddTrackSheet> {
   Future<void> _pickFile() async {
     final result = await FilePicker.platform.pickFiles(type: FileType.audio);
     if (result == null || result.files.single.path == null) return;
+    final path = result.files.single.path!;
     setState(() {
-      _file = File(result.files.single.path!);
+      _file = File(path);
+      _duration = Duration.zero;
+      _readingDuration = true;
       if (_titleCtrl.text.isEmpty) {
         _titleCtrl.text = result.files.single.name.split('.').first;
       }
     });
+
+    // Read duration straight from the audio file's metadata using a
+    // throwaway just_audio player, so it's captured up front instead of
+    // being left at zero until the track is first played.
+    final probePlayer = AudioPlayer();
+    try {
+      final metadataDuration = await probePlayer.setFilePath(path);
+      if (!mounted) return;
+      setState(() {
+        _duration = metadataDuration ?? Duration.zero;
+        _readingDuration = false;
+      });
+    } catch (e) {
+      if (!mounted) return;
+      setState(() => _readingDuration = false);
+    } finally {
+      await probePlayer.dispose();
+    }
   }
 
   void _submit() {
@@ -56,7 +82,7 @@ class _AddTrackSheetState extends State<_AddTrackSheet> {
       title: _titleCtrl.text.trim(),
       artist: _artistCtrl.text.trim().isEmpty ? 'Unknown' : _artistCtrl.text.trim(),
       album: _albumCtrl.text.trim().isEmpty ? 'Singles' : _albumCtrl.text.trim(),
-      duration: Duration.zero, // unknown until first play; updated server-side later if needed
+      duration: _duration, // read from audio metadata in _pickFile
       category: _category,
     );
     Navigator.of(context).pop();
@@ -99,6 +125,16 @@ class _AddTrackSheetState extends State<_AddTrackSheet> {
                         style: TextStyle(fontSize: 13.5.sp, color: AppColors.textPrimary),
                       ),
                     ),
+                    if (_readingDuration)
+                      SizedBox(
+                        width: 14.sp, height: 14.sp,
+                        child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.accent),
+                      )
+                    else if (_file != null && _duration > Duration.zero)
+                      Text(
+                        formatDuration(_duration),
+                        style: TextStyle(fontSize: 12.sp, color: AppColors.textSecondary),
+                      ),
                   ],
                 ),
               ),

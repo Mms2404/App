@@ -45,6 +45,9 @@ create policy "anyone can do anything" on songs
 alter table recordings enable row level security;
 create policy "anyone can do anything" on recordings
   for all using (true) with check (true);
+
+insert into storage.buckets (id, name, public)
+values ('songs', 'songs', true);
 ```
 
 Storage policies (Dashboard → Storage → songs → Policies):
@@ -59,6 +62,7 @@ create policy "anon insert" on storage.objects
 create policy "anon delete" on storage.objects
   for delete to anon using (bucket_id = 'songs');
 ```
+
 
 ## 4. Packages
 

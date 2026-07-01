@@ -26,8 +26,12 @@ class _MusicGatewayState extends State<MusicGateway> {
   @override
   void initState() {
     super.initState();
-    // Hide bottom nav + sidebar for the whole Music feature, splash included.
-    widget.onChromeOverride(false);
+    // Defer chrome hide to after the first frame — calling onChromeOverride
+    // during initState triggers setState on the parent while it's still
+    // building, causing the "markNeedsBuild called during build" assertion.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      widget.onChromeOverride(true);
+    });
 
     _repo = MusicRepository();
     _cubit = MusicCubit(

@@ -27,6 +27,7 @@ class MusicScreenWithExit extends StatefulWidget {
 class _MusicScreenWithExitState extends State<MusicScreenWithExit> {
   int _tab = 0; // 0 = Library, 1 = Recorder
 
+
   void _openNowPlaying(MusicCubit cubit, MusicState s) {
     if (s.currentTrack == null) return;
     final queue = s.tracks;
@@ -238,9 +239,9 @@ class _MusicScreenWithExitState extends State<MusicScreenWithExit> {
                       child: Container(
                         padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 10.h),
                         decoration: BoxDecoration(
-                          color: AppColors.danger.withOpacity(0.15),
+                          color: AppColors.danger.withValues(alpha:0.15),
                           borderRadius: BorderRadius.circular(12.r),
-                          border: Border.all(color: AppColors.danger.withOpacity(0.4)),
+                          border: Border.all(color: AppColors.danger.withValues(alpha:0.4)),
                         ),
                         child: Text(s.error!,
                             style: TextStyle(fontSize: 12.5.sp, color: AppColors.danger)),

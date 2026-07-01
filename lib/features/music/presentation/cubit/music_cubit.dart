@@ -18,6 +18,8 @@ import 'package:just_audio/just_audio.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:record/record.dart';
 
+import '../../../../core/utils/logger.dart';
+
 part '../cubit/music_state.dart';
 
 class MusicCubit extends Cubit<MusicState> {
@@ -161,6 +163,7 @@ class MusicCubit extends Cubit<MusicState> {
       );
       emit(state.copyWith(tracks: [...state.tracks, track], isUploading: false));
     } catch (e) {
+      log.e('Upload error: $e');
       emit(state.copyWith(isUploading: false, error: 'Upload failed.'));
     }
   }
