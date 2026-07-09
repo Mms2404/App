@@ -77,12 +77,26 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  flutter_launcher_icons: ^0.14.4
+
   build_runner: ^2.4.0
   riverpod_generator: ^2.6.4
   freezed: ^2.5.7
   json_serializable: ^6.8.0
   
   flutter_lints: ^5.0.0
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/icons/logo.png"
+
+  adaptive_icon_background: "#000000"
+  adaptive_icon_foreground: "assets/icons/logo.png"
+
+# After addling the flutter_launcher_icons configuration, run the following command to generate the app icons:
+# dart run flutter_launcher_icons
+
 
 flutter:
 
