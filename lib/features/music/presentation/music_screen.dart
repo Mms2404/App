@@ -27,27 +27,8 @@ class MusicScreenWithExit extends StatefulWidget {
 class _MusicScreenWithExitState extends State<MusicScreenWithExit> {
   int _tab = 0; // 0 = Library, 1 = Recorder
 
-
-  void _openNowPlaying(MusicCubit cubit, MusicState s) {
-    if (s.currentTrack == null) return;
-    final queue = s.tracks;
-    final i = queue.indexWhere((t) => t.id == s.currentTrack!.id);
-    showNowPlayingSheet(
-      context,
-      queue: queue,
-      currentIndex: i < 0 ? 0 : i,
-      isPlaying: s.isPlaying,
-      position: s.position,
-      shuffle: s.shuffle,
-      repeat: s.repeat,
-      onPlayPause: () { cubit.togglePlayPause(); Navigator.of(context).pop(); _openNowPlaying(cubit, cubit.state); },
-      onNext: () { cubit.next(); Navigator.of(context).pop(); _openNowPlaying(cubit, cubit.state); },
-      onPrev: () { cubit.prev(); Navigator.of(context).pop(); _openNowPlaying(cubit, cubit.state); },
-      onSeek: (v) { cubit.seek(v); Navigator.of(context).pop(); _openNowPlaying(cubit, cubit.state); },
-      onToggleShuffle: () { cubit.toggleShuffle(); Navigator.of(context).pop(); _openNowPlaying(cubit, cubit.state); },
-      onToggleRepeat: () { cubit.toggleRepeat(); Navigator.of(context).pop(); _openNowPlaying(cubit, cubit.state); },
-      onSelectTrack: (i) { Navigator.of(context).pop(); cubit.onTrackTap(queue[i]); _openNowPlaying(cubit, cubit.state); },
-    );
+  void _openNowPlaying(MusicCubit cubit) {
+    showNowPlayingSheet(context);
   }
 
   void _onMoreRecording(MusicCubit cubit, VoiceRecording recording) {
@@ -225,12 +206,7 @@ class _MusicScreenWithExitState extends State<MusicScreenWithExit> {
                     Positioned(
                       left: 20.w, right: 20.w, bottom: 96.h,
                       child: MiniPlayer(
-                        track: track,
-                        isPlaying: s.isPlaying,
-                        progress: progress.clamp(0, 1),
-                        onTap: () => _openNowPlaying(cubit, s),
-                        onPlayPause: cubit.togglePlayPause,
-                        onNext: cubit.next,
+                        onTap: () => _openNowPlaying(cubit),
                       ),
                     ),
                   if (s.error != null)
@@ -239,9 +215,9 @@ class _MusicScreenWithExitState extends State<MusicScreenWithExit> {
                       child: Container(
                         padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 10.h),
                         decoration: BoxDecoration(
-                          color: AppColors.danger.withValues(alpha:0.15),
+                          color: AppColors.danger.withOpacity(0.15),
                           borderRadius: BorderRadius.circular(12.r),
-                          border: Border.all(color: AppColors.danger.withValues(alpha:0.4)),
+                          border: Border.all(color: AppColors.danger.withOpacity(0.4)),
                         ),
                         child: Text(s.error!,
                             style: TextStyle(fontSize: 12.5.sp, color: AppColors.danger)),

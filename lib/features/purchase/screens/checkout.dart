@@ -286,8 +286,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 const SizedBox(height: 8),
                 _SummaryCard(),
                 const SizedBox(height: 24),
-                _SectionLabel('Contact'),
-                const SizedBox(height: 8),
                 LightTextField(
                   controller: _phoneCtrl,
                   labelText: 'Phone',
@@ -299,8 +297,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   validator: AppValidators.phone,
                 ),
                 const SizedBox(height: 20),
-                _SectionLabel('Delivery address'),
-                const SizedBox(height: 8),
                 LightTextField(
                   controller: _addressCtrl,
                   labelText: 'Address',

@@ -5,7 +5,7 @@
 // RecordingTile, MiniPlayer, NowPlayingSheet) need ZERO changes.
 import 'package:flutter/material.dart' show Color;
 
-enum SongCategory { tamil ,english ,powerful ,chinese ,korean ,mm ,recording ,other }
+enum SongCategory { tamil, english, powerful, chinese, korean, mm, recording, other }
 
 extension SongCategoryX on SongCategory {
   String get label => switch (this) {
@@ -19,6 +19,18 @@ extension SongCategoryX on SongCategory {
         SongCategory.other => 'Other',
       };
 
+  /// Per-category gradient used in artwork boxes (TrackTile, MiniPlayer, sheet).
+  List<Color> get gradient => switch (this) {
+        SongCategory.tamil     => [const Color(0xFFFF6B6B), const Color(0xFFFF8E53)],
+        SongCategory.english   => [const Color(0xFF5DE6C8), const Color(0xFF3CB8E6)],
+        SongCategory.powerful  => [const Color(0xFF7B2FF7), const Color(0xFFE040FB)],
+        SongCategory.chinese   => [const Color(0xFFFF4E50), const Color(0xFFF9D423)],
+        SongCategory.korean    => [const Color(0xFFFF9A9E), const Color(0xFFFAD0C4)],
+        SongCategory.mm        => [const Color(0xFF43E97B), const Color(0xFF38F9D7)],
+        SongCategory.recording => [const Color(0xFF4facfe), const Color(0xFF00f2fe)],
+        SongCategory.other     => [const Color(0xFFa18cd1), const Color(0xFFfbc2eb)],
+      };
+
   static SongCategory fromString(String s) => SongCategory.values
       .firstWhere((c) => c.name == s, orElse: () => SongCategory.other);
 }
@@ -30,9 +42,8 @@ class Track {
   final String album;
   final Duration duration;
   final SongCategory category;
-  final String storagePath; // path in Supabase "songs" bucket
-  final String? streamUrl;  // resolved public url
-  final List<Color> artwork;
+  final String storagePath;
+  final String? streamUrl;
   final bool isRecording;
 
   const Track({
@@ -44,9 +55,11 @@ class Track {
     required this.category,
     required this.storagePath,
     this.streamUrl,
-    this.artwork = const [Color(0xFF5DE6C8), Color(0xFF3CB8E6)],
     this.isRecording = false,
   });
+
+  /// Gradient colors derived from category — consistent across all widgets.
+  List<Color> get artwork => category.gradient;
 }
 
 class VoiceRecording {

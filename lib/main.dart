@@ -14,8 +14,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await Supabase.initialize(
-    url: 'https://your-supabase-url.supabase.co',
-    publishableKey: 'your-supabase-publishable-key'
+    url: 'https://pomqkzydjirurqvxainn.supabase.co', 
+    publishableKey: 'sb_publishable_OYZ7nxzTNMN1vhr5tiK1AA_TQ5JXdG9'
     );
   Logger.level = kDebugMode ? Level.debug : Level.off;  // Logs only in debug mode 
   runApp(

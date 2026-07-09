@@ -18,9 +18,7 @@ import 'package:just_audio/just_audio.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:record/record.dart';
 
-import '../../../../core/utils/logger.dart';
-
-part '../cubit/music_state.dart';
+part 'music_state.dart';
 
 class MusicCubit extends Cubit<MusicState> {
   final FetchTracksUseCase _fetchTracks;
@@ -53,10 +51,19 @@ class MusicCubit extends Cubit<MusicState> {
         _deleteRecording = deleteRecording,
         super(const MusicState()) {
     _posSub = _player.positionStream.listen((p) => emit(state.copyWith(position: p)));
-    _completeSub = _player.playerStateStream.listen((s) {
-      if (s.processingState == ProcessingState.completed) _next();
+    _completeSub = _player.playerStateStream.listen((ps) {
+      // Only react to completed when we're not in the middle of loading
+      // a new track — _loadAndPlay sets _isLoadingTrack=true while it
+      // calls stop()+setUrl() so the stop()-triggered completed event
+      // doesn't re-fire _next() and cause an infinite loop.
+      if (ps.processingState == ProcessingState.completed && !_isLoadingTrack) {
+        _next();
+      }
     });
   }
+
+  // Guard flag — true while _loadAndPlay is in progress.
+  bool _isLoadingTrack = false;
 
   // ── Load ──────────────────────────────────────────────────────────────────
 
@@ -65,7 +72,8 @@ class MusicCubit extends Cubit<MusicState> {
     try {
       final tracks = await _fetchTracks(category: category);
       emit(state.copyWith(
-          tracks: tracks, loadingTracks: false, filterCategory: category, clearFilter: category == null));
+          tracks: tracks, loadingTracks: false,
+          filterCategory: category, clearFilter: category == null));
     } catch (e) {
       emit(state.copyWith(loadingTracks: false, error: 'Could not load songs.'));
     }
@@ -83,16 +91,26 @@ class MusicCubit extends Cubit<MusicState> {
 
   void filterByCategory(SongCategory? category) => loadTracks(category: category);
 
-  // ── Player (mirrors old _MusicState method names) ───────────────────────────
+  // ── Player ────────────────────────────────────────────────────────────────
 
   Future<void> onTrackTap(Track track) async {
     if (state.currentTrack?.id == track.id) return togglePlayPause();
     emit(state.copyWith(currentTrack: track, position: Duration.zero, isPlaying: true));
+    await _loadAndPlay(track);
+  }
+
+  /// Internal — loads a URL into the player without going through onTrackTap
+  /// so _next() can call this directly without the "same track" guard.
+  Future<void> _loadAndPlay(Track track) async {
+    _isLoadingTrack = true;
     try {
+      await _player.stop();         // reset from any previous completed state
       await _player.setUrl(track.streamUrl!);
       await _player.play();
     } catch (e) {
       emit(state.copyWith(error: 'Could not play "${track.title}".', isPlaying: false));
+    } finally {
+      _isLoadingTrack = false;
     }
   }
 
@@ -112,17 +130,23 @@ class MusicCubit extends Cubit<MusicState> {
     final i = t.indexWhere((x) => x.id == state.currentTrack!.id);
     if (i == -1) return;
 
+    Track nextTrack;
     if (state.shuffle && t.length > 1) {
-      final r = (t..shuffle()).first;
-      return onTrackTap(r);
+      // Pick a random track that isn't the current one
+      final others = t.where((x) => x.id != state.currentTrack!.id).toList();
+      others.shuffle();
+      nextTrack = others.first;
+    } else {
+      final atEnd = i >= t.length - 1;
+      if (atEnd && !state.repeat) {
+        emit(state.copyWith(isPlaying: false, position: Duration.zero));
+        await _player.pause();
+        return;
+      }
+      nextTrack = t[(i + 1) % t.length];
     }
-    final atEnd = i >= t.length - 1;
-    if (atEnd && !state.repeat) {
-      emit(state.copyWith(isPlaying: false, position: Duration.zero));
-      await _player.pause();
-      return;
-    }
-    return onTrackTap(t[(i + 1) % t.length]);
+    emit(state.copyWith(currentTrack: nextTrack, position: Duration.zero, isPlaying: true));
+    await _loadAndPlay(nextTrack);
   }
 
   Future<void> next() => _next();
@@ -136,14 +160,28 @@ class MusicCubit extends Cubit<MusicState> {
     final t = state.tracks;
     final i = t.indexWhere((x) => x.id == state.currentTrack!.id);
     if (i == -1) return;
-    return onTrackTap(t[(i - 1 + t.length) % t.length]);
+    final prevTrack = t[(i - 1 + t.length) % t.length];
+    emit(state.copyWith(currentTrack: prevTrack, position: Duration.zero, isPlaying: true));
+    await _loadAndPlay(prevTrack);
   }
 
   Future<void> seek(double seconds) =>
       _player.seek(Duration(seconds: seconds.round()));
 
-  void toggleShuffle() => emit(state.copyWith(shuffle: !state.shuffle));
-  void toggleRepeat()  => emit(state.copyWith(repeat: !state.repeat));
+  void toggleShuffle() {
+    final newVal = !state.shuffle;
+    _player.setShuffleModeEnabled(newVal);
+    emit(state.copyWith(shuffle: newVal));
+  }
+
+  void toggleRepeat() {
+    final newVal = !state.repeat;
+    // just_audio LoopMode: off = no repeat, all = repeat queue.
+    // We handle repeat-one logic manually in _next() so LoopMode.off is fine —
+    // just_audio's own looping would conflict with our completed-event handler.
+    _player.setLoopMode(newVal ? LoopMode.off : LoopMode.off);
+    emit(state.copyWith(repeat: newVal));
+  }
 
   // ── Add / Delete tracks (open, no auth) ──────────────────────────────────
 
@@ -163,7 +201,6 @@ class MusicCubit extends Cubit<MusicState> {
       );
       emit(state.copyWith(tracks: [...state.tracks, track], isUploading: false));
     } catch (e) {
-      log.e('Upload error: $e');
       emit(state.copyWith(isUploading: false, error: 'Upload failed.'));
     }
   }

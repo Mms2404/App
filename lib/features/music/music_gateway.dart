@@ -26,13 +26,6 @@ class _MusicGatewayState extends State<MusicGateway> {
   @override
   void initState() {
     super.initState();
-    // Defer chrome hide to after the first frame — calling onChromeOverride
-    // during initState triggers setState on the parent while it's still
-    // building, causing the "markNeedsBuild called during build" assertion.
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      widget.onChromeOverride(true);
-    });
-
     _repo = MusicRepository();
     _cubit = MusicCubit(
       fetchTracks: FetchTracksUseCase(_repo),
@@ -44,18 +37,30 @@ class _MusicGatewayState extends State<MusicGateway> {
     )
       ..loadTracks()
       ..loadRecordings();
+    // Splash is the first screen — chrome stays visible.
+    // No chrome call needed here; app_home already has it visible.
   }
 
   @override
   void dispose() {
-    // Restore the home shell's chrome when the whole feature is torn down.
+    // Restore chrome when the whole feature is torn down (user navigates
+    // away via the bottom bar, not via the exit button).
     widget.onChromeOverride(true);
     _cubit.close();
     super.dispose();
   }
 
-  void _goToSplash() => setState(() => _showSplash = true);
-  void _enterApp() => setState(() => _showSplash = false);
+  void _goToSplash() {
+    // Restore chrome first, then switch screen.
+    widget.onChromeOverride(true);
+    setState(() => _showSplash = true);
+  }
+
+  void _enterApp() {
+    // Hide chrome before switching to music screen.
+    widget.onChromeOverride(false);
+    setState(() => _showSplash = false);
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -84,7 +84,6 @@ class _ExpenseLoginScreenState extends ConsumerState<ExpenseLoginScreen> {
                       obscureText: true,
                       textInputAction: TextInputAction.done,
                       onFieldSubmitted: (_) => _submit(),
-                      validator: (v) => AppValidators.password(v),
                     ),
                     if (failure != null) ...[
                       SizedBox(height: 12.h),

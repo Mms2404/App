@@ -143,7 +143,7 @@ class _Tagline extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(right: 40.w),
       child: Text(
-        'Chat. Shop. Track. Search.\nFive working apps under one roof.',
+        'Search. Shop. Track. Listen. Chat.\nFive working apps under one roof.',
         style: TextStyle(
           fontFamily: 'Manrope',
           fontSize: 15.sp,
