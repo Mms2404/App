@@ -204,7 +204,7 @@ class _MusicScreenWithExitState extends State<MusicScreenWithExit> {
                   ),
                   if (track != null && _tab == 0)
                     Positioned(
-                      left: 20.w, right: 20.w, bottom: 96.h,
+                      left: 20.w, right: 20.w, bottom: 40.h,
                       child: MiniPlayer(
                         onTap: () => _openNowPlaying(cubit),
                       ),
@@ -215,9 +215,9 @@ class _MusicScreenWithExitState extends State<MusicScreenWithExit> {
                       child: Container(
                         padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 10.h),
                         decoration: BoxDecoration(
-                          color: AppColors.danger.withOpacity(0.15),
+                          color: AppColors.danger.withValues(alpha :0.15),
                           borderRadius: BorderRadius.circular(12.r),
-                          border: Border.all(color: AppColors.danger.withOpacity(0.4)),
+                          border: Border.all(color: AppColors.danger.withValues(alpha: 0.4)),
                         ),
                         child: Text(s.error!,
                             style: TextStyle(fontSize: 12.5.sp, color: AppColors.danger)),

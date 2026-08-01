@@ -37,7 +37,7 @@ class MiniPlayer extends StatelessWidget {
             child: Stack(children: [
               // Progress bar along top edge
               Positioned(
-                top: 0, left: 0, right: 0,
+                top: 0, left: 12.w, right: 12.w,
                 child: ClipRRect(
                   borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
                   child: LinearProgressIndicator(

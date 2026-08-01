@@ -56,7 +56,7 @@ class MusicCubit extends Cubit<MusicState> {
       // a new track — _loadAndPlay sets _isLoadingTrack=true while it
       // calls stop()+setUrl() so the stop()-triggered completed event
       // doesn't re-fire _next() and cause an infinite loop.
-      if (ps.processingState == ProcessingState.completed && !_isLoadingTrack) {
+      if (ps.processingState == ProcessingState.completed && !_isLoadingTrack && state.playingRecordingId == null) {
         _next();
       }
     });
@@ -116,12 +116,14 @@ class MusicCubit extends Cubit<MusicState> {
 
   Future<void> togglePlayPause() async {
     if (state.currentTrack == null) return;
-    if (_player.playing) {
-      await _player.pause();
-    } else {
+    // Emit optimistically first so UI updates instantly
+    final willPlay = !_player.playing;
+    emit(state.copyWith(isPlaying: willPlay));
+    if (willPlay) {
       await _player.play();
+    } else {
+      await _player.pause();
     }
-    emit(state.copyWith(isPlaying: _player.playing));
   }
 
   Future<void> _next() async {
@@ -293,15 +295,46 @@ class MusicCubit extends Cubit<MusicState> {
   // ── Recording playback (preview) ─────────────────────────────────────────
 
   Future<void> playRecording(VoiceRecording rec) async {
+    // If tapping the same recording — toggle pause/resume
     if (state.playingRecordingId == rec.id) {
-      return togglePlayPause(); // reuse same player toggle
+      if (_player.playing) {
+        await _player.pause();
+        emit(state.copyWith(isRecordingPlaybackPlaying: false));
+      } else {
+        await _player.play();
+        emit(state.copyWith(isRecordingPlaybackPlaying: true));
+      }
+      return;
     }
-    emit(state.copyWith(playingRecordingId: rec.id, isRecordingPlaybackPlaying: true));
+    // New recording — stop anything currently playing first
+    _isLoadingTrack = true;
+    emit(state.copyWith(
+      playingRecordingId: rec.id,
+      isRecordingPlaybackPlaying: true,
+    ));
     try {
+      await _player.stop();
       await _player.setUrl(rec.streamUrl!);
       await _player.play();
+      // Listen for completion to clear the recording state
+      _player.playerStateStream.firstWhere(
+        (s) => s.processingState == ProcessingState.completed,
+      ).then((_) {
+        if (!isClosed && state.playingRecordingId == rec.id) {
+          emit(state.copyWith(
+            clearPlayingRecording: true,
+            isRecordingPlaybackPlaying: false,
+          ));
+        }
+      });
     } catch (e) {
-      emit(state.copyWith(error: 'Could not play recording.', isRecordingPlaybackPlaying: false));
+      emit(state.copyWith(
+        error: 'Could not play recording.',
+        clearPlayingRecording: true,
+        isRecordingPlaybackPlaying: false,
+      ));
+    } finally {
+      _isLoadingTrack = false;
     }
   }
 
