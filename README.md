@@ -1,10 +1,9 @@
-# MMS — 5-in-1 Flutter Practice App
+# 5-in-1 Flutter Practice App
 
 > A showcase of one year of Flutter learning (March 2025 – 2026), built as five fully functional mini-apps inside a single shell. Every app deliberately uses a different state management approach, backend, and architecture — so the project itself is a map of the Flutter ecosystem.
 
 
-<img width="1536" height="1024" alt="5 in 1" src="https://github.com/user-attachments/assets/198cb7d1-6e4d-45e7-980c-1a92850719a4" />
-
+<img width="1536" height="1024" alt="mms_poster" src="https://github.com/user-attachments/assets/ac8624fd-aa95-4747-93a5-76a1bb174412" />
 
 ---
 
@@ -13,7 +12,7 @@
 | # | App | State Management | Backend | Architecture |
 |---|-----|-----------------|---------|--------------|
 | 1 | **Search** | `setState` | Gemini API + YouTube Data API v3 | Single-screen, parallel futures |
-| 2 | **Plant Shop** | `Provider` + `ChangeNotifier` | Django REST Framework + Razorpay | Repository pattern |
+| 2 | **Succulent Shop** | `Provider` + `ChangeNotifier` | Django REST Framework + Razorpay | Repository pattern |
 | 3 | **Expense Tracker** | `Riverpod` + `Freezed` | Django REST Framework (token auth) | Full Clean Architecture |
 | 4 | **Chat** | `Bloc` (3 blocs) | Firebase Auth (Phone OTP) + Firestore | Full Clean Architecture |
 | 5 | **Music** | `Cubit` | Supabase (Postgres + Storage) | Full Clean Architecture |
@@ -44,7 +43,7 @@ The domain layer has zero Flutter or SDK imports — entities are plain Dart cla
 
 ---
 
-## App 1 — Search
+## App 1 — AI Search
 
 **What it does:** enter any query → Gemini answers it + YouTube returns related videos, both fetched in parallel.
 
@@ -59,7 +58,7 @@ The domain layer has zero Flutter or SDK imports — entities are plain Dart cla
 
 ---
 
-## App 2 — Plant Shop
+## App 2 — Succulent Shop
 
 **What it does:** browse succulents and pots, add to cart, checkout with Razorpay online payment or Cash on Delivery, track order status by phone number. Admins can log in (double-tap the plant logo) to see all orders and update statuses.
 
@@ -136,7 +135,7 @@ The domain layer has zero Flutter or SDK imports — entities are plain Dart cla
 
 ---
 
-## App 5 — Music (diveIn)
+## App 5 — Music (DiveIn)
 
 **What it does:** a dark-themed music player + voice recorder. Browse songs by category, play with full controls (play/pause, next, prev, seek, shuffle, repeat), record voice memos, upload both songs and recordings to Supabase. Anyone can add or delete — fully open, no auth.
 
