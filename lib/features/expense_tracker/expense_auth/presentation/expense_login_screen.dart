@@ -6,6 +6,7 @@
 
 import 'package:app/core/constants/background.dart';
 import 'package:app/core/constants/colors.dart';
+import 'package:app/core/navigation/app_page_route.dart';
 import 'package:app/core/utils/validators.dart';
 import 'package:app/core/widgets/buttons.dart';
 import 'package:app/core/widgets/textField.dart';
@@ -102,7 +103,7 @@ class _ExpenseLoginScreenState extends ConsumerState<ExpenseLoginScreen> {
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
+                            AppPageRoute(
                               builder: (_) => const ExpenseSignUpScreen(),
                             ),
                           );

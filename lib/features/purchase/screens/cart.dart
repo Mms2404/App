@@ -1,4 +1,5 @@
 import 'package:app/core/constants/colors.dart';
+import 'package:app/core/navigation/app_page_route.dart';
 import 'package:app/features/purchase/providers/cart_model.dart';
 import 'package:app/features/purchase/screens/widgets/cartItem.dart';
 import 'package:app/features/purchase/screens/checkout.dart';
@@ -68,7 +69,7 @@ class Cart extends StatelessWidget {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
+                      AppPageRoute(
                         // CheckoutScreen is a NEW Navigator route — it lives outside Home's
                         // MultiProvider subtree, so it can't see CartModel on its own.
                         // ChangeNotifierProvider.value passes the EXISTING instance across the

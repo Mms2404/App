@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:app/core/constants/colors.dart';
+import 'package:app/core/navigation/app_page_route.dart';
 import 'package:app/core/utils/rive.dart';
 import 'package:app/features/chat/chat_gateway.dart';
 import 'package:app/features/expense_tracker/expense_tracker_gateway.dart';
@@ -87,7 +88,7 @@ void _setChromeVisible(bool visible) {
 
   void _exitToOnboarding() {
   Navigator.of(context).pushAndRemoveUntil(
-    MaterialPageRoute(builder: (_) => const Onboarding()),
+    AppPageRoute(builder: (_) => const Onboarding()),
     (route) => false,
   );
 }

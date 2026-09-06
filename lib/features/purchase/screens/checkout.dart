@@ -448,7 +448,7 @@ class _MethodCard extends StatelessWidget {
             const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
         decoration: BoxDecoration(
           color: selected
-              ? AppColors.success.withOpacity(0.08)
+              ? AppColors.success.withAlpha(20)
               : AppColors.lightSurface,
           borderRadius: BorderRadius.circular(14),
           border: Border.all(
@@ -537,9 +537,9 @@ class _CodNotice extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: const Color(0xFFFACC15).withOpacity(0.1),
+        color: const Color(0xFFFACC15).withAlpha(25),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFFFACC15).withOpacity(0.4)),
+        border: Border.all(color: const Color(0xFFFACC15).withAlpha(102)),
       ),
       child: Row(
         children: [
@@ -830,7 +830,7 @@ class _PayButtonState extends State<_PayButton> {
         height: 56,
         decoration: BoxDecoration(
           color: widget.loading
-              ? AppColors.success.withOpacity(0.7)
+              ? AppColors.success.withAlpha(179)
               : _pressed
                   ? const Color(0xFF2E7D4F)
                   : AppColors.success,

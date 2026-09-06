@@ -22,7 +22,7 @@ class AppDialog {
       barrierDismissible: barrierDismissible,
       barrierLabel: 'Dialog',
       barrierColor: Colors.black.withValues(alpha: 0.55),
-      transitionDuration: const Duration(milliseconds: 280),
+      transitionDuration: const Duration(milliseconds: 1800),
       transitionBuilder: (context, animation, _, child) {
         final curved = CurvedAnimation(
           parent: animation,

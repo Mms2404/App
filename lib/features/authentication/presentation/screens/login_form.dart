@@ -1,4 +1,5 @@
 import 'package:app/core/constants/colors.dart';
+import 'package:app/core/navigation/app_page_route.dart';
 import 'package:app/core/utils/logger.dart';
 import 'package:app/core/utils/rive.dart';
 import 'package:app/core/utils/validators.dart';
@@ -40,7 +41,7 @@ class _LoginFormState extends State<LoginForm> {
     setState(() => _isShowLoading = true);
 
     // Give Rive time to mount and run onInit
-    await Future.delayed(const Duration(milliseconds: 600));
+    await Future.delayed(const Duration(milliseconds: 1500));
     if (!mounted) return;
 
     // log.d('Email value: "${_emailCtrl.text}"');
@@ -51,20 +52,20 @@ class _LoginFormState extends State<LoginForm> {
 
     if (isValid) {
       _check?.fire();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 3));
       if (!mounted) return;
       setState(() => _isShowLoading = false);
 
-      await Future.delayed(const Duration(milliseconds: 500));
+      await Future.delayed(const Duration(milliseconds: 1000));
       if (!mounted) return;
       Navigator.of(context).pop();
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => const Home()),
+        AppPageRoute(builder: (_) => const Home()),
       );
     } else {
       log.d("Error SMI is: ${_error?.toString()}");
       _error?.fire();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 3));
       if (!mounted) return;
       setState(() => _isShowLoading = false);
     }
@@ -140,7 +141,7 @@ class _LoginFormState extends State<LoginForm> {
                         Navigator.of(context).pop();
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
+                          AppPageRoute(
                               builder: (_) => SignUpScreen()),
                         );
                       },

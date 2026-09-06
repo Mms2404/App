@@ -1,5 +1,6 @@
 import 'package:app/core/constants/background.dart';
 import 'package:app/core/constants/colors.dart';
+import 'package:app/core/navigation/app_page_route.dart';
 import 'package:app/core/utils/enum.dart';
 import 'package:app/core/widgets/buttons.dart';
 import 'package:app/core/widgets/textField.dart';
@@ -47,7 +48,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Verification successful!')),
     );
-    Navigator.push(context, MaterialPageRoute(builder: (_) => Home()));
+    Navigator.push(context, AppPageRoute(builder: (_) => Home()));
   }
 
   void _resendCode() {

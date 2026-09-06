@@ -279,9 +279,9 @@ class _MessageBubble extends StatelessWidget {
   Widget build(BuildContext context) {
     final isMine  = message.isMine(myPhone);
     final deleted = message.isDeleted;
-    final bgColor   = isMine ? _accent.withOpacity(0.95) : AppColors.lightSurface;
+    final bgColor   = isMine ? _accent.withAlpha(243) : AppColors.lightSurface;
     final textColor = isMine ? Colors.white : AppColors.lightTextPrimary;
-    final timeColor = isMine ? Colors.white.withOpacity(0.7) : AppColors.lightTextTertiary;
+    final timeColor = isMine ? Colors.white.withAlpha(179) : AppColors.lightTextTertiary;
 
     final radius = isMine
         ? BorderRadius.only(topLeft: const Radius.circular(16),
@@ -359,7 +359,7 @@ class _ReplyPreview extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 6),
       padding: const EdgeInsets.fromLTRB(8, 6, 8, 6),
       decoration: BoxDecoration(
-        color: isMine ? Colors.white.withOpacity(0.15) : _accent.withOpacity(0.08),
+        color: isMine ? Colors.white.withAlpha(38) : _accent.withAlpha(20),
         borderRadius: BorderRadius.circular(8),
         border: const Border(left: BorderSide(color: _accent, width: 3)),
       ),
@@ -375,7 +375,7 @@ class _StatusIcon extends StatelessWidget {
   const _StatusIcon({required this.status});
   @override
   Widget build(BuildContext context) {
-    final color = Colors.white.withOpacity(0.8);
+    final color = Colors.white.withAlpha(204);
     switch (status) {
       case MessageStatus.sending:   return Icon(Icons.access_time_rounded, size: 11, color: color);
       case MessageStatus.sent:      return Icon(Icons.check_rounded, size: 12, color: color);

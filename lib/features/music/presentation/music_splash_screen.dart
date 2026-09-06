@@ -190,7 +190,7 @@ class _RipplePainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     if (fraction <= 0) return;
     final paint = Paint()
-      ..color = color.withOpacity(opacity.clamp(0.0, 1.0))
+      ..color = color.withAlpha((opacity.clamp(0.0, 1.0) * 255).round())
       ..style = PaintingStyle.fill;
     canvas.drawCircle(origin, maxRadius * fraction, paint);
   }
@@ -238,7 +238,7 @@ class _SwipeHintState extends State<_SwipeHint>
               Transform.scale(scale: _scale.value, child: child),
           child: Icon(
             Icons.swipe_rounded,
-            color: AppColors.accent.withOpacity(0.7),
+            color: AppColors.accent.withAlpha(179),
             size: 28.sp,
           ),
         ),

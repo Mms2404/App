@@ -26,8 +26,8 @@ class _PhoneEntryScreenState extends State<PhoneEntryScreen> {
   void dispose() {
     _phoneCtrl.dispose();
     _nameCtrl.dispose();
-    for (final c in _otpCtrls) c.dispose();
-    for (final f in _otpFocus) f.dispose();
+    for (final c in _otpCtrls) { c.dispose(); }
+    for (final f in _otpFocus) { f.dispose(); }
     super.dispose();
   }
 
@@ -72,7 +72,7 @@ class _PhoneEntryScreenState extends State<PhoneEntryScreen> {
             behavior: SnackBarBehavior.floating,
           ));
           if (state.wasOtpStage) {
-            for (final c in _otpCtrls) c.clear();
+            for (final c in _otpCtrls) { c.clear(); }
             _otpFocus[0].requestFocus();
           }
         }
@@ -95,9 +95,9 @@ class _PhoneEntryScreenState extends State<PhoneEntryScreen> {
                     child: Container(
                       width: 80, height: 80,
                       decoration: BoxDecoration(
-                        color: _accent.withValues(alpha: 0.12),
+                        color: _accent.withAlpha(30),
                         borderRadius: BorderRadius.circular(22),
-                        border: Border.all(color: _accent.withValues(alpha: 0.25), width: 0.8),
+                        border: Border.all(color: _accent.withAlpha(64), width: 0.8),
                       ),
                       child: const Icon(Icons.chat_rounded, size: 36, color: _accent),
                     ),

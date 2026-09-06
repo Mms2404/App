@@ -279,7 +279,7 @@ class AnswerCard extends StatelessWidget {
               a: TextStyle(
                 color: AppColors.accent,
                 decoration: TextDecoration.underline,
-                decorationColor: AppColors.accent.withOpacity(0.4),
+                decorationColor: AppColors.accent.withAlpha(102),
               ),
             ),
           ),

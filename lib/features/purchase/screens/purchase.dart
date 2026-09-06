@@ -7,6 +7,7 @@
 // -----------------------------------------------------------------------------
 
 import 'package:app/core/constants/colors.dart';
+import 'package:app/core/navigation/app_page_route.dart';
 import 'package:app/features/purchase/screens/admin_screen.dart';
 import 'package:app/features/purchase/screens/home.dart';
 import 'package:app/features/purchase/screens/track_order_screen.dart';
@@ -185,7 +186,7 @@ class _CtaBlock extends StatelessWidget {
       onPressed: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (_) => const Home()),
+          AppPageRoute(builder: (_) => const Home()),
         );
       },
     );
@@ -201,7 +202,7 @@ class _TrackOrderButton extends StatelessWidget {
     return GestureDetector(
       onTap: () => Navigator.push(
         context,
-        MaterialPageRoute(builder: (_) => const TrackOrderScreen()),
+        AppPageRoute(builder: (_) => const TrackOrderScreen()),
       ),
       child: Container(
         height: 48.h,

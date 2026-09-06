@@ -16,6 +16,7 @@ class Succulents implements CartItemModel {
   @override
   final String price;
   final String description;
+  @override
   String get productType => 'succulent';
 
   Succulents({
@@ -38,6 +39,7 @@ class Pots implements CartItemModel{
   final String height;
   final String width;
   final String description ;
+  @override
   String get productType => 'pot';
 
   Pots({

@@ -1,5 +1,6 @@
 import 'package:app/core/constants/background.dart';
 import 'package:app/core/constants/colors.dart';
+import 'package:app/core/navigation/app_page_route.dart';
 import 'package:app/core/widgets/buttons.dart';
 import 'package:app/core/widgets/dialogBox.dart';
 import 'package:app/features/authentication/presentation/screens/login_form.dart';
@@ -178,7 +179,7 @@ class _CtaStack extends StatelessWidget {
           shape: AppButtonShape.bottom,
           onPressed: () => Navigator.push(
             context,
-            MaterialPageRoute(builder: (_) => SignUpScreen()),
+            AppPageRoute(builder: (_) => SignUpScreen()),
           ),
         ),
       ],

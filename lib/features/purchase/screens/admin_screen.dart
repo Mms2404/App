@@ -111,7 +111,7 @@ class _AdminLoginSheetState extends State<_AdminLoginSheet> {
                   width: 36.w,
                   height: 36.h,
                   decoration: BoxDecoration(
-                    color: AppColors.success.withOpacity(0.12),
+                    color: AppColors.success.withAlpha(30),
                     borderRadius: BorderRadius.circular(10.r),
                   ),
                   child: Icon(Icons.admin_panel_settings_outlined,
@@ -171,7 +171,7 @@ class _AdminLoginSheetState extends State<_AdminLoginSheet> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.success,
                   foregroundColor: Colors.white,
-                  disabledBackgroundColor: AppColors.success.withOpacity(0.6),
+                  disabledBackgroundColor: AppColors.success.withAlpha(153),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16.r),
                   ),
@@ -533,9 +533,9 @@ class _StatusDropdown extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
       decoration: BoxDecoration(
-        border: Border.all(color: AppColors.success.withOpacity(0.4)),
+        border: Border.all(color: AppColors.success.withAlpha(102)),
         borderRadius: BorderRadius.circular(8.r),
-        color: AppColors.success.withOpacity(0.06),
+        color: AppColors.success.withAlpha(15),
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
@@ -587,9 +587,9 @@ class _StatusBadge extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 3.h),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.15),
+        color: color.withAlpha(38),
         borderRadius: BorderRadius.circular(6.r),
-        border: Border.all(color: color.withOpacity(0.4)),
+        border: Border.all(color: color.withAlpha(102)),
       ),
       child: Text(
         status[0].toUpperCase() + status.substring(1),
@@ -597,7 +597,7 @@ class _StatusBadge extends StatelessWidget {
           fontFamily: 'Manrope',
           fontSize: 11.sp,
           fontWeight: FontWeight.w600,
-          color: color.withOpacity(0.85),
+          color: color.withAlpha(217),
         ),
       ),
     );

@@ -3,10 +3,10 @@ class ApiConfig {
   //   'API_BASE_URL',
   //   defaultValue: 'http://10.36.193.18:8000/api',
   // );
-  static const String local = 'http://192.168.8.96:8000';
-  static const String baseUrl = '${local}/api';
-  static const String shop_url = '${baseUrl}/shop';
+  static const String local = 'http://192.168.220.35:8000';
+  static const String baseUrl = '$local/api';
+  static const String shop_url = '$baseUrl/shop';
 
-  static const String api_token_auth = '${local}/api-token-auth/';
-  static const String api_expense_register = '${baseUrl}/register/';
+  static const String api_token_auth = '$local/api-token-auth/';
+  static const String api_expense_register = '$baseUrl/register/';
 }

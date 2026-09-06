@@ -149,7 +149,7 @@ class _NotificationWidgetState extends State<_NotificationWidget>
                   border: Border.all(color: border, width: 0.8),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(isDark ? 0.45 : 0.10),
+                      color: Colors.black.withAlpha(isDark ? 115 : 26),
                       blurRadius: 20,
                       offset: const Offset(0, 6),
                     ),
@@ -159,7 +159,7 @@ class _NotificationWidgetState extends State<_NotificationWidget>
                   Container(
                     width: 36.w, height: 36.h,
                     decoration: BoxDecoration(
-                      color: widget.color.withOpacity(0.15),
+                      color: widget.color.withAlpha(38),
                       shape: BoxShape.circle,
                     ),
                     child: Icon(widget.icon, color: widget.color, size: 18.sp),

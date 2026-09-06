@@ -4,6 +4,7 @@ import 'package:app/features/chat/presentation/auth/bloc/auth_bloc.dart';
 import 'package:app/features/chat/presentation/chat_list/bloc/chat_list_bloc.dart';
 import 'package:app/features/chat/presentation/messages/bloc/messages_bloc.dart';
 import 'package:app/features/chat/presentation/messages/screens/chat_details_screen.dart';
+import 'package:app/core/navigation/app_page_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,7 +21,7 @@ class ChatListScreen extends StatelessWidget {
       listener: (context, state) {
         if (state is ChatNavigateToMessages) {
           onChromeOverride(false);
-          Navigator.of(context).push(MaterialPageRoute(
+          Navigator.of(context).push(AppPageRoute(
             builder: (_) => MultiBlocProvider(
               providers: [
                 BlocProvider.value(value: context.read<MessagesBloc>()),
@@ -138,10 +139,10 @@ class _ChatTile extends StatelessWidget {
           Container(
             width: 52, height: 52,
             decoration: BoxDecoration(
-              color: chat.isSelfChat ? _accent.withOpacity(0.15) : AppColors.lightElevated,
+              color: chat.isSelfChat ? _accent.withAlpha(38) : AppColors.lightElevated,
               shape: BoxShape.circle,
               border: Border.all(
-                  color: chat.isSelfChat ? _accent.withOpacity(0.3) : AppColors.lightBorder, width: 0.5),
+                  color: chat.isSelfChat ? _accent.withAlpha(77) : AppColors.lightBorder, width: 0.5),
             ),
             alignment: Alignment.center,
             child: chat.isSelfChat

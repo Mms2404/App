@@ -1,5 +1,6 @@
 import 'package:app/core/constants/background.dart';
 import 'package:app/core/constants/colors.dart';
+import 'package:app/core/navigation/app_page_route.dart';
 import 'package:app/features/expense_tracker/expense_auth/presentation/controllers/auth_controller.dart';
 import 'package:app/features/expense_tracker/expense_tracker/domain/entities/expense.dart';
 import 'package:app/features/expense_tracker/expense_tracker/domain/entities/expense_categories.dart';
@@ -136,7 +137,7 @@ class _ExpenseListScreenState extends ConsumerState<ExpenseListScreen> {
                     itemBuilder: (_, i) => _ExpenseTile(
                       expense: filtered[i],
                       onTap: () => Navigator.push<bool>(context,
-                          MaterialPageRoute(
+                          AppPageRoute(
                               builder: (_) =>
                                   ExpenseEditScreen(expense: filtered[i]))),
                     ),
@@ -221,7 +222,7 @@ class _FilterChip extends StatelessWidget {
         duration: const Duration(milliseconds: 150),
         padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 7.h),
         decoration: BoxDecoration(
-          color: selected ? color.withOpacity(0.15) : AppColors.bgSurface,
+          color: selected ? color.withAlpha(38) : AppColors.bgSurface,
           borderRadius: BorderRadius.circular(18.r),
           border: Border.all(
               color: selected ? color : AppColors.border,
@@ -362,7 +363,7 @@ class _ExpenseTile extends StatelessWidget {
           Container(
             width: 38.w, height: 38.h,
             decoration: BoxDecoration(
-              color: cat.color.withOpacity(0.13),
+              color: cat.color.withAlpha(33),
               borderRadius: BorderRadius.circular(10.r),
             ),
             child: Icon(cat.icon, size: 17.sp, color: cat.color),

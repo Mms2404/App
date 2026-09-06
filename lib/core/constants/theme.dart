@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 
-class AppTheme{
+class AppTheme {
   static ThemeData themeData = ThemeData(
-    fontFamily: "Manrope"
+    fontFamily: "Manrope",
+    pageTransitionsTheme: const PageTransitionsTheme(
+      builders: {
+        TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+      },
+    ),
   );
 }

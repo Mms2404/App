@@ -267,7 +267,7 @@ class _LightTextFieldState extends State<LightTextField> {
 
   Color get _borderColor {
     if (_errorText != null) return AppColors.danger;
-    if (_isFocused) return AppColors.success.withOpacity(0.5);
+    if (_isFocused) return AppColors.success.withAlpha(128);
     return AppColors.lightBorder;
   }
 
