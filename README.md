@@ -319,7 +319,7 @@ lib/
 
 ---
 
-## What this project taught me
+## What this project provides in one place : 
 
 Starting from zero Flutter in March 2025, this project covers:
 
