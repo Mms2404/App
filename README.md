@@ -3,7 +3,9 @@
 > A showcase of one year of Flutter learning (March 2025 – 2026), built as five fully functional mini-apps inside a single shell. Every app deliberately uses a different state management approach, backend, and architecture — so the project itself is a map of the Flutter ecosystem.
 
 
-<img width="1536" height="1024" alt="mms_poster" src="https://github.com/user-attachments/assets/ac8624fd-aa95-4747-93a5-76a1bb174412" />
+
+https://github.com/user-attachments/assets/a9302c5c-3cca-4cfa-a213-c50b054b98e8
+
 
 ---
 
