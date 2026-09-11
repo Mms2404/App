@@ -59,6 +59,7 @@ The domain layer has zero Flutter or SDK imports — entities are plain Dart cla
 - YouTube Data API v3 (direct HTTP via `http` package)
 
 ---
+For the Django backend , refer : https://github.com/Mms2404/Django
 
 ## App 2 — Succulent Shop
 
